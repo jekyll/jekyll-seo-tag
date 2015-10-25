@@ -13,6 +13,9 @@
   {% endif %}
 {% elsif site.title %}
   {% assign seo_title = site.title %}
+	{% if site.description %}
+		{% assign seo_title = seo_title | append:" - " | append: site.description %}
+	{% endif %}
 {% endif %}
 {% if seo_title %}
   {% assign seo_title = seo_title | escape | markdownify | strip_html | strip_newlines  %}
