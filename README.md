@@ -51,10 +51,12 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `twitter:username` - The site's Twitter handle. You'll want to describe it like so:
+
   ```yml
   twitter:
     username: benbalter
   ```
+
 * `logo` - Relative URL to a site-wide logo (e.g., `assets/your-company-logo.png`)
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `type` - Either `person` or `organization` (defaults to `person`)
