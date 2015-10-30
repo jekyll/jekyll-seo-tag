@@ -2,6 +2,8 @@
 
 A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.
 
+[![Build Status](https://travis-ci.org/benbalter/jekyll-seo-tag.svg)](https://travis-ci.org/benbalter/jekyll-seo-tag)
+
 ## What it does
 
 Jekyll SEO Tag adds the following meta tags to your site:
