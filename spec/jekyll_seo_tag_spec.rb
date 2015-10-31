@@ -4,6 +4,10 @@ describe Jekyll::SeoTag do
 
   subject { Jekyll::SeoTag.new("seo", nil, nil) }
 
+  before do
+    Jekyll.logger.log_level = :error
+  end
+
   it "builds" do
     expect(subject.render(context)).to match(/Jekyll SEO tag/i)
   end
@@ -29,9 +33,9 @@ describe Jekyll::SeoTag do
   end
 
   it "escapes titles" do
-    site = site({"title" => "Jekyll & Hyde"})
+    site = site({"title" => 'Jekyll & "Hyde"'})
     context = context({ :site => site })
-    expect(subject.render(context)).to match(/<title>Jekyll &amp; Hyde<\/title>/)
+    expect(subject.render(context)).to match(/<title>Jekyll &amp; “Hyde”<\/title>/)
   end
 
   it "uses the page description" do
@@ -134,5 +138,15 @@ describe Jekyll::SeoTag do
     context = context({ :page => page })
     expected = /<meta property="og:image" content="http:\/\/foo.invalid\/foo.png" \/>/
     expect(subject.render(context)).to match(expected)
+  end
+
+  it "outputs valid HTML" do
+    site.process
+    options = {
+      :check_html => true,
+      :checks_to_ignore => ["ScriptCheck", "LinkCheck", "ImageCheck"]
+    }
+    status = HTML::Proofer.new(dest_dir, options).run
+    expect(status).to eql(true)
   end
 end
