@@ -1,10 +1,21 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'jekyll'
 require 'jekyll-seo-tag'
+require 'html/proofer'
+
+ENV["JEKYLL_LOG_LEVEL"] = "error"
+
+def dest_dir
+  File.expand_path("../tmp/dest",   File.dirname(__FILE__))
+end
+
+def source_dir
+  File.expand_path("./fixtures", File.dirname(__FILE__))
+end
 
 CONFIG_DEFAULTS = {
-  "source"      => File.expand_path("./fixtures", File.dirname(__FILE__)),
-  "destination" => File.expand_path("../tmp/dest",   File.dirname(__FILE__)),
+  "source"      => source_dir,
+  "destination" => dest_dir,
   "gems"        => ["jekyll-seo-tag"]
 }
 
