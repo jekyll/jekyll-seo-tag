@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-seo-tag"
-  spec.version       = "0.1.1"
+  spec.version       = "0.1.2"
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = %q{A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.}
