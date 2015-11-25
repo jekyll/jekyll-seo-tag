@@ -18,7 +18,7 @@
 	{% endif %}
 {% endif %}
 {% if seo_title %}
-  {% assign seo_title = seo_title | replace:'"','&quot;' | markdownify | strip_html | strip_newlines | replace:'"','&quot;' | escape_once %}
+  {% assign seo_title = seo_title | escape | markdownify | strip_html | strip_newlines | replace:'"','&quot;' | escape_once %}
 {% endif %}
 
 {% if page.description %}
@@ -27,7 +27,7 @@
   {% assign seo_description = site.description %}
 {% endif %}
 {% if seo_description %}
-  {% assign seo_description = seo_description | replace:'"','&quot;' | markdownify | strip_html | strip_newlines | replace:'"','&quot;' | escape_once %}
+  {% assign seo_description = seo_description | escape | markdownify | strip_html | strip_newlines | replace:'"','&quot;' | escape_once %}
 {% endif %}
 
 {% if seo_title %}
