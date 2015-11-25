@@ -35,7 +35,14 @@ describe Jekyll::SeoTag do
   it "escapes titles" do
     site = site({"title" => 'Jekyll & "Hyde"'})
     context = context({ :site => site })
-    expect(subject.render(context)).to match(/<title>Jekyll &amp; “Hyde”<\/title>/)
+    expect(subject.render(context)).to match(/<title>Jekyll &amp; &quot;Hyde&quot;<\/title>/)
+  end
+
+  it "escapes descriptions" do
+    site = site({"description" => 'Jekyll & "Hyde"'})
+    context = context({ :site => site })
+    expected = /<meta name="description" content="Jekyll &amp; &quot;Hyde&quot;" \/>/
+    expect(subject.render(context)).to match(expected)
   end
 
   it "uses the page description" do
