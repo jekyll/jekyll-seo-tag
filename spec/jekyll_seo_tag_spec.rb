@@ -35,13 +35,13 @@ describe Jekyll::SeoTag do
   it "escapes titles" do
     site = site({"title" => 'Jekyll & "Hyde"'})
     context = context({ :site => site })
-    expect(subject.render(context)).to match(/<title>Jekyll &amp; &quot;Hyde&quot;<\/title>/)
+    expect(subject.render(context)).to match(/<title>Jekyll &amp; &ldquo;Hyde&rdquo;<\/title>/)
   end
 
   it "escapes descriptions" do
     site = site({"description" => 'Jekyll & "Hyde"'})
     context = context({ :site => site })
-    expected = /<meta name="description" content="Jekyll &amp; &quot;Hyde&quot;" \/>/
+    expected = /<meta name="description" content="Jekyll &amp; &ldquo;Hyde&rdquo;" \/>/
     expect(subject.render(context)).to match(expected)
   end
 
