@@ -8,7 +8,7 @@ module Jekyll
       output = Liquid::Template.parse(template_contents).render!(payload, info)
 
       # Minify
-      output.gsub!(/[\n\s]{2,}/, "\n")
+      output.gsub!(/[\s]{2,}/, "\n")
 
       # Encode smart quotes. See https://github.com/benbalter/jekyll-seo-tag/pull/6
       output.gsub!("\u201c", "&ldquo;")
