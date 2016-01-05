@@ -77,6 +77,15 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(expected)
   end
 
+  it "uses replaces '/index.html' with '/'" do
+    page = page({ "permalink" => "/page/index.html" })
+    site = site({ "url" => "http://example.invalid" })
+    context = context({ :page => page, :site => site })
+    expected = %r!<link rel="canonical" href="http://example.invalid/page/" itemprop="url" />!
+    expected = %r!<meta property='og:url' content='http://example.invalid/page/' />!
+    expect(subject.render(context)).to match(expected)
+  end
+
   it "outputs the site title meta" do
     site = site({"title" => "Foo", "url" => "http://example.invalid"})
     context = context({ :site => site })
