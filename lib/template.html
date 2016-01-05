@@ -8,17 +8,22 @@
 
 {% if page.title %}
   {% assign seo_title = page.title %}
+  {% assign seo_page_title = page.title %}
   {% if site.title %}
     {% assign seo_title = seo_title | append:" - " | append: site.title %}
   {% endif %}
 {% elsif site.title %}
   {% assign seo_title = site.title %}
+  {% assign seo_page_title = site.title %}
 	{% if site.description %}
 		{% assign seo_title = seo_title | append:" - " | append: site.description %}
 	{% endif %}
 {% endif %}
 {% if seo_title %}
   {% assign seo_title = seo_title | markdownify | strip_html | strip_newlines | escape_once %}
+{% endif %}
+{% if seo_page_title %}
+  {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
 {% if page.description %}
@@ -32,7 +37,10 @@
 
 {% if seo_title %}
   <title>{{ seo_title }}</title>
-  <meta property="og:title" content="{{ seo_title }}" />
+{% endif %}
+
+{% if seo_title %}
+  <meta property="og:title" content="{{ seo_page_title }}" />
 {% endif %}
 
 {% if seo_description %}
