@@ -1,7 +1,7 @@
 <!-- Begin Jekyll SEO tag -->
 
 {% if site.url %}
-  {% assign seo_url = site.url %}
+  {% assign seo_url = site.url | append: site.baseurl %}
 {% elsif site.github.url %}
   {% assign seo_url = site.github.url %}
 {% endif %}

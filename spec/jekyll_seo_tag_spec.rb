@@ -86,6 +86,15 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(expected)
   end
 
+  it "uses baseurl to build the seo url" do
+    site = site({ "url" => "http://example.invalid", "baseurl" => "/foo" })
+    context = context({ :site => site })
+    expected = %r!<link rel="canonical" href="http://example.invalid/foo/page.html" itemprop="url" />!
+    expect(subject.render(context)).to match(expected)
+    expected = %r!<meta property='og:url' content='http://example.invalid/foo/page.html' />!
+    expect(subject.render(context)).to match(expected)
+  end
+
   it "outputs the site title meta" do
     site = site({"title" => "Foo", "url" => "http://example.invalid"})
     context = context({ :site => site })
