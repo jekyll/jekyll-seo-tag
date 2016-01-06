@@ -3,6 +3,12 @@ module Jekyll
 
     attr_accessor :context
 
+    HTML_ESCAPE = {
+      "\u201c".freeze => '&ldquo;'.freeze,
+      "\u201d".freeze => '&rdquo;'.freeze
+    }
+    HTML_ESCAPE_REGEX = Regexp.union(HTML_ESCAPE.keys).freeze
+
     def render(context)
       @context = context
       output = Liquid::Template.parse(template_contents).render!(payload, info)
@@ -11,8 +17,7 @@ module Jekyll
       output.gsub!(/[\s]{2,}/, "\n")
 
       # Encode smart quotes. See https://github.com/benbalter/jekyll-seo-tag/pull/6
-      output.gsub!("\u201c", "&ldquo;")
-      output.gsub!("\u201d", "&rdquo;")
+      output.gsub!(HTML_ESCAPE_REGEX, HTML_ESCAPE)
 
       output
     end
