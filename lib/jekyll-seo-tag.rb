@@ -13,9 +13,6 @@ module Jekyll
       @context = context
       output = Liquid::Template.parse(template_contents).render!(payload, info)
 
-      # Minify
-      output.gsub!(/[\s]{2,}/, "\n")
-
       # Encode smart quotes. See https://github.com/benbalter/jekyll-seo-tag/pull/6
       output.gsub!(HTML_ESCAPE_REGEX, HTML_ESCAPE)
 
@@ -39,7 +36,7 @@ module Jekyll
     end
 
     def template_contents
-      @template_contents ||= File.read(template_path)
+      @template_contents ||= File.read(template_path).gsub(/(>\n|[%}]})\s+(<|{[{%])/,'\1\2').chomp
     end
 
     def template_path
