@@ -1,10 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'jekyll-seo-tag/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-seo-tag"
-  spec.version       = "0.1.3"
+  spec.version       = Jekyll::SeoTag::VERSION
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = %q{A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.}
