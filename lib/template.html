@@ -20,10 +20,10 @@
 	{% endif %}
 {% endif %}
 {% if seo_title %}
-  {% assign seo_title = seo_title | markdownify | strip_html | strip_newlines | escape_once %}
+  {% assign seo_title = seo_title | smartify %}
 {% endif %}
 {% if seo_page_title %}
-  {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
+  {% assign seo_page_title = seo_page_title | smartify %}
 {% endif %}
 
 {% if page.description %}
@@ -32,7 +32,7 @@
   {% assign seo_description = site.description %}
 {% endif %}
 {% if seo_description %}
-  {% assign seo_description = seo_description | markdownify | strip_html | strip_newlines | escape_once %}
+  {% assign seo_description = seo_description | smartify %}
 {% endif %}
 
 {% if seo_title %}
@@ -54,12 +54,12 @@
 {% endif %}
 
 {% if site.title %}
-  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta property="og:site_name" content="{{ site.title | smartify }}" />
   <script type="application/ld+json">
     {
       "@context" : "http://schema.org",
       "@type" : "WebSite",
-      "name" : {{ site.title | jsonify }},
+      "name" : {{ site.title | smartify | jsonify }},
       "url" : {{ seo_url | jsonify }}
     }
   </script>
@@ -72,19 +72,19 @@
 {% if page.date %}
   <meta property="og:type" content="article" />
   {% if page.next.url %}
-    <link rel="next" href="{{ page.next.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.next.title | escape }}" />
+    <link rel="next" href="{{ page.next.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.next.title | smartify }}" />
   {% endif %}
   {% if page.previous.url %}
-    <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | escape }}" />
+    <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | smartify }}" />
   {% endif %}
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "NewsArticle",
-      "headline": {{ page.title | jsonify }},
+      "headline": {{ seo_page_title | jsonify }},
       "image": {{ page.image | jsonify }},
       "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "description": {{ page.description | jsonify }}
+      "description": {{ seo_description | jsonify }}
     }
   </script>
 {% endif %}
