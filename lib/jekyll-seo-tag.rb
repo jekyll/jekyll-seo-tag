@@ -11,7 +11,7 @@ module Jekyll
 
     def render(context)
       @context = context
-      output = Liquid::Template.parse(template_contents).render!(payload, info)
+      output = template.render!(payload, info)
 
       # Encode smart quotes. See https://github.com/benbalter/jekyll-seo-tag/pull/6
       output.gsub!(HTML_ESCAPE_REGEX, HTML_ESCAPE)
@@ -33,6 +33,10 @@ module Jekyll
         :registers => context.registers,
         :filters   => [Jekyll::Filters]
       }
+    end
+
+    def template
+      @template ||= Liquid::Template.parse template_contents
     end
 
     def template_contents
