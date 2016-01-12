@@ -85,28 +85,14 @@ describe Jekyll::SeoTag do
   it "outputs the site title meta" do
     site = site({"title" => "Foo", "url" => "http://example.invalid"})
     context = context({ :site => site })
-    output = subject.render(context)
-
-    expect(output).to match(/<meta property="og:site_name" content="Foo" \/>/)
-    data = output.match(/<script type=\"application\/ld\+json\">(.*)<\/script>/m)[1]
-
-    data = JSON.parse(data)
-    expect(data["name"]).to eql("Foo")
-    expect(data["url"]).to eql("http://example.invalid")
+    expect(subject.render(context)).to match(%r!<meta property="og:site_name" content="Foo" />!)
   end
 
   it "outputs post meta" do
     post = post({"title" => "post", "description" => "description", "image" => "/img.png" })
     context = context({ :page => post })
-    output = subject.render(context)
     expected = /<meta property="og:type" content="article" \/>/
-    expect(output).to match(expected)
-    data = output.match(/<script type=\"application\/ld\+json\">(.*)<\/script>/m)[1]
-    data = JSON.parse(data)
-
-    expect(data["headline"]).to eql("post")
-    expect(data["description"]).to eql("description")
-    expect(data["image"]).to eql("/img.png")
+    expect(subject.render(context)).to match(expected)
   end
 
   it "outputs twitter card meta" do
@@ -119,30 +105,6 @@ describe Jekyll::SeoTag do
 
     expected = /<meta name="twitter:creator" content="@benbalter" \/>/
     expect(subject.render(context)).to match(expected)
-  end
-
-  it "outputs social meta" do
-    links = ["http://foo.invalid", "http://bar.invalid"]
-    site = site({"social" => { "name" => "Ben", "links" => links }})
-    context = context({ :site => site })
-    output = subject.render(context)
-    data = output.match(/<script type=\"application\/ld\+json\">(.*)<\/script>/m)[1]
-    data = JSON.parse(data)
-
-    expect(data["@type"]).to eql("person")
-    expect(data["name"]).to eql("Ben")
-    expect(data["sameAs"]).to eql(links)
-  end
-
-  it "outputs the logo" do
-    site = site({"logo" => "logo.png", "url" => "http://example.invalid" })
-    context = context({ :site => site })
-    output = subject.render(context)
-    data = output.match(/<script type=\"application\/ld\+json\">(.*)<\/script>/m)[1]
-    data = JSON.parse(data)
-
-    expect(data["logo"]).to eql("http://example.invalid/logo.png")
-    expect(data["url"]).to eql("http://example.invalid")
   end
 
   it "outputs the image" do
@@ -164,6 +126,48 @@ describe Jekyll::SeoTag do
     context = context({ :site => site })
     expected = %r!<meta property="og:site_name" content="Site Title" />!
     expect(subject.render(context)).to match(expected)
+  end
+
+  context "JSON-LD" do
+    def parse(output)
+      data = output.match(/<script type=\"application\/ld\+json\">(.*)<\/script>/m)[1]
+      data = JSON.parse(data)
+    end
+
+    it "outputs the site title meta" do
+      site = site({"title" => "Foo", "url" => "http://example.invalid"})
+      context = context({ :site => site })
+      data = parse(subject.render(context))
+      expect(data["name"]).to eql("Foo")
+      expect(data["url"]).to eql("http://example.invalid")
+    end
+
+    it "outputs post meta" do
+      post = post({"title" => "post", "description" => "description", "image" => "/img.png" })
+      context = context({ :page => post })
+      data = parse(subject.render(context))
+      expect(data["headline"]).to eql("post")
+      expect(data["description"]).to eql("description")
+      expect(data["image"]).to eql("/img.png")
+    end
+
+    it "outputs social meta" do
+      links = ["http://foo.invalid", "http://bar.invalid"]
+      site = site({"social" => { "name" => "Ben", "links" => links }})
+      context = context({ :page => page, :site => site })
+      data = parse(subject.render(context))
+      expect(data["@type"]).to eql("person")
+      expect(data["name"]).to eql("Ben")
+      expect(data["sameAs"]).to eql(links)
+    end
+
+    it "outputs the logo" do
+      site = site({"logo" => "logo.png", "url" => "http://example.invalid" })
+      context = context({ :site => site })
+      data = parse(subject.render(context))
+      expect(data["logo"]).to eql("http://example.invalid/logo.png")
+      expect(data["url"]).to eql("http://example.invalid")
+    end
   end
 
   it "outputs valid HTML" do
