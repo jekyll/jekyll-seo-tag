@@ -6,21 +6,30 @@
   {% assign seo_url = site.github.url %}
 {% endif %}
 
+{% if site.title %}
+  {% assign seo_site_title = site.title %}
+{% elsif site.name %}
+  {% assign seo_site_title = site.name %}
+{% endif %}
+
 {% if page.title %}
   {% assign seo_title = page.title %}
   {% assign seo_page_title = page.title %}
-  {% if site.title %}
-    {% assign seo_title = seo_title | append:" - " | append: site.title %}
+  {% if seo_site_title %}
+    {% assign seo_title = seo_title | append:" - " | append: seo_site_title %}
   {% endif %}
-{% elsif site.title %}
-  {% assign seo_title = site.title %}
-  {% assign seo_page_title = site.title %}
+{% elsif seo_site_title %}
+  {% assign seo_title = seo_site_title %}
+  {% assign seo_page_title = seo_site_title %}
 	{% if site.description %}
 		{% assign seo_title = seo_title | append:" - " | append: site.description %}
 	{% endif %}
 {% endif %}
 {% if seo_title %}
   {% assign seo_title = seo_title | markdownify | strip_html | strip_newlines | escape_once %}
+{% endif %}
+{% if seo_site_title %}
+  {% assign seo_site_title = seo_site_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 {% if seo_page_title %}
   {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
@@ -53,13 +62,13 @@
   <meta property='og:url' content='{{ page.url | prepend: seo_url | replace:'/index.html','/' }}' />
 {% endif %}
 
-{% if site.title %}
-  <meta property="og:site_name" content="{{ site.title }}" />
+{% if seo_site_title %}
+  <meta property="og:site_name" content="{{ seo_site_title }}" />
   <script type="application/ld+json">
     {
       "@context" : "http://schema.org",
       "@type" : "WebSite",
-      "name" : {{ site.title | jsonify }},
+      "name" : {{ seo_site_title | jsonify }},
       "url" : {{ seo_url | jsonify }}
     }
   </script>
@@ -118,7 +127,7 @@
     {
       "@context" : "http://schema.org",
       "@type" : "{% if site.social.type %}{{ site.social.type }}{% else %}person{% endif %}",
-      "name" : "{% if site.social.name %}{{ site.social.name }}{% else %}{{ site.title }}{% endif %}",
+      "name" : "{% if site.social.name %}{{ site.social.name }}{% else %}{{ seo_site_title }}{% endif %}",
       "url" : {{ seo_url | jsonify }},
       "sameAs" : {{ site.social.links | jsonify }}
     }

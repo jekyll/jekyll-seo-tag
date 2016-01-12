@@ -165,6 +165,20 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(expected)
   end
 
+  it "uses site.name if site.title is not present" do
+    site = site({"name" => "Site Name", "title" => nil })
+    context = context({ :site => site })
+    expected = %r!<meta property="og:site_name" content="Site Name" />!
+    expect(subject.render(context)).to match(expected)
+  end
+
+  it "uses site.tile if both site.title and site.name are present" do
+    site = site({"name" => "Site Name", "title" => "Site Title" })
+    context = context({ :site => site })
+    expected = %r!<meta property="og:site_name" content="Site Title" />!
+    expect(subject.render(context)).to match(expected)
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {
