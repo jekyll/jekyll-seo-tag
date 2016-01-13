@@ -166,6 +166,14 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(expected)
   end
 
+  it "does not output a <title> tag if title:false" do
+    site = site({"name" => "Site Name", "title" => "Site Title" })
+    context = context({ :site => site })
+    output = Liquid::Template.parse("{% seo title:false %}").render!(context, {})
+    expected = %r!<title>!
+    expect(output).not_to match(expected)
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {

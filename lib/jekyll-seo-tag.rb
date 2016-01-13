@@ -3,6 +3,13 @@ module Jekyll
 
     attr_accessor :context
 
+    def initialize(_, markup, _)
+      super
+      @options = {
+        "title" => !(markup =~ /title\s*:\s*false/i)
+      }
+    end
+
     def render(context)
       @context = context
       output = template.render!(payload, info)
@@ -15,7 +22,8 @@ module Jekyll
     def payload
       {
         "page" => context.registers[:page],
-        "site" => context.registers[:site].site_payload["site"]
+        "site" => context.registers[:site].site_payload["site"],
+        "seo" => @options
       }
     end
 
