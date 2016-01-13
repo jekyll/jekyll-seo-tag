@@ -107,7 +107,11 @@
     "@type" : "WebPage",
 {% endif %}
 
-{% if seo_site_title %}
+{% if page.seo and page.seo.name %}
+    "name" : {{ page.seo.name | jsonify }},
+{% elsif page.url == "/" and site.social and site.social.name %}
+    "name" : {{ site.social.name | jsonify }},
+{% elsif page.url == "/" and seo_site_title %}
     "name" : {{ seo_site_title | jsonify }},
 {% endif %}
 
@@ -135,10 +139,6 @@
     "sameAs" : {{ page.seo.links | jsonify }},
 {% elsif page.url == "/" and site.social and site.social.links %}
     "sameAs" : {{ site.social.links | jsonify }},
-{% endif %}
-
-{% if page.url == "/" and site.social and site.social.name %}
-    "name" : {{ site.social.name | jsonify }},
 {% endif %}
 
     "url" : "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
