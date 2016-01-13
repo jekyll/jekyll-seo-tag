@@ -168,6 +168,11 @@ describe Jekyll::SeoTag do
       expect(data["logo"]).to eql("http://example.invalid/logo.png")
       expect(data["url"]).to eql("http://example.invalid")
     end
+
+    it "outputs only one JSON-LD block" do
+      content = subject.render(context).scan(%!<script type="application/ld\+json">!)
+      expect(content.size).to eql(1)
+    end
   end
 
   it "outputs valid HTML" do

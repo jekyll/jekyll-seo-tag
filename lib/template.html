@@ -64,14 +64,6 @@
 
 {% if seo_site_title %}
   <meta property="og:site_name" content="{{ seo_site_title }}" />
-  <script type="application/ld+json">
-    {
-      "@context" : "http://schema.org",
-      "@type" : "WebSite",
-      "name" : {{ seo_site_title | jsonify }},
-      "url" : {{ seo_url | jsonify }}
-    }
-  </script>
 {% endif %}
 
 {% if page.image %}
@@ -86,16 +78,6 @@
   {% if page.previous.url %}
     <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | escape }}" />
   {% endif %}
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "NewsArticle",
-      "headline": {{ page.title | jsonify }},
-      "image": {{ page.image | jsonify }},
-      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "description": {{ page.description | jsonify }}
-    }
-  </script>
 {% endif %}
 
 {% if site.twitter %}
@@ -111,27 +93,48 @@
   {% endif %}
 {% endif %}
 
+<script type="application/ld+json">
+  {
+    "@context" : "http://schema.org",
+
+{% if page.seo and page.seo.type %}
+    "@type" : {{ page.seo.type | jsonify }},
+{% else %}
+    "@type" : "WebSite",
+{% endif %}
+
+{% if seo_site_title %}
+    "name" : {{ seo_site_title | jsonify }},
+{% endif %}
+
+{% if seo_page_title %}
+    "headline": {{ seo_page_title | jsonify }},
+{% endif %}
+
+{% if page.image %}
+    "image": {{ page.image | jsonify }},
+{% endif %}
+
+{% if page.date %}
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+{% endif %}
+
+{% if page.description %}
+    "description": {{ page.description | jsonify }},
+{% endif %}
+
 {% if site.logo %}
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "url": {{ seo_url | jsonify }},
-      "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }}
-    }
-  </script>
+    "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }},
 {% endif %}
 
 {% if site.social %}
-  <script type="application/ld+json">
-    {
-      "@context" : "http://schema.org",
-      "@type" : "{% if site.social.type %}{{ site.social.type }}{% else %}person{% endif %}",
-      "name" : "{% if site.social.name %}{{ site.social.name }}{% else %}{{ seo_site_title }}{% endif %}",
-      "url" : {{ seo_url | jsonify }},
-      "sameAs" : {{ site.social.links | jsonify }}
-    }
-  </script>
+  {% if site.social.links %}
+    "sameAs" : {{ site.social.links | jsonify }},
+  {% endif %}
 {% endif %}
+
+    "url" : {{ seo_url | jsonify }}
+  }
+</script>
 
 <!-- End Jekyll SEO tag -->
