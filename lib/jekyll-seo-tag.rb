@@ -31,7 +31,7 @@ module Jekyll
     end
 
     def template_contents
-      @template_contents ||= File.read(template_path).gsub(/(>\n|[%}]})\s+(<|{[{%])/,'\1\2').chomp
+      @template_contents ||= File.read(template_path).gsub(/(>\n|[%}]}|,\n)\s+(<|{[{%]| {4,}")/,'\1\2').chomp
     end
 
     def template_path
