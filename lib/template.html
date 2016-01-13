@@ -99,8 +99,12 @@
 
 {% if page.seo and page.seo.type %}
     "@type" : {{ page.seo.type | jsonify }},
-{% else %}
+{% elsif page.url == "/" %}
     "@type" : "WebSite",
+{% elsif page.id %}
+    "@type" : "BlogPosting",
+{% else %}
+    "@type" : "WebPage",
 {% endif %}
 
 {% if seo_site_title %}
@@ -127,13 +131,17 @@
     "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }},
 {% endif %}
 
-{% if site.social %}
-  {% if site.social.links %}
+{% if page.seo and page.seo.links %}
+    "sameAs" : {{ page.seo.links | jsonify }},
+{% elsif page.url == "/" and site.social and site.social.links %}
     "sameAs" : {{ site.social.links | jsonify }},
-  {% endif %}
 {% endif %}
 
-    "url" : {{ seo_url | jsonify }}
+{% if page.url == "/" and site.social and site.social.name %}
+    "name" : {{ site.social.name | jsonify }},
+{% endif %}
+
+    "url" : "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
   }
 </script>
 

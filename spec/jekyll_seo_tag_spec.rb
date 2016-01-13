@@ -134,16 +134,34 @@ describe Jekyll::SeoTag do
       data = JSON.parse(data)
     end
 
+    it "posts are of type `BlogPosting`" do
+      page = post()
+      context = context({ :page => page })
+      data = parse(subject.render(context))
+      expect(data["@type"]).to eql("BlogPosting")
+    end
+
+    it "pages are of type `WebPage`" do
+      data = parse(subject.render(context))
+      expect(data["@type"]).to eql("WebPage")
+    end
+
+    it "root page is of type `WebSite`" do
+      page = page({"permalink" => "/"})
+      context = context({ :page => page })
+      data = parse(subject.render(context))
+      expect(data["@type"]).to eql("WebSite")
+    end
+
     it "outputs the site title meta" do
       site = site({"title" => "Foo", "url" => "http://example.invalid"})
       context = context({ :site => site })
       data = parse(subject.render(context))
       expect(data["name"]).to eql("Foo")
-      expect(data["url"]).to eql("http://example.invalid")
     end
 
     it "outputs post meta" do
-      post = post({"title" => "post", "description" => "description", "image" => "/img.png" })
+      post = post({"title" => "post", "description" => "description", "image" => "/img.png"})
       context = context({ :page => post })
       data = parse(subject.render(context))
       expect(data["headline"]).to eql("post")
@@ -152,6 +170,7 @@ describe Jekyll::SeoTag do
     end
 
     it "outputs social meta" do
+      page = page({"permalink" => "/", "seo" => {"type" => "person"}})
       links = ["http://foo.invalid", "http://bar.invalid"]
       site = site({"social" => { "name" => "Ben", "links" => links }})
       context = context({ :page => page, :site => site })
@@ -166,7 +185,6 @@ describe Jekyll::SeoTag do
       context = context({ :site => site })
       data = parse(subject.render(context))
       expect(data["logo"]).to eql("http://example.invalid/logo.png")
-      expect(data["url"]).to eql("http://example.invalid")
     end
 
     it "outputs only one JSON-LD block" do
