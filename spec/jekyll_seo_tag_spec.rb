@@ -166,6 +166,14 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(expected)
   end
 
+  it "supports author data as an object" do
+    site = site({"twitter" => { "username" => "jekyllrb" }})
+    page = page({"author" => {"twitter" => "@test"}})
+    context = context({ :site => site, :page => page })
+    expected = %r!<meta name="twitter:creator" content="@test" />!
+    expect(subject.render(context)).to match(expected)
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {
