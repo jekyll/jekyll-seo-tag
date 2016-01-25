@@ -39,7 +39,14 @@ describe Jekyll::SeoTag do
     expect(subject.render(context)).to match(/<meta property='og:description' content="foo" \/>/)
   end
 
-  it "uses the site description when no page description exists" do
+  it "uses the page excerpt when no page description exists" do
+    page = page({"description" => "foobar"})
+    context = context({ :page => page })
+    expect(subject.render(context)).to match(/<meta name="description" content="foobar" \/>/)
+    expect(subject.render(context)).to match(/<meta property='og:description' content="foobar" \/>/)
+  end
+
+  it "uses the site description when no page description nor excerpt exist" do
     site = site({"description" => "foo"})
     context = context({ :site => site })
     expect(subject.render(context)).to match(/<meta name="description" content="foo" \/>/)
