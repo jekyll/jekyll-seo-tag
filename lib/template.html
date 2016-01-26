@@ -37,6 +37,8 @@
 
 {% if page.description %}
   {% assign seo_description = page.description %}
+{% elsif page.excerpt %}
+  {% assign seo_description = page.excerpt %}
 {% elsif site.description %}
   {% assign seo_description = site.description %}
 {% endif %}
