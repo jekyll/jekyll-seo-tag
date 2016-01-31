@@ -1,5 +1,5 @@
 <!-- Begin Jekyll SEO tag -->
-
+{% capture seocache %}
 {% if site.url %}
   {% assign seo_url = site.url | append: site.baseurl %}
 {% elsif site.github.url %}
@@ -62,7 +62,7 @@
 {% if seo_author_twitter %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" %}
 {% endif %}
-
+{% endcapture %}{% assign seocache = nil %}
 {% if seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
