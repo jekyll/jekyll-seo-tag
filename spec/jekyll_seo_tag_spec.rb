@@ -56,7 +56,7 @@ describe Jekyll::SeoTag do
   it "uses the site url to build the seo url" do
     site = site({"url" => "http://example.invalid"})
     context = context({ :site => site })
-    expected = /<link rel="canonical" href="http:\/\/example.invalid\/page.html" itemprop="url" \/>/
+    expected = /<link rel="canonical" href="http:\/\/example.invalid\/page.html" \/>/
     expect(subject.render(context)).to match(expected)
     expected = /<meta property='og:url' content='http:\/\/example.invalid\/page.html' \/>/
     expect(subject.render(context)).to match(expected)
@@ -65,7 +65,7 @@ describe Jekyll::SeoTag do
   it "uses site.github.url to build the seo url" do
     site = site({"github" => { "url" => "http://example.invalid" }} )
     context = context({ :site => site })
-    expected = /<link rel="canonical" href="http:\/\/example.invalid\/page.html" itemprop="url" \/>/
+    expected = /<link rel="canonical" href="http:\/\/example.invalid\/page.html" \/>/
     expect(subject.render(context)).to match(expected)
     expected = /<meta property='og:url' content='http:\/\/example.invalid\/page.html' \/>/
     expect(subject.render(context)).to match(expected)
@@ -75,7 +75,7 @@ describe Jekyll::SeoTag do
     page = page({ "permalink" => "/page/index.html" })
     site = site({ "url" => "http://example.invalid" })
     context = context({ :page => page, :site => site })
-    expected = %r!<link rel="canonical" href="http://example.invalid/page/" itemprop="url" />!
+    expected = %r!<link rel="canonical" href="http://example.invalid/page/" />!
     expected = %r!<meta property='og:url' content='http://example.invalid/page/' />!
     expect(subject.render(context)).to match(expected)
   end
@@ -83,7 +83,7 @@ describe Jekyll::SeoTag do
   it "uses baseurl to build the seo url" do
     site = site({ "url" => "http://example.invalid", "baseurl" => "/foo" })
     context = context({ :site => site })
-    expected = %r!<link rel="canonical" href="http://example.invalid/foo/page.html" itemprop="url" />!
+    expected = %r!<link rel="canonical" href="http://example.invalid/foo/page.html" />!
     expect(subject.render(context)).to match(expected)
     expected = %r!<meta property='og:url' content='http://example.invalid/foo/page.html' />!
     expect(subject.render(context)).to match(expected)
