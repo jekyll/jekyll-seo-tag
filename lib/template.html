@@ -127,8 +127,8 @@
     "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}
 
-{% if page.description %}
-    "description": {{ page.description | jsonify }},
+{% if seo_description %}
+    "description": {{ seo_description | jsonify }},
 {% endif %}
 
 {% if site.logo %}
