@@ -112,7 +112,7 @@
       "headline": {{ page.title | jsonify }},
       "image": {{ page.image | jsonify }},
       "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "description": {{ page.description | jsonify }}
+      "description": {{ seo_description | jsonify }}
     }
   </script>
 {% endif %}
