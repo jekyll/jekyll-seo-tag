@@ -94,7 +94,7 @@
 {% endif %}
 
 {% if page.image %}
-  <meta property="og:image" content="{{ page.image }}" />
+  <meta property="og:image" content="{{ page.image | prepend: "/" | prepend: seo_url | escape }}" />
 {% endif %}
 
 {% if page.date %}
