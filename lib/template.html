@@ -35,10 +35,8 @@
   {% assign seo_description = seo_description | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
-{% if page.author %}
-  {% assign seo_author_name = page.author.name | default: page.author %}
-  {% assign seo_author_twitter = page.author.twitter | default: page.author %}
-{% endif %}
+{% assign seo_author_name = page.author.name | default: page.author | default: site.author.name | default: site.author %}
+{% assign seo_author_twitter = page.author.twitter | default: page.author | default: site.author.twitter | default: site.author %}
 {% if seo_author_twitter %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" %}
 {% endif %}
