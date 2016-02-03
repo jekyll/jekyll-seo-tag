@@ -2,7 +2,7 @@
 
 A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.
 
-[![Gem Version](https://badge.fury.io/rb/jekyll-seo-tag.svg)](https://badge.fury.io/rb/jekyll-seo-tag) [![Build Status](https://travis-ci.org/benbalter/jekyll-seo-tag.svg)](https://travis-ci.org/benbalter/jekyll-seo-tag) 
+[![Gem Version](https://badge.fury.io/rb/jekyll-seo-tag.svg)](https://badge.fury.io/rb/jekyll-seo-tag) [![Build Status](https://travis-ci.org/benbalter/jekyll-seo-tag.svg)](https://travis-ci.org/benbalter/jekyll-seo-tag)
 
 ## What it does
 
@@ -64,6 +64,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
   * `type` - Either `person` or `organization` (defaults to `person`)
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
+* `google_site_verification` for verifying ownership via Google webmaster tools
 
 The SEO tag will respect the following YAML front matter if included in a post, page, or document:
 

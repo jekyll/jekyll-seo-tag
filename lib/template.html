@@ -110,6 +110,10 @@
   {% endif %}
 {% endif %}
 
+{% if site.google_site_verification %}
+  <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
+{% endif %}
+
 {% if site.logo %}
   <script type="application/ld+json">
     {
