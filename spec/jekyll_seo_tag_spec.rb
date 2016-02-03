@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Jekyll::SeoTag do
 
-  subject { Jekyll::SeoTag.new("seo", nil, nil) }
+  subject { Jekyll::SeoTag.parse("seo", nil, nil, nil) }
 
   before do
     Jekyll.logger.log_level = :error
