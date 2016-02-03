@@ -2,15 +2,10 @@
 
 {% if site.url %}
   {% assign seo_url = site.url | append: site.baseurl %}
-{% elsif site.github.url %}
-  {% assign seo_url = site.github.url %}
 {% endif %}
+{% assign seo_url = seo_url | default: site.github.url %}
 
-{% if site.title %}
-  {% assign seo_site_title = site.title %}
-{% elsif site.name %}
-  {% assign seo_site_title = site.name %}
-{% endif %}
+{% assign seo_site_title = site.title | default: site.name %}
 
 {% if page.title %}
   {% assign seo_title = page.title %}
@@ -35,29 +30,14 @@
   {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
-{% if page.description %}
-  {% assign seo_description = page.description %}
-{% elsif page.excerpt %}
-  {% assign seo_description = page.excerpt %}
-{% elsif site.description %}
-  {% assign seo_description = site.description %}
-{% endif %}
+{% assign seo_description = page.description | default: page.excerpt | default: site.description %}
 {% if seo_description %}
   {% assign seo_description = seo_description | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
 {% if page.author %}
-  {% if page.author.name %}
-    {% assign seo_author_name = page.author.name %}
-  {% else %}
-    {% assign seo_author_name = page.author %}
-  {% endif %}
-
-  {% if page.author.twitter %}
-    {% assign seo_author_twitter = page.author.twitter %}
-  {% else %}
-    {% assign seo_author_twitter = page.author %}
-  {% endif %}
+  {% assign seo_author_name = page.author.name | default: page.author %}
+  {% assign seo_author_twitter = page.author.twitter | default: page.author %}
 {% endif %}
 {% if seo_author_twitter %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" %}

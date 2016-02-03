@@ -1,3 +1,5 @@
+require 'jekyll-seo-tag/filters'
+
 module Jekyll
   class SeoTag < Liquid::Tag
 
@@ -22,7 +24,7 @@ module Jekyll
     def info
       {
         :registers => context.registers,
-        :filters   => [Jekyll::Filters]
+        :filters   => [Jekyll::Filters, JekyllSeoTag::Filters]
       }
     end
 
