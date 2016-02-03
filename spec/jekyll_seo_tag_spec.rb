@@ -153,9 +153,10 @@ describe Jekyll::SeoTag do
   end
 
   it "outputs the image" do
-    page = page({"image" => "http://foo.invalid/foo.png"})
-    context = context({ :page => page })
-    expected = /<meta property="og:image" content="http:\/\/foo.invalid\/foo.png" \/>/
+    page = page({ "image" => "foo.png" })
+    site = site({ "url" => "http://example.invalid" })
+    context = context({ :page => page, :site => site })
+    expected = %r!<meta property="og:image" content="http://example.invalid/foo.png" />!
     expect(subject.render(context)).to match(expected)
   end
 
