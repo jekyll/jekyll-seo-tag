@@ -36,11 +36,36 @@
 {% endif %}
 
 {% if page.author %}
-  {% assign seo_author_name = page.author.name | default: page.author %}
-  {% assign seo_author_twitter = page.author.twitter | default: page.author %}
+  {% if site.data.authors[page.author] %}
+    {% assign seo_author_name = site.data.authors[page.author].name %}
+    {% assign seo_author_twitter = site.data.authors[page.author].twitter | default: seo_author_name %}
+  {% elsif page.author.name %}
+    {% assign seo_author_name = page.author.name %}
+    {% assign seo_author_twitter = page.author.twitter | default: seo_author_name %}
+  {% elsif page.author.twitter %}
+    {% assign seo_author_twitter = page.author.twitter %}
+    {% assign seo_author_twitter = page.author.twitter %}
+  {% else %}
+    {% assign seo_author_name = page.author %}
+    {% assign seo_author_twitter = page.author %}
+  {% endif %}
+{% elsif site.author %}
+  {% if site.data.authors[site.author] %}
+    {% assign seo_author_name = site.data.authors[site.author].name %}
+    {% assign seo_author_twitter = site.data.authors[site.author].twitter | default: seo_author_name %}
+  {% elsif site.author.name %}
+    {% assign seo_author_name = site.author.name %}
+    {% assign seo_author_twitter = site.author.twitter | default: seo_author_name %}
+  {% else %}
+    {% assign seo_author_name = site.author %}
+    {% assign seo_author_twitter = site.author %}
+  {% endif %}
+{% endif %}
+{% if seo_author_name %}
+  {% assign seo_author_name = seo_author_name | strip_html | escape_once %}
 {% endif %}
 {% if seo_author_twitter %}
-  {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" %}
+  {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" | strip_html | escape_once %}
 {% endif %}
 
 {% if seo_title %}
