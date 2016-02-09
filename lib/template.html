@@ -116,6 +116,9 @@
 {% if site.facebook %}
   <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
   <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+
+{% if site.google_site_verification %}
+  <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
 {% if site.logo %}
