@@ -4,28 +4,32 @@
   {% assign seo_url = site.url | append: site.baseurl %}
 {% endif %}
 {% assign seo_url = seo_url | default: site.github.url %}
-
 {% assign seo_site_title = site.title | default: site.name %}
 
 {% if page.title %}
   {% assign seo_title = page.title %}
   {% assign seo_page_title = page.title %}
+
   {% if seo_site_title %}
     {% assign seo_title = seo_title | append:" - " | append: seo_site_title %}
   {% endif %}
 {% elsif seo_site_title %}
   {% assign seo_title = seo_site_title %}
   {% assign seo_page_title = seo_site_title %}
+
   {% if site.description %}
     {% assign seo_title = seo_title | append:" - " | append: site.description %}
   {% endif %}
 {% endif %}
+
 {% if seo_title %}
   {% assign seo_title = seo_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
+
 {% if seo_site_title %}
   {% assign seo_site_title = seo_site_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
+
 {% if seo_page_title %}
   {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
@@ -39,6 +43,7 @@
   {% assign seo_author_name = page.author.name | default: page.author %}
   {% assign seo_author_twitter = page.author.twitter | default: page.author %}
 {% endif %}
+
 {% if seo_author_twitter %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" | prepend:"@" %}
 {% endif %}
@@ -84,6 +89,7 @@
   {% if page.next.url %}
     <link rel="next" href="{{ page.next.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.next.title | escape }}" />
   {% endif %}
+
   {% if page.previous.url %}
     <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | escape }}" />
   {% endif %}
@@ -105,9 +111,11 @@
   <meta name="twitter:site" content="@{{ site.twitter.username | replace:"@","" }}" />
   <meta name="twitter:title" content="{{ seo_title }}" />
   <meta name="twitter:description" content="{{ seo_description }}" />
+
   {% if page.image %}
     <meta name="twitter:image" content="{{ page.image | escape }}" />
   {% endif %}
+
   {% if seo_author_twitter %}
     <meta name="twitter:creator" content="{{ seo_author_twitter }}" />
   {% endif %}
@@ -116,6 +124,7 @@
 {% if site.facebook %}
   <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
   <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+{% endif %}
 
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
