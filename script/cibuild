@@ -3,4 +3,5 @@
 set -ex
 
 bundle exec rake spec
+bundle exec rubocop -S -D
 bundle exec gem build jekyll-seo-tag.gemspec

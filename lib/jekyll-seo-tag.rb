@@ -2,8 +2,9 @@ require 'jekyll-seo-tag/filters'
 
 module Jekyll
   class SeoTag < Liquid::Tag
-
     attr_accessor :context
+
+    MINIFY_REGEX = /(>\n|[%}]})\s+(<|{[{%])/
 
     def render(context)
       @context = context
@@ -16,15 +17,15 @@ module Jekyll
 
     def payload
       {
-        "page" => context.registers[:page],
-        "site" => context.registers[:site].site_payload["site"]
+        'page' => context.registers[:page],
+        'site' => context.registers[:site].site_payload['site']
       }
     end
 
     def info
       {
-        :registers => context.registers,
-        :filters   => [Jekyll::Filters, JekyllSeoTag::Filters]
+        registers: context.registers,
+        filters: [Jekyll::Filters, JekyllSeoTag::Filters]
       }
     end
 
@@ -33,11 +34,15 @@ module Jekyll
     end
 
     def template_contents
-      @template_contents ||= File.read(template_path).gsub(/(>\n|[%}]})\s+(<|{[{%])/,'\1\2').chomp
+      @template_contents ||= begin
+        File.read(template_path).gsub(MINIFY_REGEX, '\1\2').chomp
+      end
     end
 
     def template_path
-      @template_path ||= File.expand_path "./template.html", File.dirname(__FILE__)
+      @template_path ||= begin
+        File.expand_path './template.html', File.dirname(__FILE__)
+      end
     end
   end
 end
