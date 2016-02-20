@@ -86,7 +86,7 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 
 Author information is used to propagate the `creator` field of Twitter summary cards. This is should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
 
-*TL;DR*: In most cases, put `author: [your Twitter handle]` in the document's front matter, for sites with multiple authors. If you need something more complicated, read on.*
+*TL;DR: In most cases, put `author: [your Twitter handle]` in the document's front matter, for sites with multiple authors. If you need something more complicated, read on.*
 
 There are several ways to convey this author-specific information. Author information is found in the following order of priority:
 
