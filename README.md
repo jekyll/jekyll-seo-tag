@@ -2,7 +2,7 @@
 
 A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content.
 
-[![Gem Version](https://badge.fury.io/rb/jekyll-seo-tag.svg)](https://badge.fury.io/rb/jekyll-seo-tag) [![Build Status](https://travis-ci.org/benbalter/jekyll-seo-tag.svg)](https://travis-ci.org/benbalter/jekyll-seo-tag) 
+[![Gem Version](https://badge.fury.io/rb/jekyll-seo-tag.svg)](https://badge.fury.io/rb/jekyll-seo-tag) [![Build Status](https://travis-ci.org/benbalter/jekyll-seo-tag.svg)](https://travis-ci.org/benbalter/jekyll-seo-tag)
 
 ## What it does
 
@@ -53,17 +53,22 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `twitter:username` - The site's Twitter handle. You'll want to describe it like so:
-
   ```yml
   twitter:
     username: benbalter
   ```
-
+* `facebook:app_id` (A Facebook app ID for Facebook insights), and/or `facebook:publisher` (A Facebook page URL or ID of the publishing entity). You'll want to describe one or both like so:
+   ```yml
+   facebook:
+     app_id: 1234
+     publisher: 1234
+   ```
 * `logo` - Relative URL to a site-wide logo (e.g., `assets/your-company-logo.png`)
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `type` - Either `person` or `organization` (defaults to `person`)
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
+* `google_site_verification` for verifying ownership via Google webmaster tools
 
 The SEO tag will respect the following YAML front matter if included in a post, page, or document:
 
