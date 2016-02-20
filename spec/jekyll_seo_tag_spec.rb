@@ -7,6 +7,8 @@ describe Jekyll::SeoTag do
   let(:post) { make_post }
   let(:context) { make_context(page: page, site: site) }
   let(:output) { subject.render(context) }
+  let(:json) { output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1] }
+  let(:json_data) { JSON.parse(json) }
 
   before do
     Jekyll.logger.log_level = :error
@@ -119,11 +121,8 @@ describe Jekyll::SeoTag do
       let(:site) { make_site('logo' => 'logo.png', 'url' => 'http://example.invalid') }
 
       it 'outputs the logo' do
-        data = output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1]
-        data = JSON.parse(data)
-
-        expect(data['logo']).to eql('http://example.invalid/logo.png')
-        expect(data['url']).to eql('http://example.invalid')
+        expect(json_data['logo']).to eql('http://example.invalid/logo.png')
+        expect(json_data['url']).to eql('http://example.invalid')
       end
     end
 
@@ -132,11 +131,8 @@ describe Jekyll::SeoTag do
 
       it 'outputs the site title meta' do
         expect(output).to match(%r{<meta property="og:site_name" content="Foo" />})
-        data = output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1]
-
-        data = JSON.parse(data)
-        expect(data['name']).to eql('Foo')
-        expect(data['url']).to eql('http://example.invalid')
+        expect(json_data['name']).to eql('Foo')
+        expect(json_data['url']).to eql('http://example.invalid')
       end
     end
   end
@@ -167,12 +163,10 @@ describe Jekyll::SeoTag do
       it 'outputs post meta' do
         expected = %r{<meta property="og:type" content="article" />}
         expect(output).to match(expected)
-        data = output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1]
-        data = JSON.parse(data)
 
-        expect(data['headline']).to eql('post')
-        expect(data['description']).to eql('description')
-        expect(data['image']).to eql('/img.png')
+        expect(json_data['headline']).to eql('post')
+        expect(json_data['description']).to eql('description')
+        expect(json_data['image']).to eql('/img.png')
       end
     end
   end
@@ -210,12 +204,9 @@ describe Jekyll::SeoTag do
     let(:site) { make_site('social' => social_namespace) }
 
     it 'outputs social meta' do
-      data = output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1]
-      data = JSON.parse(data)
-
-      expect(data['@type']).to eql('person')
-      expect(data['name']).to eql('Ben')
-      expect(data['sameAs']).to eql(links)
+      expect(json_data['@type']).to eql('person')
+      expect(json_data['name']).to eql('Ben')
+      expect(json_data['sameAs']).to eql(links)
     end
   end
 
