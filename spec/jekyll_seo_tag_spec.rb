@@ -193,4 +193,9 @@ describe Jekyll::SeoTag do
     status = HTML::Proofer.new(dest_dir, options).run
     expect(status).to eql(true)
   end
+
+  it 'outputs the plugin version' do
+    version = Jekyll::SeoTag::VERSION
+    expect(subject.render(context)).to match(/Jekyll SEO tag v#{version}/i)
+  end
 end
