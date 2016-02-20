@@ -19,13 +19,13 @@ CONFIG_DEFAULTS = {
   'gems'        => ['jekyll-seo-tag']
 }.freeze
 
-def page(options = {})
+def make_page(options = {})
   page = Jekyll::Page.new site, CONFIG_DEFAULTS['source'], '', 'page.md'
   page.data = options
   page
 end
 
-def post(options = {})
+def make_post(options = {})
   filename = File.expand_path('2015-01-01-post.md', CONFIG_DEFAULTS['source'])
   config = { site: site, collection: site.collections['posts'] }
   page = Jekyll::Document.new filename, config
@@ -33,11 +33,11 @@ def post(options = {})
   page
 end
 
-def site(options = {})
+def make_site(options = {})
   config = Jekyll.configuration CONFIG_DEFAULTS.merge(options)
   Jekyll::Site.new(config)
 end
 
-def context(registers = {})
+def make_context(registers = {})
   Liquid::Context.new({}, {}, { site: site, page: page }.merge(registers))
 end
