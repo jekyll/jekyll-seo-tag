@@ -18,8 +18,8 @@ module Jekyll
     def payload
       {
         'seo_tag' => { 'version' => VERSION },
-        'page' => context.registers[:page],
-        'site' => context.registers[:site].site_payload['site']
+        'page'    => context.registers[:page],
+        'site'    => context.registers[:site].site_payload['site']
       }
     end
 
