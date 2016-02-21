@@ -53,11 +53,13 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `twitter:username` - The site's Twitter handle. You'll want to describe it like so:
+
   ```yml
   twitter:
     username: benbalter
   ```
 * `facebook:app_id` (A Facebook app ID for Facebook insights), and/or `facebook:publisher` (A Facebook page URL or ID of the publishing entity). You'll want to describe one or both like so:
+
    ```yml
    facebook:
      app_id: 1234
