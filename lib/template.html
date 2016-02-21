@@ -53,7 +53,7 @@
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
 {% endif %}
 
-{% if seo_title %}
+{% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
 

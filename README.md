@@ -82,6 +82,14 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `image` - Relative URL to an image associated with the post, page, or document (e.g., `assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 
+### Disabling `<title>` output
+
+Jekyll SEO Tag is designed to implement SEO best practices by default. If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
+
+```
+{% seo title=false %}
+```
+
 ### Author information
 
 Author information is used to propagate the `creator` field of Twitter summary cards. This is should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).

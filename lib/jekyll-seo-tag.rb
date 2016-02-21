@@ -6,21 +6,35 @@ module Jekyll
 
     MINIFY_REGEX = /(>\n|[%}]})\s+(<|{[{%])/
 
+    def initialize(_tag_name, text, _tokens)
+      super
+      @text = text
+    end
+
     def render(context)
       @context = context
-      output = template.render!(payload, info)
-
-      output
+      template.render!(payload, info)
     end
 
     private
 
+    def options
+      {
+        'version' => VERSION,
+        'title'   => title?
+      }
+    end
+
     def payload
       {
-        'seo_tag' => { 'version' => VERSION },
         'page'    => context.registers[:page],
-        'site'    => context.registers[:site].site_payload['site']
+        'site'    => context.registers[:site].site_payload['site'],
+        'seo_tag' => options
       }
+    end
+
+    def title?
+      !(@text =~ /title=false/i)
     end
 
     def info

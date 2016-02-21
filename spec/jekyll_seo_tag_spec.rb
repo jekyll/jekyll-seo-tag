@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe Jekyll::SeoTag do
-  subject { Jekyll::SeoTag.parse('seo', nil, nil, nil) }
-  let(:page) { make_page }
-  let(:site) { make_site }
-  let(:post) { make_post }
-  let(:context) { make_context(page: page, site: site) }
-  let(:output) { subject.render(context) }
-  let(:json) { output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1] }
+  let(:page)      { make_page }
+  let(:site)      { make_site }
+  let(:post)      { make_post }
+  let(:context)   { make_context(page: page, site: site) }
+  let(:tag)       { 'seo' }
+  let(:text)      { '' }
+  let(:output)    { Liquid::Template.parse("{% #{tag} #{text} %}").render!(context, {}) }
+  let(:json)      { output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1] }
   let(:json_data) { JSON.parse(json) }
 
   before do
@@ -100,6 +101,7 @@ describe Jekyll::SeoTag do
 
     context 'with site.baseurl' do
       let(:site) { make_site('url' => 'http://example.invalid', 'baseurl' => '/foo') }
+
       it 'uses baseurl to build the seo url' do
         expected = %r{<link rel="canonical" href="http://example.invalid/foo/page.html" />}
         expect(output).to match(expected)
@@ -275,6 +277,14 @@ describe Jekyll::SeoTag do
         expected = %r{<meta property="og:site_name" content="Site Title" />}
         expect(output).to match(expected)
       end
+    end
+  end
+
+  context 'with title=false' do
+    let(:text) { 'title=false' }
+
+    it 'does not output a <title> tag' do
+      expect(output).not_to match(/<title>/)
     end
   end
 
