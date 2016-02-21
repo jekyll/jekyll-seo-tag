@@ -173,7 +173,8 @@ describe Jekyll::SeoTag do
 
   context 'twitter' do
     context 'with site.twitter.username' do
-      let(:site) { make_site('twitter' => { 'username' => 'jekyllrb' }) }
+      let(:site_twitter) { { 'username' => 'jekyllrb' } }
+      let(:site) { make_site('twitter' => site_twitter) }
 
       context 'with page.author as a string' do
         let(:page) { make_page('author' => 'benbalter') }
@@ -185,12 +186,61 @@ describe Jekyll::SeoTag do
           expected = %r{<meta name="twitter:creator" content="@benbalter" />}
           expect(output).to match(expected)
         end
+
+        context 'with an @' do
+          let(:page) { make_page('author' => '@benbalter') }
+
+          it 'outputs the twitter card' do
+            expected = %r{<meta name="twitter:creator" content="@benbalter" />}
+            expect(output).to match(expected)
+          end
+        end
+
+        context 'with site.data.authors' do
+          let(:author_data) { {} }
+          let(:data) { { 'authors' => author_data } }
+          let(:site) { make_site('data' => data, 'twitter' => site_twitter) }
+
+          context 'with the author in site.data.authors' do
+            let(:author_data) { { 'benbalter' => { 'twitter' => 'test' } } }
+            it 'outputs the twitter card' do
+              expected = %r{<meta name="twitter:creator" content="@test" />}
+              expect(output).to match(expected)
+            end
+          end
+
+          context 'without the author in site.data.authors' do
+            it 'outputs the twitter card' do
+              expected = %r{<meta name="twitter:creator" content="@benbalter" />}
+              expect(output).to match(expected)
+            end
+          end
+        end
       end
 
-      context 'with page.author as an object' do
+      context 'with page.author as a hash' do
         let(:page) { make_page('author' => { 'twitter' => '@test' }) }
 
-        it 'supports author data as an object' do
+        it 'supports author data as a hash' do
+          expected = %r{<meta name="twitter:creator" content="@test" />}
+          expect(output).to match(expected)
+        end
+      end
+
+      context 'with page.authors as an array' do
+        let(:page) { make_page('authors' => %w(test foo)) }
+
+        it 'supports author data as an array' do
+          expected = %r{<meta name="twitter:creator" content="@test" />}
+          expect(output).to match(expected)
+        end
+      end
+
+      context 'with site.author as a hash' do
+        let(:author) { { 'twitter' => '@test' } }
+        let(:site) { make_site('author' => author, 'twitter' => site_twitter) }
+
+        it 'supports author data as an hash' do
           expected = %r{<meta name="twitter:creator" content="@test" />}
           expect(output).to match(expected)
         end
