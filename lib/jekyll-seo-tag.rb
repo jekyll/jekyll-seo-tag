@@ -20,7 +20,7 @@ module Jekyll
 
     def options
       {
-        'version' => VERSION,
+        'version' => Jekyll::SeoTag::VERSION,
         'title'   => title?
       }
     end
