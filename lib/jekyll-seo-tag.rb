@@ -21,7 +21,7 @@ module Jekyll
     def options
       {
         'version' => VERSION,
-        "title" => !(@text =~ /title\s*:\s*false/i)
+        'title'   => title?
       }
     end
 
@@ -31,6 +31,10 @@ module Jekyll
         'site'    => context.registers[:site].site_payload['site'],
         'seo_tag' => options
       }
+    end
+
+    def title?
+      !(@text =~ /title=false/i)
     end
 
     def info
