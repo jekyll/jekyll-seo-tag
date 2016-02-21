@@ -124,6 +124,8 @@ There are several ways to convey this author-specific information. Author inform
 
   In the above example, the author `benbalter`'s Twitter handle will be resolved to `@jekyllrb`. This allows you to centralize author information in a single `_data/authors` file for site with many authors that require more than just the author's username.
 
+  *Pro-tip: If `authors` is present in the document's front matter as an array (and `author` is not), the plugin will use the first author listed, as Twitter supports only one author.*
+
 4. An author in the document's front matter (the simplest way), e.g.:
 
   ```yml
