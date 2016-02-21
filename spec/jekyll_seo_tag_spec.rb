@@ -227,6 +227,15 @@ describe Jekyll::SeoTag do
         end
       end
 
+      context 'with page.authors as an array' do
+        let(:page) { make_page('authors' => %w(test foo)) }
+
+        it 'supports author data as an array' do
+          expected = %r{<meta name="twitter:creator" content="@test" />}
+          expect(output).to match(expected)
+        end
+      end
+
       context 'with site.author as a hash' do
         let(:author) { { 'twitter' => '@test' } }
         let(:site) { make_site('author' => author, 'twitter' => site_twitter) }
