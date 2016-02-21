@@ -1,50 +1,59 @@
-<!-- Begin Jekyll SEO tag -->
+<!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
 
 {% if site.url %}
   {% assign seo_url = site.url | append: site.baseurl %}
-{% elsif site.github.url %}
-  {% assign seo_url = site.github.url %}
 {% endif %}
-
-{% if site.title %}
-  {% assign seo_site_title = site.title %}
-{% elsif site.name %}
-  {% assign seo_site_title = site.name %}
-{% endif %}
+{% assign seo_url = seo_url | default: site.github.url %}
+{% assign seo_site_title = site.title | default: site.name %}
 
 {% if page.title %}
   {% assign seo_title = page.title %}
   {% assign seo_page_title = page.title %}
+
   {% if seo_site_title %}
     {% assign seo_title = seo_title | append:" - " | append: seo_site_title %}
   {% endif %}
 {% elsif seo_site_title %}
   {% assign seo_title = seo_site_title %}
   {% assign seo_page_title = seo_site_title %}
+
   {% if site.description %}
     {% assign seo_title = seo_title | append:" - " | append: site.description %}
   {% endif %}
 {% endif %}
+
 {% if seo_title %}
   {% assign seo_title = seo_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
+
 {% if seo_site_title %}
   {% assign seo_site_title = seo_site_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
+
 {% if seo_page_title %}
   {% assign seo_page_title = seo_page_title | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
-{% if page.description %}
-  {% assign seo_description = page.description %}
-{% elsif site.description %}
-  {% assign seo_description = site.description %}
-{% endif %}
+{% assign seo_description = page.description | default: page.excerpt | default: site.description %}
 {% if seo_description %}
   {% assign seo_description = seo_description | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
-{% if seo_title and seo.title %}
+{% assign seo_author = page.author | default: page.authors[0] | default: site.author %}
+{% if seo_author %}
+  {% if seo_author.twitter %}
+    {% assign seo_author_twitter = seo_author.twitter %}
+  {% else %}
+    {% if site.data.authors and site.data.authors[seo_author] %}
+      {% assign seo_author_twitter = site.data.authors[seo_author].twitter  %}
+    {% else %}
+      {% assign seo_author_twitter = seo_author  %}
+    {% endif %}
+  {% endif %}
+  {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
+{% endif %}
+
+{% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
 
@@ -58,7 +67,7 @@
 {% endif %}
 
 {% if seo_url %}
-  <link rel="canonical" href="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" itemprop="url" />
+  <link rel="canonical" href="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" />
   <meta property='og:url' content='{{ page.url | prepend: seo_url | replace:'/index.html','/' }}' />
 {% endif %}
 
@@ -75,17 +84,21 @@
 {% endif %}
 
 {% if page.image %}
-  <meta property="og:image" content="{{ page.image }}" />
+  <meta property="og:image" content="{{ page.image | prepend: "/" | prepend: seo_url | escape }}" />
 {% endif %}
 
 {% if page.date %}
   <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+
   {% if page.next.url %}
     <link rel="next" href="{{ page.next.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.next.title | escape }}" />
   {% endif %}
+
   {% if page.previous.url %}
     <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | escape }}" />
   {% endif %}
+
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
@@ -93,7 +106,7 @@
       "headline": {{ page.title | jsonify }},
       "image": {{ page.image | jsonify }},
       "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "description": {{ page.description | jsonify }}
+      "description": {{ seo_description | jsonify }}
     }
   </script>
 {% endif %}
@@ -103,12 +116,23 @@
   <meta name="twitter:site" content="@{{ site.twitter.username | replace:"@","" }}" />
   <meta name="twitter:title" content="{{ seo_title }}" />
   <meta name="twitter:description" content="{{ seo_description }}" />
+
   {% if page.image %}
     <meta name="twitter:image" content="{{ page.image | escape }}" />
   {% endif %}
-  {% if page.author %}
-    <meta name="twitter:creator" content="@{{ page.author | replace:"@","" }}" />
+
+  {% if seo_author_twitter %}
+    <meta name="twitter:creator" content="@{{ seo_author_twitter }}" />
   {% endif %}
+{% endif %}
+
+{% if site.facebook %}
+  <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
+  <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+{% endif %}
+
+{% if site.google_site_verification %}
+  <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
 {% if site.logo %}

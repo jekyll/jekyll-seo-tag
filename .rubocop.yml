@@ -1,0 +1,10 @@
+Metrics/LineLength:
+  Exclude:
+    - spec/**/*
+    - jekyll-seo-tag.gemspec
+
+Style/Documentation:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
