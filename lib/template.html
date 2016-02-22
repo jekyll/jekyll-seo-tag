@@ -127,8 +127,13 @@
 {% endif %}
 
 {% if site.facebook %}
-  <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
-  <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+  {% if site.facebook.publisher %}
+    <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
+  {% endif %}
+
+  {% if site.facebook.app_id %}
+    <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+  {% endif %}
 {% endif %}
 
 {% if site.google_site_verification %}
