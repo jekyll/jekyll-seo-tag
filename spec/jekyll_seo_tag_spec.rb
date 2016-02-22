@@ -124,7 +124,6 @@ describe Jekyll::SeoTag do
 
       it 'outputs the logo' do
         expect(json_data['logo']).to eql('http://example.invalid/logo.png')
-        expect(json_data['url']).to eql('http://example.invalid')
       end
     end
 
@@ -133,8 +132,6 @@ describe Jekyll::SeoTag do
 
       it 'outputs the site title meta' do
         expect(output).to match(%r{<meta property="og:site_name" content="Foo" />})
-        expect(json_data['name']).to eql('Foo')
-        expect(json_data['url']).to eql('http://example.invalid')
       end
     end
   end
@@ -254,6 +251,15 @@ describe Jekyll::SeoTag do
     let(:links) { ['http://foo.invalid', 'http://bar.invalid'] }
     let(:social_namespace) { { 'name' => 'Ben', 'links' => links } }
     let(:site) { make_site('social' => social_namespace) }
+    let(:meta) do
+      {
+        'permalink'   => '/',
+        'seo'         => {
+          'type' => 'person'
+        }
+      }
+    end
+    let(:page) { make_post(meta) }
 
     it 'outputs social meta' do
       expect(json_data['@type']).to eql('person')
