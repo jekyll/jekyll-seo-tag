@@ -111,10 +111,10 @@ describe Jekyll::SeoTag do
     end
 
     context 'with page.image' do
-      let(:page) { make_page('image' => 'foo.png') }
+      let(:page) { make_page('image' => '/img/foo.png') }
 
       it 'outputs the image' do
-        expected = %r{<meta property="og:image" content="http://example.invalid/foo.png" />}
+        expected = %r{<meta property="og:image" content="http://example.invalid/img/foo.png" />}
         expect(output).to match(expected)
       end
     end
