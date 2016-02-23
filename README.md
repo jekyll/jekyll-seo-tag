@@ -68,7 +68,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
      publisher: 1234
    ```
 
-* `logo` - Relative URL to a site-wide logo (e.g., `assets/your-company-logo.png`)
+* `logo` - Relative URL to a site-wide logo (e.g., `/assets/your-company-logo.png`)
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `type` - Either `person` or `organization` (defaults to `person`)
   * `name` - If the user or organization name differs from the site's name
@@ -79,7 +79,7 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 
 * `title` - The title of the post, page, or document
 * `description` - A short description of the page's content
-* `image` - Relative URL to an image associated with the post, page, or document (e.g., `assets/page-pic.jpg`)
+* `image` - Relative URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 
 ### Disabling `<title>` output
