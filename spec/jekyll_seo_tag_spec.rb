@@ -251,20 +251,39 @@ describe Jekyll::SeoTag do
     let(:links) { ['http://foo.invalid', 'http://bar.invalid'] }
     let(:social_namespace) { { 'name' => 'Ben', 'links' => links } }
     let(:site) { make_site('social' => social_namespace) }
-    let(:meta) do
-      {
-        'permalink'   => '/',
-        'seo'         => {
-          'type' => 'person'
-        }
-      }
-    end
     let(:page) { make_post(meta) }
 
-    it 'outputs social meta' do
-      expect(json_data['@type']).to eql('person')
-      expect(json_data['name']).to eql('Ben')
-      expect(json_data['sameAs']).to eql(links)
+    context 'on homepage' do
+      let(:meta) do
+        {
+          'permalink'   => '/',
+          'seo'         => {
+            'type' => 'person'
+          }
+        }
+      end
+
+      it 'outputs social meta' do
+        expect(json_data['@type']).to eql('person')
+        expect(json_data['name']).to eql('Ben')
+        expect(json_data['sameAs']).to eql(links)
+      end
+    end
+
+    context 'on about page' do
+      let(:meta) { { 'permalink' => '/about/' } }
+
+      it 'outputs sameAs links' do
+        expect(json_data['sameAs']).to eql(links)
+      end
+    end
+
+    context 'on other pages' do
+      let(:meta) { { 'permalink' => '/2/' } }
+
+      it 'does not output sameAs links' do
+        expect(json_data['sameAs']).to be_nil
+      end
     end
   end
 
