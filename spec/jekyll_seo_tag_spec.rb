@@ -247,6 +247,16 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
         end
       end
+
+      context 'with page.image' do
+        let(:site) { make_site('twitter' => site_twitter, 'url' => 'http://example.invalid') }
+        let(:page) { make_page('image' => 'foo.png') }
+
+        it 'outputs the image' do
+          expected = %r{<meta name="twitter:image" content="http://example.invalid/foo.png" />}
+          expect(output).to match(expected)
+        end
+      end
     end
   end
 
