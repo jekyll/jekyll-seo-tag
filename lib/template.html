@@ -118,7 +118,7 @@
   <meta name="twitter:description" content="{{ seo_description }}" />
 
   {% if page.image %}
-    <meta name="twitter:image" content="{{ page.image | prepend: "/" | prepend: seo_url | escape }}" />
+    <meta name="twitter:image" content="{{ page.image | prepend: seo_url | escape }}" />
   {% endif %}
 
   {% if seo_author_twitter %}
