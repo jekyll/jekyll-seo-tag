@@ -1,5 +1,9 @@
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
 
+{% if page.url == "/" or page.url == "/about/" %}
+  {% assign seo_homepage_or_about = true %}
+{% endif %}
+
 {% if site.url %}
   {% assign seo_url = site.url | append: site.baseurl %}
 {% endif %}
@@ -20,6 +24,17 @@
   {% if site.description %}
     {% assign seo_title = seo_title | append:" - " | append: site.description %}
   {% endif %}
+{% endif %}
+
+{% if page.seo and page.seo.name %}
+    {% assign seo_name = page.seo.name %}
+{% elsif seo_homepage_or_about and site.social and site.social.name %}
+    {% assign seo_name = site.social.name %}
+{% elsif seo_homepage_or_about and seo_site_title %}
+    {% assign seo_name = seo_site_title %}
+{% endif %}
+{% if seo_name %}
+  {% assign seo_name = seo_name | markdownify | strip_html | strip_newlines | escape_once %}
 {% endif %}
 
 {% if seo_title %}
@@ -53,6 +68,22 @@
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
 {% endif %}
 
+{% if page.seo and page.seo.type %}
+    {% assign seo_type = page.seo.type %}
+{% elsif seo_homepage_or_about %}
+    {% assign seo_type = "WebSite" %}
+{% elsif page.date %}
+    {% assign seo_type = "BlogPosting" %}
+{% else %}
+    {% assign seo_type = "WebPage" %}
+{% endif %}
+
+{% if page.seo and page.seo.links %}
+    {% assign seo_links = page.seo.links %}
+{% elsif seo_homepage_or_about and site.social and site.social.links %}
+    {% assign seo_links = site.social.links %}
+{% endif %}
+
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
@@ -73,14 +104,6 @@
 
 {% if seo_site_title %}
   <meta property="og:site_name" content="{{ seo_site_title }}" />
-  <script type="application/ld+json">
-    {
-      "@context" : "http://schema.org",
-      "@type" : "WebSite",
-      "name" : {{ seo_site_title | jsonify }},
-      "url" : {{ seo_url | jsonify }}
-    }
-  </script>
 {% endif %}
 
 {% if page.image %}
@@ -98,17 +121,6 @@
   {% if page.previous.url %}
     <link rel="prev" href="{{ page.previous.url | prepend: seo_url | replace:'/index.html','/' }}" title="{{ page.previous.title | escape }}" />
   {% endif %}
-
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "NewsArticle",
-      "headline": {{ page.title | jsonify }},
-      "image": {{ page.image | jsonify }},
-      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-      "description": {{ seo_description | jsonify }}
-    }
-  </script>
 {% endif %}
 
 {% if site.twitter %}
@@ -140,27 +152,44 @@
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
-{% if site.logo %}
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "Organization",
-      "url": {{ seo_url | jsonify }},
-      "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }}
-    }
-  </script>
+<script type="application/ld+json">
+  {
+    "@context" : "http://schema.org",
+
+{% if seo_type %}
+    "@type" : {{ seo_type | jsonify }},
 {% endif %}
 
-{% if site.social %}
-  <script type="application/ld+json">
-    {
-      "@context" : "http://schema.org",
-      "@type" : "{% if site.social.type %}{{ site.social.type }}{% else %}person{% endif %}",
-      "name" : "{% if site.social.name %}{{ site.social.name }}{% else %}{{ seo_site_title }}{% endif %}",
-      "url" : {{ seo_url | jsonify }},
-      "sameAs" : {{ site.social.links | jsonify }}
-    }
-  </script>
+{% if seo_name %}
+    "name" : {{ seo_name | jsonify }},
 {% endif %}
+
+{% if seo_page_title %}
+    "headline": {{ seo_page_title | jsonify }},
+{% endif %}
+
+{% if page.image %}
+    "image": {{ page.image | jsonify }},
+{% endif %}
+
+{% if page.date %}
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+{% endif %}
+
+{% if seo_description %}
+    "description": {{ seo_description | jsonify }},
+{% endif %}
+
+{% if site.logo %}
+    "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }},
+{% endif %}
+
+{% if seo_links %}
+    "sameAs" : {{ seo_links | jsonify }},
+{% endif %}
+
+    "url" : "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
+  }
+</script>
 
 <!-- End Jekyll SEO tag -->

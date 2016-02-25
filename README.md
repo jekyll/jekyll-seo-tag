@@ -70,7 +70,6 @@ The SEO tag will respect any of the following if included in your site's `_confi
 
 * `logo` - Relative URL to a site-wide logo (e.g., `/assets/your-company-logo.png`)
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
-  * `type` - Either `person` or `organization` (defaults to `person`)
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
 * `google_site_verification` for verifying ownership via Google webmaster tools
@@ -145,3 +144,12 @@ There are several ways to convey this author-specific information. Author inform
   ```yml
   author: benbalter
   ```
+
+### Customizing JSON-LD output
+
+The following options can be set for any particular page. While the default options are meant to serve most users in the most common circumstances, there may be situations where more precise control is necessary.
+
+* `seo`
+  * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
+  * `type` - The type of things that the page represents. This must be a [Schema.org type](http://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](http://schema.org/BlogPosting), [`NewsArticle`](http://schema.org/NewsArticle), [`Person`](http://schema.org/Person), [`Organization`](http://schema.org/Organization), etc.
+  * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
