@@ -133,6 +133,18 @@ describe Jekyll::SeoTag do
       it 'outputs the site title meta' do
         expect(output).to match(%r{<meta property="og:site_name" content="Foo" />})
       end
+
+      it 'minifies the output' do
+        expected = <<-EOS
+<!-- Begin Jekyll SEO tag v1.3.1 -->
+<title>Foo</title>
+<meta property="og:title" content="Foo" />
+<link rel="canonical" href="http://example.invalid/page.html" />
+<meta property='og:url' content='http://example.invalid/page.html' />
+<meta property="og:site_name" content="Foo" />
+EOS
+        expect(output).to match(expected)
+      end
     end
   end
 
@@ -166,6 +178,16 @@ describe Jekyll::SeoTag do
         expect(json_data['headline']).to eql('post')
         expect(json_data['description']).to eql('description')
         expect(json_data['image']).to eql('/img.png')
+      end
+
+      it 'minifies JSON-LD' do
+        expected = <<-EOS
+  {
+    "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "headline": "post",
+EOS
+        expect(output).to match(expected)
       end
     end
   end

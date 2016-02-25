@@ -5,7 +5,7 @@ module Jekyll
   class SeoTag < Liquid::Tag
     attr_accessor :context
 
-    MINIFY_REGEX = /(>\n|[%}]})\s+(<|{[{%])/
+    MINIFY_REGEX = /([>,]\n|[%}]})\s+?(<|{[{%]|[ ]+\")/
 
     def initialize(_tag_name, text, _tokens)
       super
