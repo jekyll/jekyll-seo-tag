@@ -1,4 +1,5 @@
 require 'jekyll-seo-tag/filters'
+require 'jekyll-seo-tag/version'
 
 module Jekyll
   class SeoTag < Liquid::Tag
