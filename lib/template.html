@@ -169,7 +169,7 @@
 {% endif %}
 
 {% if page.image %}
-    "image": {{ page.image | jsonify }},
+    "image": {{ page.image | prepend: seo_url | jsonify }},
 {% endif %}
 
 {% if page.date %}
@@ -181,7 +181,7 @@
 {% endif %}
 
 {% if site.logo %}
-    "logo": {{ site.logo | prepend: "/" | prepend: seo_url | jsonify }},
+    "logo": {{ site.logo | prepend: seo_url | jsonify }},
 {% endif %}
 
 {% if seo_links %}
