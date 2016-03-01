@@ -94,12 +94,12 @@
 
 {% if seo_description %}
   <meta name="description" content="{{ seo_description }}" />
-  <meta property='og:description' content="{{ seo_description }}" />
+  <meta property="og:description" content="{{ seo_description }}" />
 {% endif %}
 
 {% if seo_url %}
   <link rel="canonical" href="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" />
-  <meta property='og:url' content='{{ page.url | prepend: seo_url | replace:'/index.html','/' }}' />
+  <meta property="og:url" content="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" />
 {% endif %}
 
 {% if seo_site_title %}
