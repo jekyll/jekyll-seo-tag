@@ -42,7 +42,7 @@ Jekyll SEO tag isn't designed to accommodate every possible use case. It should 
 3. Add the following right before `</head>` in your site's template(s):
 
   ```liquid
-    {% seo %}
+  {% seo %}
   ```
 
 ## Usage
@@ -60,12 +60,12 @@ The SEO tag will respect any of the following if included in your site's `_confi
     username: benbalter
   ```
 
-* `facebook:app_id` (A Facebook app ID for Facebook insights), and/or `facebook:publisher` (A Facebook page URL or ID of the publishing entity). You'll want to describe one or both like so:
+* `facebook:app_id` (a Facebook app ID for Facebook insights), and/or `facebook:publisher` (a Facebook page URL or ID of the publishing entity). You'll want to describe one or both like so:
 
    ```yml
-   facebook:
-     app_id: 1234
-     publisher: 1234
+  facebook:
+    app_id: 1234
+    publisher: 1234
    ```
 
 * `logo` - Relative URL to a site-wide logo (e.g., `/assets/your-company-logo.png`)
