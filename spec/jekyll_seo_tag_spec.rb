@@ -55,7 +55,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the page description' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -64,7 +64,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the page excerpt when no page description exists' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -73,7 +73,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the site description when no page description nor excerpt exist' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -83,7 +83,7 @@ describe Jekyll::SeoTag do
     it 'uses the site url to build the seo url' do
       expected = %r{<link rel="canonical" href="http://example.invalid/page.html" />}
       expect(output).to match(expected)
-      expected = %r{<meta property='og:url' content='http://example.invalid/page.html' />}
+      expected = %r{<meta property="og:url" content="http://example.invalid/page.html" />}
       expect(output).to match(expected)
     end
 
@@ -94,7 +94,7 @@ describe Jekyll::SeoTag do
         expected = %r{<link rel="canonical" href="http://example.invalid/page/" />}
         expect(output).to match(expected)
 
-        expected = %r{<meta property='og:url' content='http://example.invalid/page/' />}
+        expected = %r{<meta property="og:url" content="http://example.invalid/page/" />}
         expect(output).to match(expected)
       end
     end
@@ -105,7 +105,7 @@ describe Jekyll::SeoTag do
       it 'uses baseurl to build the seo url' do
         expected = %r{<link rel="canonical" href="http://example.invalid/foo/page.html" />}
         expect(output).to match(expected)
-        expected = %r{<meta property='og:url' content='http://example.invalid/foo/page.html' />}
+        expected = %r{<meta property="og:url" content="http://example.invalid/foo/page.html" />}
         expect(output).to match(expected)
       end
     end
@@ -140,7 +140,7 @@ describe Jekyll::SeoTag do
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
 <link rel="canonical" href="http://example.invalid/page.html" />
-<meta property='og:url' content='http://example.invalid/page.html' />
+<meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
 EOS
         expect(output).to match(expected)
@@ -155,7 +155,7 @@ EOS
     it 'uses site.github.url to build the seo url' do
       expected = %r{<link rel="canonical" href="http://example.invalid/page.html" \/>}
       expect(output).to match(expected)
-      expected = %r{<meta property='og:url' content='http://example.invalid/page.html' />}
+      expected = %r{<meta property="og:url" content="http://example.invalid/page.html" />}
       expect(output).to match(expected)
     end
   end
