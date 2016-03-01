@@ -154,14 +154,14 @@
 
 <script type="application/ld+json">
   {
-    "@context" : "http://schema.org",
+    "@context": "http://schema.org",
 
 {% if seo_type %}
-    "@type" : {{ seo_type | jsonify }},
+    "@type": {{ seo_type | jsonify }},
 {% endif %}
 
 {% if seo_name %}
-    "name" : {{ seo_name | jsonify }},
+    "name": {{ seo_name | jsonify }},
 {% endif %}
 
 {% if seo_page_title %}
@@ -185,10 +185,10 @@
 {% endif %}
 
 {% if seo_links %}
-    "sameAs" : {{ seo_links | jsonify }},
+    "sameAs": {{ seo_links | jsonify }},
 {% endif %}
 
-    "url" : "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
+    "url": "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
   }
 </script>
 
