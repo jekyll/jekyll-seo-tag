@@ -55,7 +55,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the page description' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -64,7 +64,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the page excerpt when no page description exists' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -73,7 +73,7 @@ describe Jekyll::SeoTag do
 
     it 'uses the site description when no page description nor excerpt exist' do
       expect(output).to match(%r{<meta name="description" content="foo" />})
-      expect(output).to match(%r{<meta property='og:description' content="foo" />})
+      expect(output).to match(%r{<meta property="og:description" content="foo" />})
     end
   end
 
@@ -83,7 +83,7 @@ describe Jekyll::SeoTag do
     it 'uses the site url to build the seo url' do
       expected = %r{<link rel="canonical" href="http://example.invalid/page.html" />}
       expect(output).to match(expected)
-      expected = %r{<meta property='og:url' content='http://example.invalid/page.html' />}
+      expected = %r{<meta property="og:url" content="http://example.invalid/page.html" />}
       expect(output).to match(expected)
     end
 
@@ -94,7 +94,7 @@ describe Jekyll::SeoTag do
         expected = %r{<link rel="canonical" href="http://example.invalid/page/" />}
         expect(output).to match(expected)
 
-        expected = %r{<meta property='og:url' content='http://example.invalid/page/' />}
+        expected = %r{<meta property="og:url" content="http://example.invalid/page/" />}
         expect(output).to match(expected)
       end
     end
@@ -105,7 +105,7 @@ describe Jekyll::SeoTag do
       it 'uses baseurl to build the seo url' do
         expected = %r{<link rel="canonical" href="http://example.invalid/foo/page.html" />}
         expect(output).to match(expected)
-        expected = %r{<meta property='og:url' content='http://example.invalid/foo/page.html' />}
+        expected = %r{<meta property="og:url" content="http://example.invalid/foo/page.html" />}
         expect(output).to match(expected)
       end
     end
@@ -135,12 +135,13 @@ describe Jekyll::SeoTag do
       end
 
       it 'minifies the output' do
+        version = Jekyll::SeoTag::VERSION
         expected = <<-EOS
-<!-- Begin Jekyll SEO tag v1.3.1 -->
+<!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
 <link rel="canonical" href="http://example.invalid/page.html" />
-<meta property='og:url' content='http://example.invalid/page.html' />
+<meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
 EOS
         expect(output).to match(expected)
@@ -155,7 +156,7 @@ EOS
     it 'uses site.github.url to build the seo url' do
       expected = %r{<link rel="canonical" href="http://example.invalid/page.html" \/>}
       expect(output).to match(expected)
-      expected = %r{<meta property='og:url' content='http://example.invalid/page.html' />}
+      expected = %r{<meta property="og:url" content="http://example.invalid/page.html" />}
       expect(output).to match(expected)
     end
   end
@@ -184,8 +185,8 @@ EOS
       it 'minifies JSON-LD' do
         expected = <<-EOS
   {
-    "@context" : "http://schema.org",
-    "@type" : "BlogPosting",
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
     "headline": "post",
 EOS
         expect(output).to match(expected)
@@ -264,16 +265,6 @@ EOS
 
         it 'supports author data as an hash' do
           expected = %r{<meta name="twitter:creator" content="@test" />}
-          expect(output).to match(expected)
-        end
-      end
-
-      context 'with page.image' do
-        let(:site) { make_site('twitter' => site_twitter, 'url' => 'http://example.invalid') }
-        let(:page) { make_page('image' => '/img/foo.png') }
-
-        it 'outputs the image' do
-          expected = %r{<meta name="twitter:image" content="http://example.invalid/img/foo.png" />}
           expect(output).to match(expected)
         end
       end
