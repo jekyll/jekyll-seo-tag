@@ -266,16 +266,6 @@ EOS
           expect(output).to match(expected)
         end
       end
-
-      context 'with page.image' do
-        let(:site) { make_site('twitter' => site_twitter, 'url' => 'http://example.invalid') }
-        let(:page) { make_page('image' => '/img/foo.png') }
-
-        it 'outputs the image' do
-          expected = %r{<meta name="twitter:image" content="http://example.invalid/img/foo.png" />}
-          expect(output).to match(expected)
-        end
-      end
     end
   end
 
