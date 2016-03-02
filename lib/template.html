@@ -182,7 +182,7 @@
     "sameAs": {{ seo_links | jsonify }},
 {% endif %}
 
-    "url": "{{ page.url | prepend: seo_url | replace:'/index.html','/' }}"
+    "url": {{ page.url | prepend: seo_url | replace:'/index.html','/' | jsonify }}
   }
 </script>
 
