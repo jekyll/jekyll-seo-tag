@@ -135,8 +135,9 @@ describe Jekyll::SeoTag do
       end
 
       it 'minifies the output' do
+        version = Jekyll::SeoTag::VERSION
         expected = <<-EOS
-<!-- Begin Jekyll SEO tag v1.3.1 -->
+<!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
 <link rel="canonical" href="http://example.invalid/page.html" />
