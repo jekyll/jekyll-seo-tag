@@ -88,7 +88,7 @@
   <title>{{ seo_title }}</title>
 {% endif %}
 
-{% if seo_title %}
+{% if seo_page_title %}
   <meta property="og:title" content="{{ seo_page_title }}" />
 {% endif %}
 
@@ -126,12 +126,6 @@
 {% if site.twitter %}
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@{{ site.twitter.username | replace:"@","" }}" />
-  <meta name="twitter:title" content="{{ seo_title }}" />
-  <meta name="twitter:description" content="{{ seo_description }}" />
-
-  {% if page.image %}
-    <meta name="twitter:image" content="{{ page.image | prepend: seo_url | escape }}" />
-  {% endif %}
 
   {% if seo_author_twitter %}
     <meta name="twitter:creator" content="@{{ seo_author_twitter }}" />
