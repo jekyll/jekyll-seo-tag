@@ -84,6 +84,14 @@
     {% assign seo_links = site.social.links %}
 {% endif %}
 
+{% if site.logo %}
+    {% assign seo_site_logo = site.logo | prepend: seo_url | escape %}
+{% endif %}
+
+{% if page.image %}
+    {% assign seo_page_image = page.image | prepend: seo_url | escape %}
+{% endif %}
+
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
@@ -106,8 +114,8 @@
   <meta property="og:site_name" content="{{ seo_site_title }}" />
 {% endif %}
 
-{% if page.image %}
-  <meta property="og:image" content="{{ page.image | prepend: seo_url | escape }}" />
+{% if seo_page_image %}
+  <meta property="og:image" content="{{ seo_page_image }}" />
 {% endif %}
 
 {% if page.date %}
@@ -162,8 +170,8 @@
     "headline": {{ seo_page_title | jsonify }},
 {% endif %}
 
-{% if page.image %}
-    "image": {{ page.image | prepend: seo_url | jsonify }},
+{% if seo_page_image %}
+    "image": {{ seo_page_image | jsonify }},
 {% endif %}
 
 {% if page.date %}
@@ -174,8 +182,8 @@
     "description": {{ seo_description | jsonify }},
 {% endif %}
 
-{% if site.logo %}
-    "logo": {{ site.logo | prepend: seo_url | jsonify }},
+{% if seo_site_logo %}
+    "logo": {{ seo_site_logo | jsonify }},
 {% endif %}
 
 {% if seo_links %}
