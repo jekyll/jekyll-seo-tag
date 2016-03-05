@@ -203,6 +203,9 @@ EOS
         let(:page) { make_page('author' => 'benbalter') }
 
         it 'outputs twitter card meta' do
+          expected = %r{<meta name="twitter:card" content="summary" />}
+          expect(output).to match(expected)
+
           expected = %r{<meta name="twitter:site" content="@jekyllrb" />}
           expect(output).to match(expected)
 
@@ -238,6 +241,15 @@ EOS
               expect(output).to match(expected)
             end
           end
+        end
+      end
+
+      context 'with page.image' do
+        let(:page) { make_page('image' => '/img/foo.png') }
+
+        it 'outputs summary card with large image' do
+          expected = %r{<meta name="twitter:card" content="summary_large_image" />}
+          expect(output).to match(expected)
         end
       end
 
