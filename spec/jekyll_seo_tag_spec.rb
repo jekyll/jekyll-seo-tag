@@ -120,7 +120,7 @@ describe Jekyll::SeoTag do
     end
 
     context 'with site.logo' do
-      let(:site) { make_site('logo' => 'logo.png', 'url' => 'http://example.invalid') }
+      let(:site) { make_site('logo' => '/logo.png', 'url' => 'http://example.invalid') }
 
       it 'outputs the logo' do
         expect(json_data['logo']).to eql('http://example.invalid/logo.png')
@@ -163,6 +163,7 @@ EOS
 
   context 'posts' do
     context 'with post meta' do
+      let(:site) { make_site('url' => 'http://example.invalid') }
       let(:meta) do
         {
           'title'       => 'post',
@@ -178,7 +179,7 @@ EOS
 
         expect(json_data['headline']).to eql('post')
         expect(json_data['description']).to eql('description')
-        expect(json_data['image']).to eql('/img.png')
+        expect(json_data['image']).to eql('http://example.invalid/img.png')
       end
 
       it 'minifies JSON-LD' do
