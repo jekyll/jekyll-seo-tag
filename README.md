@@ -81,9 +81,13 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `image` - Relative URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 
+## Advanced usage
+
+Jekyll SEO Tag is designed to implement SEO best practices by default and to be the right fit for most sites right out of the box. If for some reason, you need more control over the output, read on:
+
 ### Disabling `<title>` output
 
-Jekyll SEO Tag is designed to implement SEO best practices by default. If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
+If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
 
 ```
 {% seo title=false %}
@@ -153,3 +157,23 @@ The following options can be set for any particular page. While the default opti
   * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
   * `type` - The type of things that the page represents. This must be a [Schema.org type](http://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](http://schema.org/BlogPosting), [`NewsArticle`](http://schema.org/NewsArticle), [`Person`](http://schema.org/Person), [`Organization`](http://schema.org/Organization), etc.
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
+
+### Customizing image output
+
+For most users, setting `image: [path-to-image]` on a per-page basis should be enough. If you need more control over how images are represented, the `image` property can also be an object, with the following options:
+
+* `path` - The relative path to the image. Same as `image: [path-to-image]`
+* `twitter` - The relative path to a Twitter-specific image.
+* `facebook` - The relative path to a Facebook-specific image.
+* `height` - The height of the Facebook (`og:image`) image
+* `width` - The width of the Facebook (`og:image`) image
+
+You can use any of the above, optional properties, like so:
+
+```yml
+image:
+  twitter: /img/twitter.png
+  facebook: /img/facebook.png
+  height: 100
+  width: 100
+```
