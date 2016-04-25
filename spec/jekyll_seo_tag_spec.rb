@@ -110,12 +110,21 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context 'with page.image as a string' do
+    context 'with relative page.image as a string' do
       let(:page) { make_page('image' => '/img/foo.png') }
 
       it 'outputs the image' do
-        expected = %r{<meta property="og:image" content="http://example.invalid/img/foo.png" />}
-        expect(output).to match(expected)
+        expected = '<meta property="og:image" content="http://example.invalid/img/foo.png" />'
+        expect(output).to include(expected)
+      end
+    end
+
+    context 'with absolute page.image' do
+      let(:page) { make_page('image' => 'http://cdn.example.invalid/img/foo.png') }
+
+      it 'outputs the image' do
+        expected = '<meta property="og:image" content="http://cdn.example.invalid/img/foo.png" />'
+        expect(output).to include(expected)
       end
     end
 
@@ -165,6 +174,14 @@ describe Jekyll::SeoTag do
 
       it 'outputs the logo' do
         expect(json_data['logo']).to eql('http://example.invalid/logo.png')
+      end
+    end
+
+    context 'with absolute site.logo' do
+      let(:site) { make_site('logo' => 'http://cdn.example.invalid/logo.png', 'url' => 'http://example.invalid') }
+
+      it 'outputs the logo' do
+        expect(json_data['logo']).to eql('http://cdn.example.invalid/logo.png')
       end
     end
 
