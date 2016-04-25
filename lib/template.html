@@ -93,8 +93,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook |
-default: page.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | prepend: seo_url %}
   {% endunless %}
