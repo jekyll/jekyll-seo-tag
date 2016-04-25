@@ -121,7 +121,7 @@ describe Jekyll::SeoTag do
 
     context 'with page.image as an object' do
       context 'when given a path' do
-        let(:page) { make_page('image' => { 'path' => '/img/foo.png' } ) }
+        let(:page) { make_page('image' => { 'path' => '/img/foo.png' }) }
 
         it 'outputs the image' do
           expected = %r{<meta property="og:image" content="http://example.invalid/img/foo.png" />}
@@ -129,8 +129,8 @@ describe Jekyll::SeoTag do
         end
       end
 
-      context "when given a facebook image" do
-        let(:page) { make_page('image' => { 'facebook' => '/img/facebook.png' } ) }
+      context 'when given a facebook image' do
+        let(:page) { make_page('image' => { 'facebook' => '/img/facebook.png' }) }
 
         it 'outputs the image' do
           expected = %r{<meta property="og:image" content="http://example.invalid/img/facebook.png" />}
@@ -138,8 +138,8 @@ describe Jekyll::SeoTag do
         end
       end
 
-      context "when given a twitter image" do
-        let(:page) { make_page('image' => { 'twitter' => '/img/twitter.png' } ) }
+      context 'when given a twitter image' do
+        let(:page) { make_page('image' => { 'twitter' => '/img/twitter.png' }) }
 
         it 'outputs the image' do
           expected = %r{<meta name="twitter:image" content="http://example.invalid/img/twitter.png" />}
@@ -147,7 +147,7 @@ describe Jekyll::SeoTag do
         end
       end
 
-      context "when given the image height and width" do
+      context 'when given the image height and width' do
         let(:image) { { 'facebook' => '/img/foo.png', 'height' => 1, 'width' => 2 } }
         let(:page) { make_page('image' => image) }
 
