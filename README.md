@@ -60,8 +60,12 @@ The SEO tag will respect any of the following if included in your site's `_confi
     username: benbalter
   ```
 
-* `facebook:app_id` (a Facebook app ID for Facebook insights), `facebook:publisher` (a Facebook page URL or ID of the publishing entity) and/or `facebook:admins`
-  (a Facebook user ID for domain insights linked to a personal account). You'll want to describe one or both like so:
+* `facebook` - The following properties are available:
+  * `facebook:app_id` - a Facebook app ID for Facebook insights
+  * `facebook:publisher` - a Facebook page URL or ID of the publishing entity
+  * `facebook:admins` - a Facebook user ID for domain insights linked to a personal account
+
+  You'll want to describe one or more like so:
 
    ```yml
   facebook:
