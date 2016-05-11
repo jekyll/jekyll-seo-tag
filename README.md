@@ -11,7 +11,7 @@ Jekyll SEO Tag adds the following meta tags to your site:
 * Pages title (with site title appended when available)
 * Page description
 * Canonical URL
-* Next and previous URLs for posts
+* Next and previous URLs on paginated pages
 * [JSON-LD Site and post metadata](https://developers.google.com/structured-data/) for richer indexing
 * [Open graph](http://ogp.me/) title, description, site title, and URL (for Facebook, LinkedIn, etc.)
 * [Twitter summary card](https://dev.twitter.com/cards/overview) metadata
