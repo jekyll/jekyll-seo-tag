@@ -164,6 +164,10 @@
 {% endif %}
 
 {% if site.facebook %}
+  {% if site.facebook.admins %}
+    <meta property="fb:admins" content="{{ site.facebook.admins }}" />
+  {% endif %}
+
   {% if site.facebook.publisher %}
     <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
   {% endif %}
