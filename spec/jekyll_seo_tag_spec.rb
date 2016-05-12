@@ -252,6 +252,33 @@ EOS
     end
   end
 
+  context 'facebook' do
+    let(:site_facebook) do
+      {
+        'admins' => 'jekyllrb-fb-admins',
+        'app_id' => 'jekyllrb-fb-app_id',
+        'publisher' => 'jekyllrb-fb-publisher'
+      }
+    end
+
+    let(:site) { make_site('facebook' => site_facebook) }
+
+    it 'outputs facebook admins meta' do
+      expected = %r{<meta property="fb:admins" content="jekyllrb-fb-admins" />}
+      expect(output).to match(expected)
+    end
+
+    it 'outputs facebook app ID meta' do
+      expected = %r{<meta property="fb:app_id" content="jekyllrb-fb-app_id" />}
+      expect(output).to match(expected)
+    end
+
+    it 'outputs facebook article publisher meta' do
+      expected = %r{<meta property="article:publisher" content="jekyllrb-fb-publisher" />}
+      expect(output).to match(expected)
+    end
+  end
+
   context 'twitter' do
     context 'with site.twitter.username' do
       let(:site_twitter) { { 'username' => 'jekyllrb' } }
