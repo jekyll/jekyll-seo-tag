@@ -10,6 +10,7 @@ describe Jekyll::SeoTag do
   let(:output)    { Liquid::Template.parse("{% #{tag} #{text} %}").render!(context, {}) }
   let(:json)      { output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1] }
   let(:json_data) { JSON.parse(json) }
+  let(:paginator) { { 'previous_page' => true, 'previous_page_path' => 'foo', 'next_page' => true, 'next_page_path' => 'bar' } }
 
   before do
     Jekyll.logger.log_level = :error
@@ -441,6 +442,15 @@ EOS
 
     it 'does not output a <title> tag' do
       expect(output).not_to match(/<title>/)
+    end
+  end
+
+  context 'with pagination' do
+    let(:context) { make_context(environments: { 'paginator' => paginator }) }
+
+    it 'outputs pagination links' do
+      expect(output).to match(%r{<link rel="prev" href="foo">})
+      expect(output).to match(%r{<link rel="next" href="bar">})
     end
   end
 end
