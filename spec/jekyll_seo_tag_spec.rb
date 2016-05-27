@@ -446,11 +446,11 @@ EOS
   end
 
   context 'with pagination' do
-    let(:context) { make_context({}, { 'paginator' => paginator }) }
+    let(:context) { make_context({}, 'paginator' => paginator) }
 
     it 'outputs pagination links' do
-      expect(output).to match(%r{<link rel="prev" href="foo">})
-      expect(output).to match(%r{<link rel="next" href="bar">})
+      expect(output).to match(/<link rel="prev" href="foo">/)
+      expect(output).to match(/<link rel="next" href="bar">/)
     end
   end
 end
