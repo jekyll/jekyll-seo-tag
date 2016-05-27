@@ -24,6 +24,16 @@ describe Jekyll::SeoTag do
     expect(output).to match(/Jekyll SEO tag v#{version}/i)
   end
 
+  it 'outputs valid HTML' do
+    site.process
+    options = {
+      check_html: true,
+      checks_to_ignore: %w(ScriptCheck LinkCheck ImageCheck)
+    }
+    status = HTML::Proofer.new(dest_dir, options).run
+    expect(status).to eql(true)
+  end
+
   context 'with page.title' do
     let(:page) { make_page('title' => 'foo') }
 
@@ -432,15 +442,5 @@ EOS
     it 'does not output a <title> tag' do
       expect(output).not_to match(/<title>/)
     end
-  end
-
-  it 'outputs valid HTML' do
-    site.process
-    options = {
-      check_html: true,
-      checks_to_ignore: %w(ScriptCheck LinkCheck ImageCheck)
-    }
-    status = HTML::Proofer.new(dest_dir, options).run
-    expect(status).to eql(true)
   end
 end
