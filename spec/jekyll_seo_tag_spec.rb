@@ -10,6 +10,7 @@ describe Jekyll::SeoTag do
   let(:output)    { Liquid::Template.parse("{% #{tag} #{text} %}").render!(context, {}) }
   let(:json)      { output.match(%r{<script type=\"application/ld\+json\">(.*)</script>}m)[1] }
   let(:json_data) { JSON.parse(json) }
+  let(:paginator) { { 'previous_page' => true, 'previous_page_path' => 'foo', 'next_page' => true, 'next_page_path' => 'bar' } }
 
   before do
     Jekyll.logger.log_level = :error
@@ -22,6 +23,16 @@ describe Jekyll::SeoTag do
   it 'outputs the plugin version' do
     version = Jekyll::SeoTag::VERSION
     expect(output).to match(/Jekyll SEO tag v#{version}/i)
+  end
+
+  it 'outputs valid HTML' do
+    site.process
+    options = {
+      check_html: true,
+      checks_to_ignore: %w(ScriptCheck LinkCheck ImageCheck)
+    }
+    status = HTML::Proofer.new(dest_dir, options).run
+    expect(status).to eql(true)
   end
 
   context 'with page.title' do
@@ -434,13 +445,12 @@ EOS
     end
   end
 
-  it 'outputs valid HTML' do
-    site.process
-    options = {
-      check_html: true,
-      checks_to_ignore: %w(ScriptCheck LinkCheck ImageCheck)
-    }
-    status = HTML::Proofer.new(dest_dir, options).run
-    expect(status).to eql(true)
+  context 'with pagination' do
+    let(:context) { make_context({}, 'paginator' => paginator) }
+
+    it 'outputs pagination links' do
+      expect(output).to match(/<link rel="prev" href="foo">/)
+      expect(output).to match(/<link rel="next" href="bar">/)
+    end
   end
 end

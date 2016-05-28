@@ -38,6 +38,6 @@ def make_site(options = {})
   Jekyll::Site.new(config)
 end
 
-def make_context(registers = {})
-  Liquid::Context.new({}, {}, { site: site, page: page }.merge(registers))
+def make_context(registers = {}, environments = {})
+  Liquid::Context.new(environments, {}, { site: site, page: page }.merge(registers))
 end

@@ -30,6 +30,7 @@ module Jekyll
       {
         'page'    => context.registers[:page],
         'site'    => context.registers[:site].site_payload['site'],
+        'paginator' => context['paginator'],
         'seo_tag' => options
       }
     end
