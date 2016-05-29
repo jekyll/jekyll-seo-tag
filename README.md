@@ -183,3 +183,7 @@ image:
   height: 100
   width: 100
 ```
+
+### SmartyPants Titles
+
+Titles will be processed using [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/). This will use SmartyPants to translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a page title.
