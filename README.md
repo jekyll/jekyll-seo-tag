@@ -101,7 +101,7 @@ If for some reason, you don't want the plugin to output `<title>` tags on each p
 
 ### Author information
 
-Author information is used to propagate the `creator` field of Twitter summary cards. This is should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
+Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
 
 *TL;DR: In most cases, put `author: [your Twitter handle]` in the document's front matter, for sites with multiple authors. If you need something more complicated, read on.*
 
