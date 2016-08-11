@@ -27,7 +27,7 @@ end
 
 def make_post(options = {})
   filename = File.expand_path('2015-01-01-post.md', CONFIG_DEFAULTS['source'])
-  config = { site: site, collection: site.collections['posts'] }
+  config = { :site => site, :collection => site.collections['posts'] }
   page = Jekyll::Document.new filename, config
   page.merge_data!(options)
   page
@@ -39,5 +39,5 @@ def make_site(options = {})
 end
 
 def make_context(registers = {}, environments = {})
-  Liquid::Context.new(environments, {}, { site: site, page: page }.merge(registers))
+  Liquid::Context.new(environments, {}, { :site => site, :page => page }.merge(registers))
 end

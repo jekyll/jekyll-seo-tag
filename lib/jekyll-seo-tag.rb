@@ -41,8 +41,8 @@ module Jekyll
 
     def info
       {
-        registers: context.registers,
-        filters: [Jekyll::Filters, JekyllSeoTag::Filters]
+        :registers => context.registers,
+        :filters => [Jekyll::Filters, JekyllSeoTag::Filters]
       }
     end
 
