@@ -11,3 +11,7 @@ Style/Documentation:
 
 Style/FileName:
   Enabled: false
+
+AllCops:
+  Exclude:
+    - vendor/**/*
