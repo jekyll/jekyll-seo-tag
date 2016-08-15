@@ -1,3 +1,6 @@
+inherit_gem:
+  jekyll: .rubocop.yml
+
 Metrics/LineLength:
   Exclude:
     - spec/**/*
@@ -8,3 +11,7 @@ Style/Documentation:
 
 Style/FileName:
   Enabled: false
+
+AllCops:
+  Exclude:
+    - vendor/**/*
