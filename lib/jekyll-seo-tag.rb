@@ -1,11 +1,11 @@
-require 'jekyll-seo-tag/filters'
-require 'jekyll-seo-tag/version'
+require "jekyll-seo-tag/filters"
+require "jekyll-seo-tag/version"
 
 module Jekyll
   class SeoTag < Liquid::Tag
     attr_accessor :context
 
-    MINIFY_REGEX = /([>,]\n|[%}]})\s+?(<|{[{%]|[ ]+\")/
+    MINIFY_REGEX = %r!([>,]\n|[%}]})\s+?(<|{[{%]|[ ]+\")!
 
     def initialize(_tag_name, text, _tokens)
       super
@@ -21,28 +21,28 @@ module Jekyll
 
     def options
       {
-        'version' => Jekyll::SeoTag::VERSION,
-        'title'   => title?
+        "version" => Jekyll::SeoTag::VERSION,
+        "title"   => title?
       }
     end
 
     def payload
       {
-        'page'    => context.registers[:page],
-        'site'    => context.registers[:site].site_payload['site'],
-        'paginator' => context['paginator'],
-        'seo_tag' => options
+        "page"      => context.registers[:page],
+        "site"      => context.registers[:site].site_payload["site"],
+        "paginator" => context["paginator"],
+        "seo_tag"   => options
       }
     end
 
     def title?
-      !(@text =~ /title=false/i)
+      !(@text =~ %r!title=false!i)
     end
 
     def info
       {
         :registers => context.registers,
-        :filters => [Jekyll::Filters, JekyllSeoTag::Filters]
+        :filters   => [Jekyll::Filters, JekyllSeoTag::Filters]
       }
     end
 
@@ -58,10 +58,10 @@ module Jekyll
 
     def template_path
       @template_path ||= begin
-        File.expand_path './template.html', File.dirname(__FILE__)
+        File.expand_path "./template.html", File.dirname(__FILE__)
       end
     end
   end
 end
 
-Liquid::Template.register_tag('seo', Jekyll::SeoTag)
+Liquid::Template.register_tag("seo", Jekyll::SeoTag)

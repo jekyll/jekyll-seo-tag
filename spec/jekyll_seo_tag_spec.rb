@@ -1,105 +1,105 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
   let(:post)      { make_post }
   let(:context)   { make_context(:page => page, :site => site) }
-  let(:tag)       { 'seo' }
-  let(:text)      { '' }
+  let(:tag)       { "seo" }
+  let(:text)      { "" }
   let(:output)    { Liquid::Template.parse("{% #{tag} #{text} %}").render!(context, {}) }
   let(:json)      { output.match(%r!<script type=\"application/ld\+json\">(.*)</script>!m)[1] }
   let(:json_data) { JSON.parse(json) }
-  let(:paginator) { { 'previous_page' => true, 'previous_page_path' => 'foo', 'next_page' => true, 'next_page_path' => 'bar' } }
+  let(:paginator) { { "previous_page" => true, "previous_page_path" => "foo", "next_page" => true, "next_page_path" => "bar" } }
 
   before do
     Jekyll.logger.log_level = :error
   end
 
-  it 'builds' do
-    expect(output).to match(/Jekyll SEO tag/i)
+  it "builds" do
+    expect(output).to match(%r!Jekyll SEO tag!i)
   end
 
-  it 'outputs the plugin version' do
+  it "outputs the plugin version" do
     version = Jekyll::SeoTag::VERSION
-    expect(output).to match(/Jekyll SEO tag v#{version}/i)
+    expect(output).to match(%r!Jekyll SEO tag v#{version}!i)
   end
 
-  it 'outputs valid HTML' do
+  it "outputs valid HTML" do
     site.process
     options = {
-      :check_html => true,
+      :check_html       => true,
       :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck)
     }
     status = HTML::Proofer.new(dest_dir, options).run
     expect(status).to eql(true)
   end
 
-  context 'with page.title' do
-    let(:page) { make_page('title' => 'foo') }
+  context "with page.title" do
+    let(:page) { make_page("title" => "foo") }
 
-    it 'builds the title with a page title only' do
+    it "builds the title with a page title only" do
       expect(output).to match(%r!<title>foo</title>!)
       expected = %r!<meta property="og:title" content="foo" />!
       expect(output).to match(expected)
     end
 
-    context 'with site.title' do
-      let(:site) { make_site('title' => 'bar') }
+    context "with site.title" do
+      let(:site) { make_site("title" => "bar") }
 
-      it 'builds the title with a page title and site title' do
+      it "builds the title with a page title and site title" do
         expect(output).to match(%r!<title>foo - bar</title>!)
       end
     end
   end
 
-  context 'with site.title' do
-    let(:site) { make_site('title' => 'Site title') }
+  context "with site.title" do
+    let(:site) { make_site("title" => "Site title") }
 
-    it 'builds the title with only a site title' do
+    it "builds the title with only a site title" do
       expect(output).to match(%r!<title>Site title</title>!)
     end
   end
 
-  context 'with page.description' do
-    let(:page) { make_page('description' => 'foo') }
+  context "with page.description" do
+    let(:page) { make_page("description" => "foo") }
 
-    it 'uses the page description' do
+    it "uses the page description" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
     end
   end
 
-  context 'with page.excerpt' do
-    let(:page) { make_page('excerpt' => 'foo') }
+  context "with page.excerpt" do
+    let(:page) { make_page("excerpt" => "foo") }
 
-    it 'uses the page excerpt when no page description exists' do
+    it "uses the page excerpt when no page description exists" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
     end
   end
 
-  context 'with site.description' do
-    let(:site) { make_site('description' => 'foo') }
+  context "with site.description" do
+    let(:site) { make_site("description" => "foo") }
 
-    it 'uses the site description when no page description nor excerpt exist' do
+    it "uses the site description when no page description nor excerpt exist" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
     end
   end
 
-  context 'with site.url' do
-    let(:site) { make_site('url' => 'http://example.invalid') }
+  context "with site.url" do
+    let(:site) { make_site("url" => "http://example.invalid") }
 
-    it 'uses the site url to build the seo url' do
+    it "uses the site url to build the seo url" do
       expected = %r!<link rel="canonical" href="http://example.invalid/page.html" />!
       expect(output).to match(expected)
       expected = %r!<meta property="og:url" content="http://example.invalid/page.html" />!
       expect(output).to match(expected)
     end
 
-    context 'with page.permalink' do
-      let(:page) { make_page('permalink' => '/page/index.html') }
+    context "with page.permalink" do
+      let(:page) { make_page("permalink" => "/page/index.html") }
 
       it "uses replaces '/index.html' with '/'" do
         expected = %r!<link rel="canonical" href="http://example.invalid/page/" />!
@@ -110,10 +110,10 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context 'with site.baseurl' do
-      let(:site) { make_site('url' => 'http://example.invalid', 'baseurl' => '/foo') }
+    context "with site.baseurl" do
+      let(:site) { make_site("url" => "http://example.invalid", "baseurl" => "/foo") }
 
-      it 'uses baseurl to build the seo url' do
+      it "uses baseurl to build the seo url" do
         expected = %r!<link rel="canonical" href="http://example.invalid/foo/page.html" />!
         expect(output).to match(expected)
         expected = %r!<meta property="og:url" content="http://example.invalid/foo/page.html" />!
@@ -121,57 +121,57 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context 'with relative page.image as a string' do
-      let(:page) { make_page('image' => '/img/foo.png') }
+    context "with relative page.image as a string" do
+      let(:page) { make_page("image" => "/img/foo.png") }
 
-      it 'outputs the image' do
+      it "outputs the image" do
         expected = '<meta property="og:image" content="http://example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
     end
 
-    context 'with absolute page.image' do
-      let(:page) { make_page('image' => 'http://cdn.example.invalid/img/foo.png') }
+    context "with absolute page.image" do
+      let(:page) { make_page("image" => "http://cdn.example.invalid/img/foo.png") }
 
-      it 'outputs the image' do
+      it "outputs the image" do
         expected = '<meta property="og:image" content="http://cdn.example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
     end
 
-    context 'with page.image as an object' do
-      context 'when given a path' do
-        let(:page) { make_page('image' => { 'path' => '/img/foo.png' }) }
+    context "with page.image as an object" do
+      context "when given a path" do
+        let(:page) { make_page("image" => { "path" => "/img/foo.png" }) }
 
-        it 'outputs the image' do
+        it "outputs the image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'when given a facebook image' do
-        let(:page) { make_page('image' => { 'facebook' => '/img/facebook.png' }) }
+      context "when given a facebook image" do
+        let(:page) { make_page("image" => { "facebook" => "/img/facebook.png" }) }
 
-        it 'outputs the image' do
+        it "outputs the image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/facebook.png" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'when given a twitter image' do
-        let(:page) { make_page('image' => { 'twitter' => '/img/twitter.png' }) }
+      context "when given a twitter image" do
+        let(:page) { make_page("image" => { "twitter" => "/img/twitter.png" }) }
 
-        it 'outputs the image' do
+        it "outputs the image" do
           expected = %r!<meta name="twitter:image" content="http://example.invalid/img/twitter.png" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'when given the image height and width' do
-        let(:image) { { 'facebook' => '/img/foo.png', 'height' => 1, 'width' => 2 } }
-        let(:page) { make_page('image' => image) }
+      context "when given the image height and width" do
+        let(:image) { { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 } }
+        let(:page) { make_page("image" => image) }
 
-        it 'outputs the image' do
+        it "outputs the image" do
           expected = %r!<meta property="og:image:height" content="1" />!
           expect(output).to match(expected)
           expected = %r!<meta property="og:image:width" content="2" />!
@@ -180,30 +180,30 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context 'with site.logo' do
-      let(:site) { make_site('logo' => '/logo.png', 'url' => 'http://example.invalid') }
+    context "with site.logo" do
+      let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
 
-      it 'outputs the logo' do
-        expect(json_data['logo']).to eql('http://example.invalid/logo.png')
+      it "outputs the logo" do
+        expect(json_data["logo"]).to eql("http://example.invalid/logo.png")
       end
     end
 
-    context 'with absolute site.logo' do
-      let(:site) { make_site('logo' => 'http://cdn.example.invalid/logo.png', 'url' => 'http://example.invalid') }
+    context "with absolute site.logo" do
+      let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid") }
 
-      it 'outputs the logo' do
-        expect(json_data['logo']).to eql('http://cdn.example.invalid/logo.png')
+      it "outputs the logo" do
+        expect(json_data["logo"]).to eql("http://cdn.example.invalid/logo.png")
       end
     end
 
-    context 'with site.title' do
-      let(:site) { make_site('title' => 'Foo', 'url' => 'http://example.invalid') }
+    context "with site.title" do
+      let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
-      it 'outputs the site title meta' do
+      it "outputs the site title meta" do
         expect(output).to match(%r!<meta property="og:site_name" content="Foo" />!)
       end
 
-      it 'minifies the output' do
+      it "minifies the output" do
         version = Jekyll::SeoTag::VERSION
         expected = <<-EOS
 <!-- Begin Jekyll SEO tag v#{version} -->
@@ -218,11 +218,11 @@ EOS
     end
   end
 
-  context 'with site.github.url' do
-    let(:github_namespace) { { 'url' => 'http://example.invalid' } }
-    let(:site) { make_site('github' => github_namespace) }
+  context "with site.github.url" do
+    let(:github_namespace) { { "url" => "http://example.invalid" } }
+    let(:site) { make_site("github" => github_namespace) }
 
-    it 'uses site.github.url to build the seo url' do
+    it "uses site.github.url to build the seo url" do
       expected = %r!<link rel="canonical" href="http://example.invalid/page.html" \/>!
       expect(output).to match(expected)
       expected = %r!<meta property="og:url" content="http://example.invalid/page.html" />!
@@ -230,28 +230,28 @@ EOS
     end
   end
 
-  context 'posts' do
-    context 'with post meta' do
-      let(:site) { make_site('url' => 'http://example.invalid') }
+  context "posts" do
+    context "with post meta" do
+      let(:site) { make_site("url" => "http://example.invalid") }
       let(:meta) do
         {
-          'title'       => 'post',
-          'description' => 'description',
-          'image'       => '/img.png'
+          "title"       => "post",
+          "description" => "description",
+          "image"       => "/img.png"
         }
       end
       let(:page) { make_post(meta) }
 
-      it 'outputs post meta' do
+      it "outputs post meta" do
         expected = %r!<meta property="og:type" content="article" />!
         expect(output).to match(expected)
 
-        expect(json_data['headline']).to eql('post')
-        expect(json_data['description']).to eql('description')
-        expect(json_data['image']).to eql('http://example.invalid/img.png')
+        expect(json_data["headline"]).to eql("post")
+        expect(json_data["description"]).to eql("description")
+        expect(json_data["image"]).to eql("http://example.invalid/img.png")
       end
 
-      it 'minifies JSON-LD' do
+      it "minifies JSON-LD" do
         expected = <<-EOS
   {
     "@context": "http://schema.org",
@@ -263,42 +263,42 @@ EOS
     end
   end
 
-  context 'facebook' do
+  context "facebook" do
     let(:site_facebook) do
       {
-        'admins' => 'jekyllrb-fb-admins',
-        'app_id' => 'jekyllrb-fb-app_id',
-        'publisher' => 'jekyllrb-fb-publisher'
+        "admins"    => "jekyllrb-fb-admins",
+        "app_id"    => "jekyllrb-fb-app_id",
+        "publisher" => "jekyllrb-fb-publisher"
       }
     end
 
-    let(:site) { make_site('facebook' => site_facebook) }
+    let(:site) { make_site("facebook" => site_facebook) }
 
-    it 'outputs facebook admins meta' do
+    it "outputs facebook admins meta" do
       expected = %r!<meta property="fb:admins" content="jekyllrb-fb-admins" />!
       expect(output).to match(expected)
     end
 
-    it 'outputs facebook app ID meta' do
+    it "outputs facebook app ID meta" do
       expected = %r!<meta property="fb:app_id" content="jekyllrb-fb-app_id" />!
       expect(output).to match(expected)
     end
 
-    it 'outputs facebook article publisher meta' do
+    it "outputs facebook article publisher meta" do
       expected = %r!<meta property="article:publisher" content="jekyllrb-fb-publisher" />!
       expect(output).to match(expected)
     end
   end
 
-  context 'twitter' do
-    context 'with site.twitter.username' do
-      let(:site_twitter) { { 'username' => 'jekyllrb' } }
-      let(:site) { make_site('twitter' => site_twitter) }
+  context "twitter" do
+    context "with site.twitter.username" do
+      let(:site_twitter) { { "username" => "jekyllrb" } }
+      let(:site) { make_site("twitter" => site_twitter) }
 
-      context 'with page.author as a string' do
-        let(:page) { make_page('author' => 'benbalter') }
+      context "with page.author as a string" do
+        let(:page) { make_page("author" => "benbalter") }
 
-        it 'outputs twitter card meta' do
+        it "outputs twitter card meta" do
           expected = %r!<meta name="twitter:card" content="summary" />!
           expect(output).to match(expected)
 
@@ -309,30 +309,30 @@ EOS
           expect(output).to match(expected)
         end
 
-        context 'with an @' do
-          let(:page) { make_page('author' => '@benbalter') }
+        context "with an @" do
+          let(:page) { make_page("author" => "@benbalter") }
 
-          it 'outputs the twitter card' do
+          it "outputs the twitter card" do
             expected = %r!<meta name="twitter:creator" content="@benbalter" />!
             expect(output).to match(expected)
           end
         end
 
-        context 'with site.data.authors' do
+        context "with site.data.authors" do
           let(:author_data) { {} }
-          let(:data) { { 'authors' => author_data } }
-          let(:site) { make_site('data' => data, 'twitter' => site_twitter) }
+          let(:data) { { "authors" => author_data } }
+          let(:site) { make_site("data" => data, "twitter" => site_twitter) }
 
-          context 'with the author in site.data.authors' do
-            let(:author_data) { { 'benbalter' => { 'twitter' => 'test' } } }
-            it 'outputs the twitter card' do
+          context "with the author in site.data.authors" do
+            let(:author_data) { { "benbalter" => { "twitter" => "test" } } }
+            it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@test" />!
               expect(output).to match(expected)
             end
           end
 
-          context 'without the author in site.data.authors' do
-            it 'outputs the twitter card' do
+          context "without the author in site.data.authors" do
+            it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@benbalter" />!
               expect(output).to match(expected)
             end
@@ -340,38 +340,38 @@ EOS
         end
       end
 
-      context 'with page.image' do
-        let(:page) { make_page('image' => '/img/foo.png') }
+      context "with page.image" do
+        let(:page) { make_page("image" => "/img/foo.png") }
 
-        it 'outputs summary card with large image' do
+        it "outputs summary card with large image" do
           expected = %r!<meta name="twitter:card" content="summary_large_image" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'with page.author as a hash' do
-        let(:page) { make_page('author' => { 'twitter' => '@test' }) }
+      context "with page.author as a hash" do
+        let(:page) { make_page("author" => { "twitter" => "@test" }) }
 
-        it 'supports author data as a hash' do
+        it "supports author data as a hash" do
           expected = %r!<meta name="twitter:creator" content="@test" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'with page.authors as an array' do
-        let(:page) { make_page('authors' => %w(test foo)) }
+      context "with page.authors as an array" do
+        let(:page) { make_page("authors" => %w(test foo)) }
 
-        it 'supports author data as an array' do
+        it "supports author data as an array" do
           expected = %r!<meta name="twitter:creator" content="@test" />!
           expect(output).to match(expected)
         end
       end
 
-      context 'with site.author as a hash' do
-        let(:author) { { 'twitter' => '@test' } }
-        let(:site) { make_site('author' => author, 'twitter' => site_twitter) }
+      context "with site.author as a hash" do
+        let(:author) { { "twitter" => "@test" } }
+        let(:site) { make_site("author" => author, "twitter" => site_twitter) }
 
-        it 'supports author data as an hash' do
+        it "supports author data as an hash" do
           expected = %r!<meta name="twitter:creator" content="@test" />!
           expect(output).to match(expected)
         end
@@ -379,78 +379,78 @@ EOS
     end
   end
 
-  context 'with site.social' do
-    let(:links) { ['http://foo.invalid', 'http://bar.invalid'] }
-    let(:social_namespace) { { 'name' => 'Ben', 'links' => links } }
-    let(:site) { make_site('social' => social_namespace) }
+  context "with site.social" do
+    let(:links) { ["http://foo.invalid", "http://bar.invalid"] }
+    let(:social_namespace) { { "name" => "Ben", "links" => links } }
+    let(:site) { make_site("social" => social_namespace) }
     let(:page) { make_post(meta) }
 
-    context 'on homepage' do
+    context "on homepage" do
       let(:meta) do
         {
-          'permalink'   => '/',
-          'seo'         => {
-            'type' => 'person'
+          "permalink" => "/",
+          "seo"       => {
+            "type" => "person"
           }
         }
       end
 
-      it 'outputs social meta' do
-        expect(json_data['@type']).to eql('person')
-        expect(json_data['name']).to eql('Ben')
-        expect(json_data['sameAs']).to eql(links)
+      it "outputs social meta" do
+        expect(json_data["@type"]).to eql("person")
+        expect(json_data["name"]).to eql("Ben")
+        expect(json_data["sameAs"]).to eql(links)
       end
     end
 
-    context 'on about page' do
-      let(:meta) { { 'permalink' => '/about/' } }
+    context "on about page" do
+      let(:meta) { { "permalink" => "/about/" } }
 
-      it 'outputs sameAs links' do
-        expect(json_data['sameAs']).to eql(links)
+      it "outputs sameAs links" do
+        expect(json_data["sameAs"]).to eql(links)
       end
     end
 
-    context 'on other pages' do
-      let(:meta) { { 'permalink' => '/2/' } }
+    context "on other pages" do
+      let(:meta) { { "permalink" => "/2/" } }
 
-      it 'does not output sameAs links' do
-        expect(json_data['sameAs']).to be_nil
+      it "does not output sameAs links" do
+        expect(json_data["sameAs"]).to be_nil
       end
     end
   end
 
-  context 'with site.name' do
-    let(:site) { make_site('name' => 'Site name') }
+  context "with site.name" do
+    let(:site) { make_site("name" => "Site name") }
 
-    it 'uses site.name if site.title is not present' do
+    it "uses site.name if site.title is not present" do
       expected = %r!<meta property="og:site_name" content="Site name" />!
       expect(output).to match(expected)
     end
 
-    context 'with site.title' do
-      let(:site)  { make_site('name' => 'Site Name', 'title' => 'Site Title') }
+    context "with site.title" do
+      let(:site)  { make_site("name" => "Site Name", "title" => "Site Title") }
 
-      it 'uses site.tile if both site.title and site.name are present' do
+      it "uses site.tile if both site.title and site.name are present" do
         expected = %r!<meta property="og:site_name" content="Site Title" />!
         expect(output).to match(expected)
       end
     end
   end
 
-  context 'with title=false' do
-    let(:text) { 'title=false' }
+  context "with title=false" do
+    let(:text) { "title=false" }
 
-    it 'does not output a <title> tag' do
-      expect(output).not_to match(/<title>/)
+    it "does not output a <title> tag" do
+      expect(output).not_to match(%r!<title>!)
     end
   end
 
-  context 'with pagination' do
-    let(:context) { make_context({}, 'paginator' => paginator) }
+  context "with pagination" do
+    let(:context) { make_context({}, "paginator" => paginator) }
 
-    it 'outputs pagination links' do
-      expect(output).to match(/<link rel="prev" href="foo">/)
-      expect(output).to match(/<link rel="next" href="bar">/)
+    it "outputs pagination links" do
+      expect(output).to match(%r!<link rel="prev" href="foo">!)
+      expect(output).to match(%r!<link rel="next" href="bar">!)
     end
   end
 end
