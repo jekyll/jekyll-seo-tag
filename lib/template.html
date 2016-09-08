@@ -21,9 +21,6 @@
   {% assign seo_title = seo_site_title %}
   {% assign seo_page_title = seo_site_title %}
 
-  {% if site.description %}
-    {% assign seo_title = seo_title | append:" - " | append: site.description %}
-  {% endif %}
 {% endif %}
 
 {% if page.seo and page.seo.name %}
