@@ -26,7 +26,7 @@ def make_page(options = {})
 end
 
 def make_post(options = {})
-  filename = File.expand_path("2015-01-01-post.md", CONFIG_DEFAULTS["source"])
+  filename = File.expand_path("_posts/2015-01-01-post.md", CONFIG_DEFAULTS["source"])
   config = { :site => site, :collection => site.collections["posts"] }
   page = Jekyll::Document.new filename, config
   page.merge_data!(options)
