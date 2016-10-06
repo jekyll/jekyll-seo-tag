@@ -218,18 +218,6 @@ EOS
     end
   end
 
-  context "with site.github.url" do
-    let(:github_namespace) { { "url" => "http://example.invalid" } }
-    let(:site) { make_site("github" => github_namespace) }
-
-    it "uses site.github.url to build the seo url" do
-      expected = %r!<link rel="canonical" href="http://example.invalid/page.html" \/>!
-      expect(output).to match(expected)
-      expected = %r!<meta property="og:url" content="http://example.invalid/page.html" />!
-      expect(output).to match(expected)
-    end
-  end
-
   context "posts" do
     context "with post meta" do
       let(:site) { make_site("url" => "http://example.invalid") }
@@ -449,8 +437,8 @@ EOS
     let(:context) { make_context({}, "paginator" => paginator) }
 
     it "outputs pagination links" do
-      expect(output).to match(%r!<link rel="prev" href="foo">!)
-      expect(output).to match(%r!<link rel="next" href="bar">!)
+      expect(output).to match(%r!<link rel="prev" href="/foo">!)
+      expect(output).to match(%r!<link rel="next" href="/bar">!)
     end
   end
 end
