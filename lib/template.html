@@ -4,10 +4,6 @@
   {% assign seo_homepage_or_about = true %}
 {% endif %}
 
-{% if site.url %}
-  {% assign seo_url = site.url | append: site.baseurl %}
-{% endif %}
-{% assign seo_url = seo_url | default: site.github.url %}
 {% assign seo_site_title = site.title | default: site.name %}
 
 {% if page.title %}
@@ -87,7 +83,7 @@
 {% if site.logo %}
   {% assign seo_site_logo = site.logo %}
   {% unless seo_site_logo contains "://" %}
-    {% assign seo_site_logo = seo_site_logo | prepend: seo_url %}
+    {% assign seo_site_logo = seo_site_logo | absolute_url %}
   {% endunless %}
   {% assign seo_site_logo = seo_site_logo | escape %}
 {% endif %}
@@ -95,7 +91,7 @@
 {% if page.image %}
   {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
   {% unless seo_page_image contains "://" %}
-    {% assign seo_page_image = seo_page_image | prepend: seo_url %}
+    {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
   {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
@@ -113,9 +109,9 @@
   <meta property="og:description" content="{{ seo_description }}" />
 {% endif %}
 
-{% if seo_url %}
-  <link rel="canonical" href="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" />
-  <meta property="og:url" content="{{ page.url | prepend: seo_url | replace:'/index.html','/' }}" />
+{% if page.url %}
+  <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
+  <meta property="og:url" content="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
 {% endif %}
 
 {% if seo_site_title %}
@@ -133,7 +129,7 @@
 {% endif %}
 
 {% if page.image.twitter %}
-  <meta name="twitter:image" content="{{ page.image.twitter | prepend: seo_url | escape }}" />
+  <meta name="twitter:image" content="{{ page.image.twitter | absolute_url }}" />
 {% endif %}
 
 {% if page.date %}
@@ -142,10 +138,10 @@
 {% endif %}
 
 {% if paginator.previous_page %}
-  <link rel="prev" href="{{ paginator.previous_page_path | prepend: seo_url }}">
+  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">
 {% endif %}
 {% if paginator.next_page %}
-  <link rel="next" href="{{ paginator.next_page_path | prepend: seo_url }}">
+  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
 {% endif %}
 
 {% if site.twitter %}
@@ -216,7 +212,7 @@
     "sameAs": {{ seo_links | jsonify }},
 {% endif %}
 
-    "url": {{ page.url | prepend: seo_url | replace:'/index.html','/' | jsonify }}
+    "url": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
   }
 </script>
 

@@ -1,4 +1,3 @@
-require "jekyll-seo-tag/filters"
 require "jekyll-seo-tag/version"
 
 module Jekyll
@@ -42,7 +41,7 @@ module Jekyll
     def info
       {
         :registers => context.registers,
-        :filters   => [Jekyll::Filters, JekyllSeoTag::Filters]
+        :filters   => [Jekyll::Filters]
       }
     end
 
