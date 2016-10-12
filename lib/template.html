@@ -153,6 +153,10 @@
 
   <meta name="twitter:site" content="@{{ site.twitter.username | replace:"@","" }}" />
 
+  {% if seo_description %}
+    <meta name="twitter:description" content="@{{ seo_description }}" />
+  {% endif %}
+
   {% if seo_author_twitter %}
     <meta name="twitter:creator" content="@{{ seo_author_twitter }}" />
   {% endif %}
