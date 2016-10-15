@@ -4,7 +4,16 @@ module Jekyll
   class SeoTag < Liquid::Tag
     attr_accessor :context
 
-    MINIFY_REGEX = %r!([>,]\n|[%}]})\s+?(<|{[{%]|[ ]+\")!
+    # Matches all whitespace that follows either
+    #   1. A '}', which closes a Liquid tag
+    #   2. A '{', which opens a JSON block
+    #   3. A '>' followed by a newline, which closes an XML tag or
+    #   4. A ',' followed by a newline, which ends a JSON line
+    # We will strip all of this whitespace to minify the template
+    # We will not strip any whitespace if the next character is a '-'
+    #   so that we do not interfere with the HTML comment at the
+    #   very begining
+    MINIFY_REGEX = %r!(?<=[{}]|[>,]\n)\s+(?\!-)!
 
     def initialize(_tag_name, text, _tokens)
       super
@@ -51,7 +60,7 @@ module Jekyll
 
     def template_contents
       @template_contents ||= begin
-        File.read(template_path).gsub(MINIFY_REGEX, '\1\2').chomp
+        File.read(template_path).gsub(MINIFY_REGEX, "")
       end
     end
 
