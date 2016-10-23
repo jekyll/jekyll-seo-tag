@@ -205,7 +205,13 @@
 {% endif %}
 
 {% if seo_site_logo %}
-    "logo": {{ seo_site_logo | jsonify }},
+    "publisher": {
+        "@type": "Organization",
+        "logo": {
+            "@type": "ImageObject",
+            "url": {{ seo_site_logo | jsonify }}
+        }
+    },
 {% endif %}
 
 {% if seo_links %}
