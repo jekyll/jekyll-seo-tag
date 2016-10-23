@@ -184,7 +184,7 @@ describe Jekyll::SeoTag do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
 
       it "outputs the logo" do
-        expect(json_data["logo"]).to eql("http://example.invalid/logo.png")
+        expect(json_data["publisher"]["logo"]["url"]).to eql("http://example.invalid/logo.png")
       end
     end
 
@@ -192,7 +192,7 @@ describe Jekyll::SeoTag do
       let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid") }
 
       it "outputs the logo" do
-        expect(json_data["logo"]).to eql("http://cdn.example.invalid/logo.png")
+        expect(json_data["publisher"]["logo"]["url"]).to eql("http://cdn.example.invalid/logo.png")
       end
     end
 
