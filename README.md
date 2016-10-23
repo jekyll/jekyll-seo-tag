@@ -184,6 +184,20 @@ image:
   width: 100
 ```
 
+### Setting a default image
+
+You can define a default image using [Front Matter default](https://jekyllrb.com/docs/configuration/#front-matter-defaults), to provide a default Twitter Card or OGP image to all of your posts and pages.
+
+Here is a very basic example, that you are encouraged to adapt to your needs:
+
+```yml
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/default-card.png
+```
+
 ### SmartyPants Titles
 
 Titles will be processed using [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/). This will use SmartyPants to translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a page title.
