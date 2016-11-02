@@ -1,5 +1,7 @@
 ## HEAD
 
+## 2.1.0 - 2016-11-02
+
 ### Major Enhancement
 
   * Use new URL filters (#123)
