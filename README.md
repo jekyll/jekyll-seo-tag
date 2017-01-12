@@ -92,6 +92,8 @@ The SEO tag will respect any of the following if included in your site's `_confi
     ```
 
 * `google_site_verification` for verifying ownership via Google webmaster tools
+* `bing_site_verification` for verifying ownership via Bing webmaster tools
+* `yandex_site_verification` for verifying ownership via Yandex webmaster tools
 
 The SEO tag will respect the following YAML front matter if included in a post, page, or document:
 

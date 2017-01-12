@@ -175,6 +175,12 @@
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
+{% if site.bing_site_verification %}
+  <meta name="msvalidate.01" content="{{ site.bing_site_verification }}">
+{% endif %}
+{% if site.yandex_site_verification %}
+  <meta name="yandex-verification" content="{{ site.yandex_site_verification }}">
+{% endif %}
 
 <script type="application/ld+json">
   {
