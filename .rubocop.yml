@@ -6,6 +6,10 @@ Metrics/LineLength:
     - spec/**/*
     - jekyll-seo-tag.gemspec
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
 Style/Documentation:
   Enabled: false
 
