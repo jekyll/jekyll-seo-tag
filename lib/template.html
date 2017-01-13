@@ -172,15 +172,23 @@
   {% endif %}
 {% endif %}
 
-{% if site.google_site_verification %}
+{% if site.webmaster_verifications %}
+  {% if site.webmaster_verifications.google %}
+    <meta name="google-site-verification" content="{{ site.webmaster_verifications.google }}">
+  {% endif %}
+  {% if site.webmaster_verifications.bing %}
+    <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing }}">
+  {% endif %}
+  {% if site.webmaster_verifications.alexa %}
+    <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa }}">
+  {% endif %}
+  {% if site.webmaster_verifications.yandex %}
+    <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex }}">
+  {% endif %}
+{% elsif site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
-{% if site.bing_site_verification %}
-  <meta name="msvalidate.01" content="{{ site.bing_site_verification }}">
-{% endif %}
-{% if site.yandex_site_verification %}
-  <meta name="yandex-verification" content="{{ site.yandex_site_verification }}">
-{% endif %}
+
 
 <script type="application/ld+json">
   {

@@ -440,4 +440,48 @@ EOS
       expect(output).to match(%r!<link rel="next" href="/bar">!)
     end
   end
+
+  context "webmaster verification" do
+    context "with site.webmaster_verifications" do
+      let(:site_verifications) do
+        {
+          "google" => "foo",
+          "bing"   => "bar",
+          "alexa"  => "baz",
+          "yandex" => "bat"
+        }
+      end
+
+      let(:site) { make_site("webmaster_verifications" => site_verifications) }
+
+      it "outputs google verification meta" do
+        expected = %r!<meta name="google-site-verification" content="foo">!
+        expect(output).to match(expected)
+      end
+
+      it "outputs bing verification meta" do
+        expected = %r!<meta name="msvalidate.01" content="bar">!
+        expect(output).to match(expected)
+      end
+
+      it "outputs alexa verification meta" do
+        expected = %r!<meta name="alexaVerifyID" content="baz">!
+        expect(output).to match(expected)
+      end
+
+      it "outputs yandex verification meta" do
+        expected = %r!<meta name="yandex-verification" content="bat">!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "with site.google_site_verification" do
+      let(:site) { make_site("google_site_verification" => "foo") }
+
+      it "outputs google verification meta" do
+        expected = %r!<meta name="google-site-verification" content="foo" />!
+        expect(output).to match(expected)
+      end
+    end
+  end
 end
