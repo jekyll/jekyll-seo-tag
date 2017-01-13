@@ -4,6 +4,10 @@
 
   * Rubocop shouldn't worry if tests are too long (#149)
 
+### Minor Enhancements
+
+  * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
+
 ## 2.1.0
 
 ### Major Enhancement
