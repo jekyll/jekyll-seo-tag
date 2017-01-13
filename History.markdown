@@ -1,6 +1,10 @@
 ## HEAD
 
-## 2.1.0 - 2016-11-02
+### Development Fixes
+
+  * Rubocop shouldn't worry if tests are too long (#149)
+
+## 2.1.0
 
 ### Major Enhancement
 
