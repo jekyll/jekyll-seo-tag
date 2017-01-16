@@ -62,6 +62,9 @@
     {% endif %}
   {% endif %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
+  {% if seo_author.name %}
+    {% assign seo_author_name = seo_author.name %}
+  {% else %}
 {% endif %}
 
 {% if page.seo and page.seo.type %}
@@ -206,6 +209,10 @@
     "headline": {{ seo_page_title | jsonify }},
 {% endif %}
 
+{% if seo_author_name %}
+    "author": {{ seo_author_name | jsonify }},
+{% endif %}
+
 {% if seo_page_image %}
     "image": {{ seo_page_image | jsonify }},
 {% endif %}
@@ -221,6 +228,9 @@
 {% if seo_site_logo %}
     "publisher": {
         "@type": "Organization",
+        {% if seo_author_name %}
+            "Name": {{ seo_author_name | jsonify }},
+        {% endif %}
         "logo": {
             "@type": "ImageObject",
             "url": {{ seo_site_logo | jsonify }}
