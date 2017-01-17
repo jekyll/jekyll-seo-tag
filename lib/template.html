@@ -232,7 +232,7 @@
 
 {% if page.dateModified %}
     "dateModified": {{ page.dateModified | date_to_xmlschema | jsonify }},
-{% elseif page.date %}
+{% elsif page.date %}
     "dateModified": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}
 
