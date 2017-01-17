@@ -92,7 +92,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.url | default: page.image.facebook | default: page.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
@@ -214,11 +214,26 @@
 {% endif %}
 
 {% if seo_page_image %}
-    "image": {{ seo_page_image | jsonify }},
+    {% if page.image.height && page.image.width %}
+      "image": {
+          "@type": "ImageObject",
+          "url": {{ seo_page_image | jsonify }},
+          "height": {{ page.image.height | jsonify }},
+          "width": {{ page.image.width | jsonify }}
+      },
+    {% else %}
+        "image": {{ seo_page_image | jsonify }},
+    {% endif %}
 {% endif %}
 
 {% if page.date %}
     "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+{% endif %}
+
+{% if page.dateModified %}
+    "dateModified": {{ page.dateModified | date_to_xmlschema | jsonify }},
+{% elseif page.date %}
+    "dateModified": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}
 
 {% if seo_description %}
@@ -235,6 +250,13 @@
             "@type": "ImageObject",
             "url": {{ seo_site_logo | jsonify }}
         }
+    },
+{% endif %}
+
+{% if seo_type == "BlogPosting" %}
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
     },
 {% endif %}
 
