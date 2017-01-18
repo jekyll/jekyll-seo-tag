@@ -196,6 +196,22 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with image.url, image.height, and image.width" do
+      let(:meta) do
+        {
+          "image" =>  {"url" => "/img/banner.png","height" => 1,"width" => 2},
+          "url" => "http://example.invalid"
+        }
+      end
+      let(:page) { make_post(meta) }
+
+      it "outputs the image object with dimensions" do
+        expect(json_data["image"]["url"]).to eql("http://example.invalid/img/banner.png")
+        expect(json_data["image"]["height"]).to eql(1)
+        expect(json_data["image"]["width"]).to eql(2)
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
