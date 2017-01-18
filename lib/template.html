@@ -62,8 +62,8 @@
     {% endif %}
   {% endif %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
-  {% if seo_author.name %}
-    {% assign seo_author_name = seo_author.name %}
+  {% if seo_author %}
+    {% assign seo_author_name = seo_author %}
   {% endif %}
 {% endif %}
 

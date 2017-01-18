@@ -212,6 +212,77 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with image.url only" do
+      let(:meta) do
+        {
+          "image" =>  {"url" => "/img/banner.png"},
+          "url" => "http://example.invalid"
+        }
+      end
+      let(:page) { make_post(meta) }
+
+      it "outputs the image object" do
+        expect(json_data["image"]).to eql("http://example.invalid/img/banner.png")
+      end
+    end
+
+    context "with page.author" do
+      let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
+      let(:page) { make_post("author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["author"]).to eql("Mr. Foo")
+      end
+
+      it "outputs the publisher author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with page.date only" do
+      let(:page) { make_post("date" => "2017-01-01T01:00:00-05:00") }
+
+      it "outputs the datePublished" do
+        expect(json_data["datePublished"]).to eql("2017-01-01T01:00:00-05:00")
+        expect(json_data["dateModified"]).to eql("2017-01-01T01:00:00-05:00")
+      end
+    end
+
+    context "with page.dateModified" do
+      let(:page) { make_post("date" => "2017-01-01T01:00:00-05:00", "dateModified" => "2017-02-02T02:00:00-05:00") }
+
+      it "outputs the datePublished" do
+        expect(json_data["datePublished"]).to eql("2017-01-01T01:00:00-05:00")
+      end
+
+      it "outputs the dateModified" do
+        expect(json_data["dateModified"]).to eql("2017-02-02T02:00:00-05:00")
+      end
+    end
+
+    context "with page.author" do
+      let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
+      let(:page) { make_post("author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["author"]).to eql("Mr. Foo")
+      end
+
+      it "outputs the publisher author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with seo type is BlogPosting" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => {"type" => "BlogPosting"},"permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
