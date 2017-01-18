@@ -199,8 +199,8 @@ describe Jekyll::SeoTag do
     context "with image.url, image.height, and image.width" do
       let(:meta) do
         {
-          "image" =>  {"url" => "/img/banner.png","height" => 1,"width" => 2},
-          "url" => "http://example.invalid"
+          "image" => { "url" => "/img/banner.png", "height" => 1, "width" => 2 },
+          "url"   => "http://example.invalid"
         }
       end
       let(:page) { make_post(meta) }
@@ -215,8 +215,8 @@ describe Jekyll::SeoTag do
     context "with image.url only" do
       let(:meta) do
         {
-          "image" =>  {"url" => "/img/banner.png"},
-          "url" => "http://example.invalid"
+          "image" => { "url" => "/img/banner.png" },
+          "url"   => "http://example.invalid"
         }
       end
       let(:page) { make_post(meta) }
@@ -254,7 +254,7 @@ describe Jekyll::SeoTag do
 
     context "with seo type is BlogPosting" do
       let(:site) { make_site("url" => "http://example.invalid") }
-      let(:page) { make_post("seo" => {"type" => "BlogPosting"},"permalink" => "/foo/") }
+      let(:page) { make_post("seo" => { "type" => "BlogPosting" }, "permalink" => "/foo/") }
 
       it "outputs the mainEntityOfPage" do
         expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
