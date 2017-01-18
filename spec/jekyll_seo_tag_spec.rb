@@ -239,27 +239,6 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context "with page.date only" do
-      let(:page) { make_post("date" => "2017-01-01T01:00:00-05:00") }
-
-      it "outputs the datePublished" do
-        expect(json_data["datePublished"]).to eql("2017-01-01T01:00:00-05:00")
-        expect(json_data["dateModified"]).to eql("2017-01-01T01:00:00-05:00")
-      end
-    end
-
-    context "with page.dateModified" do
-      let(:page) { make_post("date" => "2017-01-01T01:00:00-05:00", "dateModified" => "2017-02-02T02:00:00-05:00") }
-
-      it "outputs the datePublished" do
-        expect(json_data["datePublished"]).to eql("2017-01-01T01:00:00-05:00")
-      end
-
-      it "outputs the dateModified" do
-        expect(json_data["dateModified"]).to eql("2017-02-02T02:00:00-05:00")
-      end
-    end
-
     context "with page.author" do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
       let(:page) { make_post("author" => "Mr. Foo") }
