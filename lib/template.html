@@ -62,9 +62,6 @@
     {% endif %}
   {% endif %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
-  {% if seo_author %}
-    {% assign seo_author_name = seo_author.name | default: seo_author %}
-  {% endif %}
 {% endif %}
 
 {% if page.seo and page.seo.type %}
@@ -105,6 +102,10 @@
 
 {% if seo_page_title %}
   <meta property="og:title" content="{{ seo_page_title }}" />
+{% endif %}
+
+{% if seo_author %}
+  <meta name="author" content="{{ seo_author }}" />
 {% endif %}
 
 {% if seo_description %}
@@ -209,10 +210,10 @@
     "headline": {{ seo_page_title | jsonify }},
 {% endif %}
 
-{% if seo_author_name %}
+{% if seo_author %}
     "author": {
       "@type": "Person",
-      "name": {{ seo_author_name | jsonify }}
+      "name": {{ seo_author | jsonify }}
     },
 {% endif %}
 
@@ -246,8 +247,8 @@
 {% if seo_site_logo %}
     "publisher": {
         "@type": "Organization",
-        {% if seo_author_name %}
-            "name": {{ seo_author_name | jsonify }},
+        {% if seo_author %}
+            "name": {{ seo_author | jsonify }},
         {% endif %}
         "logo": {
             "@type": "ImageObject",
