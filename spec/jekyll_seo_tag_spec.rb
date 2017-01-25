@@ -70,6 +70,14 @@ describe Jekyll::SeoTag do
     end
   end
 
+  context "with page.author" do
+    let(:page) { make_page("author" => "Mr. Foo") }
+
+    it "uses the page author" do
+      expect(output).to match(%r!<meta name="author" content="Mr. Foo" />!)
+    end
+  end
+
   context "with page.excerpt" do
     let(:page) { make_page("excerpt" => "foo") }
 
