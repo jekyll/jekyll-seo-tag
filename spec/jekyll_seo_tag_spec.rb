@@ -226,12 +226,13 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context "with page.author" do
+    context "with page.author.name" do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
       let(:page) { make_post("author" => "Mr. Foo") }
 
       it "outputs the author" do
-        expect(json_data["author"]).to eql("Mr. Foo")
+        expect(json_data["author"]["@type"]).to eql("Person")
+        expect(json_data["author"]["name"]).to eql("Mr. Foo")
       end
 
       it "outputs the publisher author" do
@@ -239,12 +240,13 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context "with page.author" do
+    context "with only page.author" do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
-      let(:page) { make_post("author" => "Mr. Foo") }
+      let(:page) { make_post("author" => { "name" => "Mr. Foo" }) }
 
       it "outputs the author" do
-        expect(json_data["author"]).to eql("Mr. Foo")
+        expect(json_data["author"]["@type"]).to eql("Person")
+        expect(json_data["author"]["name"]).to eql("Mr. Foo")
       end
 
       it "outputs the publisher author" do

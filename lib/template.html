@@ -63,7 +63,7 @@
   {% endif %}
   {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
   {% if seo_author %}
-    {% assign seo_author_name = seo_author %}
+    {% assign seo_author_name = seo_author.name | default: seo_author %}
   {% endif %}
 {% endif %}
 
@@ -210,7 +210,10 @@
 {% endif %}
 
 {% if seo_author_name %}
-    "author": {{ seo_author_name | jsonify }},
+    "author": {
+      "@type": "Person",
+      "name": {{ seo_author_name | jsonify }}
+    },
 {% endif %}
 
 {% if seo_page_image %}
