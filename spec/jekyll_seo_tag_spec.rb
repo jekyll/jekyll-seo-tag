@@ -200,7 +200,7 @@ describe Jekyll::SeoTag do
       let(:meta) do
         {
           "image" => { "path" => "/img/banner.png", "height" => 1, "width" => 2 },
-          "url"   => "http://example.invalid"
+          "url"   => "http://example.invalid",
         }
       end
       let(:page) { make_post(meta) }
@@ -216,7 +216,7 @@ describe Jekyll::SeoTag do
       let(:meta) do
         {
           "image" => { "path" => "/img/banner.png" },
-          "url"   => "http://example.invalid"
+          "url"   => "http://example.invalid",
         }
       end
       let(:page) { make_post(meta) }
