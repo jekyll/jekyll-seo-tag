@@ -16,7 +16,7 @@ end
 CONFIG_DEFAULTS = {
   "source"      => source_dir,
   "destination" => dest_dir,
-  "gems"        => ["jekyll-seo-tag"]
+  "gems"        => ["jekyll-seo-tag"],
 }.freeze
 
 def make_page(options = {})

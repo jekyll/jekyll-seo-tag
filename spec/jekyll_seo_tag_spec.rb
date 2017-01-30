@@ -29,7 +29,7 @@ describe Jekyll::SeoTag do
     site.process
     options = {
       :check_html       => true,
-      :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck)
+      :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck),
     }
     status = HTML::Proofer.new(dest_dir, options).run
     expect(status).to eql(true)
@@ -279,7 +279,7 @@ EOS
         {
           "title"       => "post",
           "description" => "description",
-          "image"       => "/img.png"
+          "image"       => "/img.png",
         }
       end
       let(:page) { make_post(meta) }
@@ -309,7 +309,7 @@ EOS
       {
         "admins"    => "jekyllrb-fb-admins",
         "app_id"    => "jekyllrb-fb-app_id",
-        "publisher" => "jekyllrb-fb-publisher"
+        "publisher" => "jekyllrb-fb-publisher",
       }
     end
 
@@ -431,8 +431,8 @@ EOS
         {
           "permalink" => "/",
           "seo"       => {
-            "type" => "person"
-          }
+            "type" => "person",
+          },
         }
       end
 
@@ -502,7 +502,7 @@ EOS
           "google" => "foo",
           "bing"   => "bar",
           "alexa"  => "baz",
-          "yandex" => "bat"
+          "yandex" => "bat",
         }
       end
 
