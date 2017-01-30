@@ -89,7 +89,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.url | default: page.image.facebook | default: page.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
@@ -230,8 +230,8 @@
     "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}
 
-{% if page.dateModified %}
-    "dateModified": {{ page.dateModified | date_to_xmlschema | jsonify }},
+{% if page.date_modified %}
+    "dateModified": {{ page.date_modified | date_to_xmlschema | jsonify }},
 {% elsif page.date %}
     "dateModified": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}

@@ -196,10 +196,10 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context "with image.url, image.height, and image.width" do
+    context "with image.path, image.height, and image.width" do
       let(:meta) do
         {
-          "image" => { "url" => "/img/banner.png", "height" => 1, "width" => 2 },
+          "image" => { "path" => "/img/banner.png", "height" => 1, "width" => 2 },
           "url"   => "http://example.invalid"
         }
       end
@@ -212,10 +212,10 @@ describe Jekyll::SeoTag do
       end
     end
 
-    context "with image.url only" do
+    context "with image.path only" do
       let(:meta) do
         {
-          "image" => { "url" => "/img/banner.png" },
+          "image" => { "path" => "/img/banner.png" },
           "url"   => "http://example.invalid"
         }
       end

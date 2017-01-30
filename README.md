@@ -185,27 +185,25 @@ The following options can be set for any particular page. While the default opti
   * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
   * `type` - The type of things that the page represents. This must be a [Schema.org type](http://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](http://schema.org/BlogPosting), [`NewsArticle`](http://schema.org/NewsArticle), [`Person`](http://schema.org/Person), [`Organization`](http://schema.org/Organization), etc.
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
-  * `dateModified` - An override for the `dateModified` field in the JSON-LD output. Useful when the file timestamp does not match the true time that the content was modified. 
-  * `author` - The `author` field will match the JSON-LD author output where applicable.
+  * `date_modified` - An override for the `dateModified` field in the JSON-LD output. Useful when the file timestamp does not match the true time that the content was modified.
 
 ### Customizing image output
 
 For most users, setting `image: [path-to-image]` on a per-page basis should be enough. If you need more control over how images are represented, the `image` property can also be an object, with the following options:
 
 * `path` - The relative path to the image. Same as `image: [path-to-image]`
-* `url` - The path to the image to be used in the JSON-LD image object `url`.
 * `twitter` - The relative path to a Twitter-specific image.
 * `facebook` - The relative path to a Facebook-specific image.
 * `height` - The height of the Facebook (`og:image`) image and JSON-LD image object.
 * `width` - The width of the Facebook (`og:image`) image and JSON-LD image object.
 
-The JSON-LD will default to the `image: ` tag unless `url: ` `height: ` and `width: `.
+The JSON-LD will default to the `image: ` tag unless `path: ` `height: ` and `width: `.
 
 You can use any of the above, optional properties, like so:
 
 ```yml
 image:
-  url: /img/banner.png
+  path: /img/banner.png
   twitter: /img/twitter.png
   facebook: /img/facebook.png
   height: 100
@@ -216,7 +214,7 @@ Or if you have no site specific images simply:
 
 ```yml
 image:
-  url: /img/banner.png
+  path: /img/banner.png
   height: 100
   width: 100
 ```
