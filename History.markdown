@@ -7,6 +7,7 @@
 ### Minor Enhancements
 
   * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
+  * Add author meta (#103)
 
 ## 2.1.0
 
