@@ -215,10 +215,9 @@ Or if you have no site specific images simply:
 ```yml
 image:
   path: /img/banner.png
-  height: 100
-  width: 100
 ```
 
+> Using the image dimensions are optional, but the [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/u/0/) will consider the JSON-LD to have errors when an image does not have specified dimensions.
 
 ### Setting a default image
 

@@ -250,6 +250,16 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with seo type is CreativeWork" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => { "type" => "CreativeWork" }, "permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
