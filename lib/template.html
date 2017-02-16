@@ -102,7 +102,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image_default = page.image.default.path | default: page.image.default | default: page.image %}
+  {% assign seo_page_image_default = page.image.default.path | default: page.image.default | default: page.image.path | default: page.image %}
   {% unless seo_page_image_default contains "://" %}
     {% assign seo_page_image_default = seo_page_image_default | absolute_url %}
   {% endunless %}

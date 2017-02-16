@@ -141,7 +141,7 @@ describe Jekyll::SeoTag do
 
     context "with page.image as an object" do
       context "when given a path" do
-        let(:page) { make_page("image" => { "default" => "/img/foo.png" }) }
+        let(:page) { make_page("image" => { "path" => "/img/foo.png" }) }
 
         it "outputs the image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
