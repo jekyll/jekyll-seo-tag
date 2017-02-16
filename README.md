@@ -198,8 +198,6 @@ For most users, setting `image: [path-to-image]` on a per-page basis should be e
 * `height` - The height of the image in pixels.
 * `width` - The width of image in pixels.
 
-The JSON-LD will default to the `image: ` tag unless `path: ` `height: ` and `width: `.
-
 You can use any of the above, optional properties, like so:
 
 ```yml
