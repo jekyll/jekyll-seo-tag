@@ -179,7 +179,7 @@ describe Jekyll::SeoTag do
       end
 
       context "when given the image height and width (legacy)" do
-        let(:page) { make_page("image" => { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 } ) }
+        let(:page) { make_page("image" => { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 }) }
 
         it "outputs the image" do
           expected = %r!<meta property="og:image:height" content="1" />!
