@@ -115,8 +115,8 @@
     {% assign seo_page_image_facebook = seo_page_image_facebook | absolute_url %}
   {% endunless %}
   {% assign seo_page_image_facebook = seo_page_image_facebook | escape %}
-  {% assign seo_page_image_facebook_width = page.image.facebook.width %}
-  {% assign seo_page_image_facebook_height = page.image.facebook.height %}
+  {% assign seo_page_image_facebook_width = page.image.facebook.width | default: page.image.width %}
+  {% assign seo_page_image_facebook_height = page.image.facebook.height | default: page.image.height %}
 
   {% assign seo_page_image_twitter = page.image.twitter.path | default: page.image.twitter %}
   {% unless seo_page_image_twitter contains "://" %}

@@ -177,6 +177,17 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
         end
       end
+
+      context "when given the image height and width (legacy)" do
+        let(:page) { make_page("image" => { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 } ) }
+
+        it "outputs the image" do
+          expected = %r!<meta property="og:image:height" content="1" />!
+          expect(output).to match(expected)
+          expected = %r!<meta property="og:image:width" content="2" />!
+          expect(output).to match(expected)
+        end
+      end
     end
 
     context "with site.logo" do
