@@ -366,6 +366,55 @@ EOS
     end
   end
 
+  context "author" do
+    let(:site) { make_site("author" => "Site Author") }
+
+    context "with site.author" do
+      it "outputs site author metadata" do
+        expected = %r!<meta name="author" content="Site Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "with page.author" do
+      let(:page) { make_page("author" => "Page Author") }
+
+      it "outputs page author metadata" do
+        expected = %r!<meta name="author" content="Page Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "without page.author" do
+      let(:page) { make_page("author" => "") }
+
+      it "outputs site author metadata" do
+        expected = %r!<meta name="author" content="Site Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "with site.data.authors" do
+      let(:author_data) { { "renshuki" => { "name" => "Site Data Author" } } }
+      let(:data) { { "authors" => author_data } }
+
+      context "with the author in site.data.authors" do
+        let(:site) { make_site("data" => data, "author" => "renshuki") }
+        it "outputs the author metadata" do
+          expected = %r!<meta name="author" content="Site Data Author" />!
+          expect(output).to match(expected)
+        end
+      end
+
+      context "without the author in site.data.authors" do
+        it "outputs site author metadata" do
+          expected = %r!<meta name="author" content="Site Author" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+  end
+
   context "with site.social" do
     let(:links) { ["http://foo.invalid", "http://bar.invalid"] }
     let(:social_namespace) { { "name" => "Ben", "links" => links } }
