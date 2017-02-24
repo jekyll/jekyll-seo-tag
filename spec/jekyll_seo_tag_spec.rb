@@ -140,12 +140,53 @@ describe Jekyll::SeoTag do
     end
 
     context "with page.image as an object" do
-      context "when given a path" do
+      context "when given 'image' with a path" do
         let(:page) { make_page("image" => { "path" => "/img/foo.png" }) }
 
         it "outputs the image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
+        end
+      end
+
+      context "when given a default image" do
+        let(:page) { make_page("image" => { "default" => "/img/default.png" }) }
+
+        it "outputs the image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/default.png" />!
+          expect(output).to match(expected)
+        end
+
+        it "outputs the default image JSON item" do
+          expect(json_data["image"]).to eql("http://example.invalid/img/default.png")
+        end
+      end
+
+      context "when given a default image as a path" do
+        let(:page) { make_page("image" => { "default" => { "path" => "/img/default.png" } }) }
+
+        it "outputs the image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/default.png" />!
+          expect(output).to match(expected)
+        end
+
+        it "outputs the default image JSON item" do
+          expect(json_data["image"]).to eql("http://example.invalid/img/default.png")
+        end
+      end
+
+      context "when given a default image with dimensions" do
+        let(:page) { make_page("image" => { "default" => { "path" => "/img/default.png", "height" => 1, "width" => 2 } }) }
+
+        it "outputs the image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/default.png" />!
+          expect(output).to match(expected)
+        end
+
+        it "outputs the default image JSON object with dimensions" do
+          expect(json_data["image"]["url"]).to eql("http://example.invalid/img/default.png")
+          expect(json_data["image"]["height"]).to eql(1)
+          expect(json_data["image"]["width"]).to eql(2)
         end
       end
 
@@ -158,6 +199,67 @@ describe Jekyll::SeoTag do
         end
       end
 
+      context "when given a facebook image as a path" do
+        let(:page) { make_page("image" => { "facebook" => { "path" => "/img/facebook.png" } }) }
+
+        it "outputs the image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/facebook.png" />!
+          expect(output).to match(expected)
+        end
+      end
+
+      # Ensuring the facebook image takes priority for OG tags, and Default for JSON
+      context "when given a facebook image (with dimensions) and a default image (with different dimensions)" do
+        let(:meta) do
+          {
+            "image" => {
+              "facebook" => { "path" => "/img/facebook.png", "height" => 1, "width" => 2 },
+              "default"  => { "path" => "/img/default.png", "height" => 3, "width" => 4 },
+            },
+          }
+        end
+        let(:page) { make_page(meta) }
+
+        it "outputs the facebook image with its dimensions" do
+          expected = %r!<meta property="og:image:height" content="1" />!
+          expect(output).to match(expected)
+          expected = %r!<meta property="og:image:width" content="2" />!
+          expect(output).to match(expected)
+        end
+
+        it "outputs the default image JSON object with dimensions" do
+          expect(json_data["image"]["url"]).to eql("http://example.invalid/img/default.png")
+          expect(json_data["image"]["height"]).to eql(3)
+          expect(json_data["image"]["width"]).to eql(4)
+        end
+      end
+
+      # Making sure the facebook image does not inherit the default image dimensions
+      context "when given a facebook image without dimensions and a default image with dimensions" do
+        let(:meta) do
+          {
+            "image" => {
+              "facebook" => { "path" => "/img/facebook.png" },
+              "default"  => { "path" => "/img/default.png", "height" => 3, "width" => 4 },
+            },
+          }
+        end
+        let(:page) { make_page(meta) }
+
+        it "outputs the facebook image without dimensions" do
+          expected = %r!<meta property="og:image:height" content="3" />!
+          expect(output).not_to match(expected)
+          expected = %r!<meta property="og:image:width" content="4" />!
+          expect(output).not_to match(expected)
+        end
+
+        it "outputs the default image JSON object with dimensions" do
+          expect(json_data["image"]["url"]).to eql("http://example.invalid/img/default.png")
+          expect(json_data["image"]["height"]).to eql(3)
+          expect(json_data["image"]["width"]).to eql(4)
+        end
+      end
+
       context "when given a twitter image" do
         let(:page) { make_page("image" => { "twitter" => "/img/twitter.png" }) }
 
@@ -167,17 +269,16 @@ describe Jekyll::SeoTag do
         end
       end
 
-      context "when given the image height and width" do
-        let(:page) { make_page("image" => { "facebook" => { "path" => "/img/foo.png", "height" => 1, "width" => 2 } }) }
+      context "when given a twitter image as a path" do
+        let(:page) { make_page("image" => { "twitter" => { "path" => "/img/twitter.png" } }) }
 
         it "outputs the image" do
-          expected = %r!<meta property="og:image:height" content="1" />!
-          expect(output).to match(expected)
-          expected = %r!<meta property="og:image:width" content="2" />!
+          expected = %r!<meta name="twitter:image" content="http://example.invalid/img/twitter.png" />!
           expect(output).to match(expected)
         end
       end
 
+      # A legacy test for an old implementation of facebook height and width
       context "when given the image height and width (legacy)" do
         let(:page) { make_page("image" => { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 }) }
 
@@ -199,30 +300,18 @@ describe Jekyll::SeoTag do
     end
 
     context "with absolute site.logo" do
-      let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid") }
+      let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid", "author" => "Mr. Foo") }
 
       it "outputs the logo" do
         expect(json_data["publisher"]["logo"]["url"]).to eql("http://cdn.example.invalid/logo.png")
       end
-    end
 
-    context "with image.default.path, image.default.height, and image.default.width" do
-      let(:meta) do
-        {
-          "image" => { "default" => { "path" => "/img/banner.png", "height" => 1, "width" => 2 } },
-          "url"   => "http://example.invalid",
-        }
-      end
-      let(:page) { make_post(meta) }
-
-      it "outputs the image object with dimensions" do
-        expect(json_data["image"]["url"]).to eql("http://example.invalid/img/banner.png")
-        expect(json_data["image"]["height"]).to eql(1)
-        expect(json_data["image"]["width"]).to eql(2)
+      it "outputs the author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
       end
     end
 
-    context "with page.author" do
+    context "with page author" do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
       let(:page) { make_post("author" => "Mr. Foo") }
 
