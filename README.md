@@ -221,6 +221,17 @@ image:
 
 Using the image dimensions are optional, but the [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/u/0/) will consider the JSON-LD to have errors with certain types (i.e. BlogPosting) when an image does not have specified dimensions.
 
+#### Deprecated image output
+
+The older method for setting facebook image dimensions (shown below) is **no longer recommended**. It will continue work as intended, but is no longer the suggested procedure due to the lack of clarity in where these dimensions are assigned. 
+
+```yml
+image:
+  facebook: /img/bad_facebook_example.png		
+  height: 100		
+  width: 100		
+```
+
 ### Setting a default image
 
 You can define a default image using [Front Matter default](https://jekyllrb.com/docs/configuration/#front-matter-defaults), to provide a default Twitter Card or OGP image to all of your posts and pages.
