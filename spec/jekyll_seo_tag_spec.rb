@@ -44,13 +44,47 @@ describe Jekyll::SeoTag do
       expect(output).to match(expected)
     end
 
+    context "with site.name" do
+      let(:site) { make_site("name" => "Site Name") }
+
+      it "builds the title with a page title and site name" do
+        expect(output).to match(%r!<title>foo \| Site Name</title>!)
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "bar") }
 
       it "builds the title with a page title and site title" do
-        expect(output).to match(%r!<title>foo - bar</title>!)
+        expect(output).to match(%r!<title>foo \| bar</title>!)
       end
     end
+
+    context "with site.title and site.description" do
+      let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+      it "builds the title with a page title and site title" do
+        expect(output).to match(%r!<title>foo \| Site Title</title>!)
+      end
+
+      it "does not build the title with the site description" do
+        expect(output).not_to match(%r!<title>foo \| Site Description</title>!)
+      end
+    end
+
+    context "with site.title and site.description" do
+      let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+      it "builds the title with a page title and site title" do
+        expect(output).to match(%r!<title>foo \| Site Title</title>!)
+      end
+
+      it "does not build the title with the site description" do
+        expect(output).not_to match(%r!<title>Page Title \| Site Description</title>!)
+      end
+
+    end
+
   end
 
   context "with site.title" do
@@ -58,6 +92,14 @@ describe Jekyll::SeoTag do
 
     it "builds the title with only a site title" do
       expect(output).to match(%r!<title>Site title</title>!)
+    end
+  end
+
+  context "with site.title and site.description" do
+    let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+    it "builds the title with site title and description" do
+      expect(output).to match(%r!<title>Site Title \| Site Description</title>!)
     end
   end
 
