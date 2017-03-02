@@ -9,9 +9,9 @@
 {% assign seo_title = page.title | default: seo_site_title %}
 
 {% if page.title and seo_site_title %}
-  {% assign seo_title = seo_title | append:" | " | append: seo_site_title %}
+  {% assign seo_title = page.title | append:" | " | append: seo_site_title %}
 {% elsif site.description and seo_site_title %}
-  {% assign seo_title = seo_title | append:" | " | append: site.description %}
+  {% assign seo_title = seo_site_title | append:" | " | append: site.description %}
 {% endif %}
 
 {% if page.seo and page.seo.name %}
