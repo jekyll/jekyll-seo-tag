@@ -8,7 +8,7 @@ A Jekyll plugin to add metadata tags for search engines and social networks to b
 
 Jekyll SEO Tag adds the following meta tags to your site:
 
-* Pages title (with site title appended when available)
+* Page title, with site title or description appended
 * Page description
 * Canonical URL
 * Next and previous URLs on paginated pages
