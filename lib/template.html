@@ -10,7 +10,7 @@
 
 {% if page.title and seo_site_title %}
   {% assign seo_title = seo_title | append:" | " | append: seo_site_title %}
-{% elsif site.description %}
+{% elsif site.description and seo_site_title %}
   {% assign seo_title = seo_title | append:" | " | append: site.description %}
 {% endif %}
 

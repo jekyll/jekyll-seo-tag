@@ -60,6 +60,14 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with site.description" do
+      let(:site) { make_site("description" => "Site Description") }
+
+      it "builds the title without the site description" do
+        expect(output).not_to match(%r!<title>foo \| Site Description</title>!)
+      end
+    end
+
     context "with site.title and site.description" do
       let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
 
@@ -82,9 +90,7 @@ describe Jekyll::SeoTag do
       it "does not build the title with the site description" do
         expect(output).not_to match(%r!<title>Page Title \| Site Description</title>!)
       end
-
     end
-
   end
 
   context "with site.title" do
