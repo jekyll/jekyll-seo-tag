@@ -581,4 +581,24 @@ EOS
       end
     end
   end
+
+  context "with locale" do
+    let(:site) { make_site("locale" => "en_US") }
+
+    it "uses site.locale if page.locale is not present" do
+      expected = %r!<meta property="og:locale" content="en_US" />!
+      expect(output).to match(expected)
+    end
+
+    context "with page.locale" do
+      let(:site)  { make_site("locale" => "en_US") }
+      let(:page)  { make_page("locale" => "en_UK") }
+
+      it "uses page.locale if both site.locale and page.locale are present" do
+        expected = %r!<meta property="og:locale" content="en_UK" />!
+        expect(output).to match(expected)
+      end
+    end
+  end
+
 end
