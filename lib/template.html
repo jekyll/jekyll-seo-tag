@@ -97,6 +97,10 @@
   {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
 
+{% if site.locale %}
+  {% assign seo_page_locale = page.locale | default: site.locale %}
+{% endif %}
+
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
@@ -107,6 +111,10 @@
 
 {% if seo_author_name %}
   <meta name="author" content="{{ seo_author_name }}" />
+{% endif %}
+
+{% if seo_page_locale %}
+  <meta name="og:locale" content="{{ seo_page_locale }}" />
 {% endif %}
 
 {% if seo_description %}
