@@ -16,6 +16,10 @@ Style/Documentation:
 Style/FileName:
   Enabled: false
 
+Style/IndentHeredoc:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - vendor/**/*
