@@ -97,9 +97,7 @@
   {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
 
-{% if site.locale %}
-  {% assign seo_page_locale = page.locale | default: site.locale %}
-{% endif %}
+{% assign seo_page_locale = page.locale | default: site.locale | default: "en_US"" %}
 
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
@@ -113,9 +111,7 @@
   <meta name="author" content="{{ seo_author_name }}" />
 {% endif %}
 
-{% if seo_page_locale %}
-  <meta name="og:locale" content="{{ seo_page_locale }}" />
-{% endif %}
+<meta property="og:locale" content="{{ seo_page_locale }}" />
 
 {% if seo_description %}
   <meta name="description" content="{{ seo_description }}" />

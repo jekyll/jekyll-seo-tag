@@ -257,6 +257,7 @@ describe Jekyll::SeoTag do
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
+<meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
 <meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
@@ -583,20 +584,26 @@ EOS
   end
 
   context "with locale" do
-    let(:site) { make_site("locale" => "en_US") }
-
-    it "uses site.locale if page.locale is not present" do
+    it "uses en_US when no locale is specified" do
       expected = %r!<meta property="og:locale" content="en_US" />!
       expect(output).to match(expected)
     end
 
-    context "with page.locale" do
+    context "with site.locale" do
       let(:site)  { make_site("locale" => "en_US") }
-      let(:page)  { make_page("locale" => "en_UK") }
-
-      it "uses page.locale if both site.locale and page.locale are present" do
-        expected = %r!<meta property="og:locale" content="en_UK" />!
+      
+      it "uses site.locale if page.locale is not present" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
         expect(output).to match(expected)
+      end
+
+      context "with page.locale" do
+        let(:page)  { make_page("locale" => "en_UK") }
+
+        it "uses page.locale if both site.locale and page.locale are present" do
+          expected = %r!<meta property="og:locale" content="en_UK" />!
+          expect(output).to match(expected)
+        end
       end
     end
   end
