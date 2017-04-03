@@ -423,7 +423,7 @@ EOS
         expected = %r!<link href="https://plus.google.com/\+jekyllrb" rel="publisher" />!
         expect(output).to match(expected)
       end
-      
+
       context "with page.author as a string" do
         let(:page) { make_page("author" => "benbalter") }
 
