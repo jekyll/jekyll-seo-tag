@@ -90,7 +90,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image.twitter | default: page.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
@@ -128,17 +128,14 @@
 {% endif %}
 
 {% if seo_page_image %}
-<meta property="og:image" content="{{ seo_page_image }}" />
+
+  <meta property="og:image" content="{{ seo_page_image }}" />
   {% if page.image.height %}
     <meta property="og:image:height" content="{{ page.image.height }}" />
   {% endif %}
   {% if page.image.width %}
     <meta property="og:image:width" content="{{ page.image.width }}" />
   {% endif %}
-{% endif %}
-
-{% if page.image.twitter %}
-  <meta name="twitter:image" content="{{ page.image.twitter | absolute_url }}" />
 {% endif %}
 
 {% if page.date %}
