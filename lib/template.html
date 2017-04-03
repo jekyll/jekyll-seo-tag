@@ -89,8 +89,8 @@
   {% assign seo_site_logo = seo_site_logo | escape %}
 {% endif %}
 
-{% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
+{% if page.image or site.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image | default: site.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
