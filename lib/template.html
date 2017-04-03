@@ -97,7 +97,7 @@
   {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
 
-{% assign seo_page_locale = page.locale | default: site.locale | default: "en_US"" %}
+{% assign seo_page_locale = page.lang | default: site.lang | default: "en_US"" %}
 
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
