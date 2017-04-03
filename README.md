@@ -13,8 +13,8 @@ Jekyll SEO Tag adds the following meta tags to your site:
 * Canonical URL
 * Next and previous URLs on paginated pages
 * [JSON-LD Site and post metadata](https://developers.google.com/structured-data/) for richer indexing
-* [Open graph](http://ogp.me/) title, description, site title, and URL (for Facebook, LinkedIn, etc.)
-* [Twitter summary card](https://dev.twitter.com/cards/overview) metadata
+* [Open Graph](http://ogp.me/) title, description, site title, and URL (for Facebook, LinkedIn, etc.)
+* [Twitter Summary Card](https://dev.twitter.com/cards/overview) metadata
 
 While you could theoretically add the necessary metadata tags yourself, Jekyll SEO Tag provides a battle-tested template of crowdsourced best-practices.
 
@@ -191,17 +191,14 @@ The following options can be set for any particular page. While the default opti
 For most users, setting `image: [path-to-image]` on a per-page basis should be enough. If you need more control over how images are represented, the `image` property can also be an object, with the following options:
 
 * `path` - The relative path to the image. Same as `image: [path-to-image]`
-* `twitter` - The relative path to a Twitter-specific image.
-* `facebook` - The relative path to a Facebook-specific image.
-* `height` - The height of the Facebook (`og:image`) image
-* `width` - The width of the Facebook (`og:image`) image
+* `height` - The height of the Open Graph (`og:image`) image
+* `width` - The width of the Open Graph (`og:image`) image
 
 You can use any of the above, optional properties, like so:
 
 ```yml
 image:
-  twitter: /img/twitter.png
-  facebook: /img/facebook.png
+  path: /img/twitter.png
   height: 100
   width: 100
 ```
