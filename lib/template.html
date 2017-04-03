@@ -94,27 +94,11 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image_default = page.image.default.path | default: page.image.default | default: page.image.path | default: page.image %}
-  {% unless seo_page_image_default contains "://" %}
-    {% assign seo_page_image_default = seo_page_image_default | absolute_url %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
+  {% unless seo_page_image contains "://" %}
+    {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
-  {% assign seo_page_image_default = seo_page_image_default | escape %}
-  {% assign seo_page_image_default_width = page.image.default.width %}
-  {% assign seo_page_image_default_height = page.image.default.height %}
-
-  {% assign seo_page_image_facebook = page.image.facebook.path | default: page.image.facebook %}
-  {% unless seo_page_image_facebook contains "://" %}
-    {% assign seo_page_image_facebook = seo_page_image_facebook | absolute_url %}
-  {% endunless %}
-  {% assign seo_page_image_facebook = seo_page_image_facebook | escape %}
-  {% assign seo_page_image_facebook_width = page.image.facebook.width | default: page.image.width %}
-  {% assign seo_page_image_facebook_height = page.image.facebook.height | default: page.image.height %}
-
-  {% assign seo_page_image_twitter = page.image.twitter.path | default: page.image.twitter %}
-  {% unless seo_page_image_twitter contains "://" %}
-    {% assign seo_page_image_twitter = seo_page_image_twitter | absolute_url %}
-  {% endunless %}
-  {% assign seo_page_image_twitter = seo_page_image_twitter | escape %}
+  {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
 
 {% if seo_tag.title and seo_title %}
@@ -143,27 +127,18 @@
   <meta property="og:site_name" content="{{ seo_site_title }}" />
 {% endif %}
 
-{% if page.image %}
-  {% if page.image.facebook %}
-    {% assign local_seo_page_image = seo_page_image_facebook %}
-    {% assign local_seo_page_image_height = seo_page_image_facebook_height %}
-    {% assign local_seo_page_image_width = seo_page_image_facebook_width %}
-  {% else %}
-    {% assign local_seo_page_image = seo_page_image_default %}
-    {% assign local_seo_page_image_height = seo_page_image_default_height %}
-    {% assign local_seo_page_image_width = seo_page_image_default_width %}
+{% if seo_page_image %}
+<meta property="og:image" content="{{ seo_page_image }}" />
+  {% if page.image.height %}
+    <meta property="og:image:height" content="{{ page.image.height }}" />
   {% endif %}
-  <meta property="og:image" content="{{ local_seo_page_image }}" />
-  {% if local_seo_page_image_height %}
-    <meta property="og:image:height" content="{{ local_seo_page_image_height }}" />
-  {% endif %}
-  {% if local_seo_page_image_width %}
-    <meta property="og:image:width" content="{{ local_seo_page_image_width }}" />
+  {% if page.image.width %}
+    <meta property="og:image:width" content="{{ page.image.width }}" />
   {% endif %}
 {% endif %}
 
 {% if page.image.twitter %}
-  <meta name="twitter:image" content="{{ seo_page_image_twitter }}" />
+  <meta name="twitter:image" content="{{ page.image.twitter | absolute_url }}" />
 {% endif %}
 
 {% if page.date %}
@@ -179,7 +154,7 @@
 {% endif %}
 
 {% if site.twitter %}
-  {% if page.image or page.image.twitter %}
+  {% if seo_page_image or page.image.twitter %}
     <meta name="twitter:card" content="summary_large_image" />
   {% else %}
     <meta name="twitter:card" content="summary" />
@@ -242,22 +217,13 @@
 
 {% if seo_author %}
     "author": {
-      "@type": "Person",
-      "name": {{ seo_author | jsonify }}
+       "@type": "Person",
+       "name": {{ seo_author | jsonify }}
     },
 {% endif %}
 
-{% if seo_page_image_default %}
-    {% if seo_page_image_default_height && seo_page_image_default_width %}
-      "image": {
-          "@type": "ImageObject",
-          "url": {{ seo_page_image_default | jsonify }},
-          "height": {{ seo_page_image_default_height | jsonify }},
-          "width": {{ seo_page_image_default_width | jsonify }}
-      },
-    {% else %}
-        "image": {{ seo_page_image_default | jsonify }},
-    {% endif %}
+{% if seo_page_image %}
+    "image": {{ seo_page_image | jsonify }},
 {% endif %}
 
 {% if page.date %}
@@ -287,8 +253,8 @@
 
 {% if seo_type == "BlogPosting" or seo_type == "CreativeWork"%}
     "mainEntityOfPage": {
-         "@type": "WebPage",
-         "@id": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
+        "@type": "WebPage",
+        "@id": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
     },
 {% endif %}
 

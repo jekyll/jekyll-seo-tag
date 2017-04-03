@@ -78,6 +78,8 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
+  * `date_modified` - (YYYY-MM-DD hh:mm) A manual override for the `dateModified` field in the JSON-LD output. This field will take **first priority** for the `dateModified` output. This is useful when the file timestamp does not match the true time that the content was modified.
+  * A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
 
   ```yml
   social:
@@ -185,8 +187,6 @@ The following options can be set for any particular page. While the default opti
   * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
   * `type` - The type of things that the page represents. This must be a [Schema.org type](http://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](http://schema.org/BlogPosting), [`NewsArticle`](http://schema.org/NewsArticle), [`Person`](http://schema.org/Person), [`Organization`](http://schema.org/Organization), etc.
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
-  * `date_modified` - (YYYY-MM-DD hh:mm) A manual override for the `dateModified` field in the JSON-LD output. This field will take **first priority** for the `dateModified` output. This is useful when the file timestamp does not match the true time that the content was modified.
-    * A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
 
 ### Customizing image output
 
@@ -195,41 +195,17 @@ For most users, setting `image: [path-to-image]` on a per-page basis should be e
 * `path` - The relative path to the image. Same as `image: [path-to-image]`
 * `twitter` - The relative path to a Twitter-specific image.
 * `facebook` - The relative path to a Facebook-specific image.
-* `height` - The height of the image in pixels.
-* `width` - The width of image in pixels.
+* `height` - The height of the Facebook (`og:image`) image
+* `width` - The width of the Facebook (`og:image`) image
 
 You can use any of the above, optional properties, like so:
 
 ```yml
-image: /img/banner.png
-```
-
-Or if you have Facebook or Twitter specific images simply use:
-
-```yml
 image:
-  default:
-    path: /img/banner.png
-    height: 100
-    width: 100
-  facebook:
-    path: /img/facebook.png
-    height: 90
-    width: 90
   twitter: /img/twitter.png
-```
-
-Using the image dimensions are optional, but the [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/u/0/) will consider the JSON-LD to have errors with certain types (i.e. BlogPosting) when an image does not have specified dimensions.
-
-#### Deprecated image output
-
-The older method for setting facebook image dimensions (shown below) is **no longer recommended**. It will continue work as intended, but is no longer the suggested procedure due to the lack of clarity in where these dimensions are assigned. 
-
-```yml
-image:
-  facebook: /img/bad_facebook_example.png		
-  height: 100		
-  width: 100		
+  facebook: /img/facebook.png
+  height: 100
+  width: 100
 ```
 
 ### Setting a default image
