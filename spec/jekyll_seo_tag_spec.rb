@@ -591,7 +591,7 @@ EOS
 
     context "with site.lang" do
       let(:site)  { make_site("lang" => "en_US") }
-      
+
       it "uses site.lang if page.lang is not present" do
         expected = %r!<meta property="og:locale" content="en_US" />!
         expect(output).to match(expected)
@@ -607,5 +607,4 @@ EOS
       end
     end
   end
-
 end
