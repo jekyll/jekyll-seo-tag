@@ -420,7 +420,7 @@ EOS
       let(:site) { make_site("author" => site_author) }
 
       it "outputs googleplus link" do
-        expected = %r!<link href="https://plus.google.com/+jekyllrb" rel="publisher" />!
+        expected = %r!<link href="https://plus.google.com/\+jekyllrb" rel="publisher" />!
         expect(output).to match(expected)
       end
       
@@ -428,7 +428,7 @@ EOS
         let(:page) { make_page("author" => "benbalter") }
 
         it "outputs googleplus link" do
-          expected = %r!<link href="https://plus.google.com/+benbalter" rel="publisher" />!
+          expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
           expect(output).to match(expected)
         end
 
@@ -436,7 +436,7 @@ EOS
           let(:page) { make_page("author" => "+benbalter") }
 
           it "outputs googleplus link" do
-            expected = %r!<link href="https://plus.google.com/+benbalter" rel="publisher" />!
+            expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
             expect(output).to match(expected)
           end
         end
@@ -449,14 +449,14 @@ EOS
           context "with the author in site.data.authors" do
             let(:author_data) { { "benbalter" => { "googleplus" => "test" } } }
             it "outputs googleplus link" do
-              expected = %r!<link href="https://plus.google.com/+test" rel="publisher" />!
+              expected = %r!<link href="https://plus.google.com/\+test" rel="publisher" />!
               expect(output).to match(expected)
             end
           end
 
           context "without the author in site.data.authors" do
             it "outputs googleplus link" do
-              expected = %r!<link href="https://plus.google.com/+benbalter" rel="publisher" />!
+              expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
               expect(output).to match(expected)
             end
           end
@@ -467,7 +467,7 @@ EOS
         let(:page) { make_page("author" => { "googleplus" => "benbalter" }) }
 
         it "supports author data as a hash" do
-          expected = %r!<link href="https://plus.google.com/+benbalter" rel="publisher" />!
+          expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
           expect(output).to match(expected)
         end
       end
@@ -476,7 +476,7 @@ EOS
         let(:page) { make_page("authors" => %w(test foo)) }
 
         it "supports author data as an array" do
-          expected = %r!<link href="https://plus.google.com/+test" rel="publisher" />!
+          expected = %r!<link href="https://plus.google.com/\+test" rel="publisher" />!
           expect(output).to match(expected)
         end
       end
