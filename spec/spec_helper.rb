@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "jekyll"
 require "jekyll-seo-tag"
-require "html/proofer"
+require "html-proofer"
 
 ENV["JEKYLL_LOG_LEVEL"] = "error"
 
@@ -16,7 +16,7 @@ end
 CONFIG_DEFAULTS = {
   "source"      => source_dir,
   "destination" => dest_dir,
-  "gems"        => ["jekyll-seo-tag"]
+  "gems"        => ["jekyll-seo-tag"],
 }.freeze
 
 def make_page(options = {})

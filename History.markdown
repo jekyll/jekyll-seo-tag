@@ -1,12 +1,22 @@
 ## HEAD
 
-### Development Fixes
+### Major Enhancements
 
-  * Rubocop shouldn't worry if tests are too long (#149)
+  * Add author meta (#103)
+  * Add og:locale support #166
+  * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
 
 ### Minor Enhancements
 
-  * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
+  * Use `|` for title separator (#162)
+  * Use `og:image` for twitter image (#174)
+
+### Development Fixes
+
+  * Style fixes (#170, #157, #149)
+  * Test against latest version of Jekyll (#171)
+  * Bump dev dependencies (#172)
+  * Remove Rake dependency (#180)
 
 ## 2.1.0
 

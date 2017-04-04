@@ -29,9 +29,9 @@ describe Jekyll::SeoTag do
     site.process
     options = {
       :check_html       => true,
-      :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck)
+      :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck),
     }
-    status = HTML::Proofer.new(dest_dir, options).run
+    status = HTMLProofer.check_directory(dest_dir, options).run
     expect(status).to eql(true)
   end
 
@@ -44,11 +44,51 @@ describe Jekyll::SeoTag do
       expect(output).to match(expected)
     end
 
+    context "with site.name" do
+      let(:site) { make_site("name" => "Site Name") }
+
+      it "builds the title with a page title and site name" do
+        expect(output).to match(%r!<title>foo \| Site Name</title>!)
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "bar") }
 
       it "builds the title with a page title and site title" do
-        expect(output).to match(%r!<title>foo - bar</title>!)
+        expect(output).to match(%r!<title>foo \| bar</title>!)
+      end
+    end
+
+    context "with site.description" do
+      let(:site) { make_site("description" => "Site Description") }
+
+      it "builds the title without the site description" do
+        expect(output).not_to match(%r!<title>foo \| Site Description</title>!)
+      end
+    end
+
+    context "with site.title and site.description" do
+      let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+      it "builds the title with a page title and site title" do
+        expect(output).to match(%r!<title>foo \| Site Title</title>!)
+      end
+
+      it "does not build the title with the site description" do
+        expect(output).not_to match(%r!<title>foo \| Site Description</title>!)
+      end
+    end
+
+    context "with site.title and site.description" do
+      let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+      it "builds the title with a page title and site title" do
+        expect(output).to match(%r!<title>foo \| Site Title</title>!)
+      end
+
+      it "does not build the title with the site description" do
+        expect(output).not_to match(%r!<title>Page Title \| Site Description</title>!)
       end
     end
   end
@@ -58,6 +98,14 @@ describe Jekyll::SeoTag do
 
     it "builds the title with only a site title" do
       expect(output).to match(%r!<title>Site title</title>!)
+    end
+  end
+
+  context "with site.title and site.description" do
+    let(:site) { make_site("title" => "Site Title", "description" => "Site Description") }
+
+    it "builds the title with site title and description" do
+      expect(output).to match(%r!<title>Site Title \| Site Description</title>!)
     end
   end
 
@@ -124,7 +172,7 @@ describe Jekyll::SeoTag do
     context "with relative page.image as a string" do
       let(:page) { make_page("image" => "/img/foo.png") }
 
-      it "outputs the image" do
+      it "outputs an open graph image" do
         expected = '<meta property="og:image" content="http://example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
@@ -133,7 +181,7 @@ describe Jekyll::SeoTag do
     context "with absolute page.image" do
       let(:page) { make_page("image" => "http://cdn.example.invalid/img/foo.png") }
 
-      it "outputs the image" do
+      it "outputs an open graph image" do
         expected = '<meta property="og:image" content="http://cdn.example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
@@ -143,7 +191,7 @@ describe Jekyll::SeoTag do
       context "when given a path" do
         let(:page) { make_page("image" => { "path" => "/img/foo.png" }) }
 
-        it "outputs the image" do
+        it "outputs an open graph image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
         end
@@ -152,7 +200,7 @@ describe Jekyll::SeoTag do
       context "when given a facebook image" do
         let(:page) { make_page("image" => { "facebook" => "/img/facebook.png" }) }
 
-        it "outputs the image" do
+        it "outputs an open graph image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/facebook.png" />!
           expect(output).to match(expected)
         end
@@ -161,17 +209,17 @@ describe Jekyll::SeoTag do
       context "when given a twitter image" do
         let(:page) { make_page("image" => { "twitter" => "/img/twitter.png" }) }
 
-        it "outputs the image" do
-          expected = %r!<meta name="twitter:image" content="http://example.invalid/img/twitter.png" />!
+        it "outputs an open graph image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/twitter.png" />!
           expect(output).to match(expected)
         end
       end
 
-      context "when given the image height and width" do
-        let(:image) { { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 } }
+      context "when given an image height and width" do
+        let(:image) { { "path" => "/img/foo.png", "height" => 1, "width" => 2 } }
         let(:page) { make_page("image" => image) }
 
-        it "outputs the image" do
+        it "outputs an open graph image width and height" do
           expected = %r!<meta property="og:image:height" content="1" />!
           expect(output).to match(expected)
           expected = %r!<meta property="og:image:width" content="2" />!
@@ -209,6 +257,7 @@ describe Jekyll::SeoTag do
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
+<meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
 <meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
@@ -225,7 +274,7 @@ EOS
         {
           "title"       => "post",
           "description" => "description",
-          "image"       => "/img.png"
+          "image"       => "/img.png",
         }
       end
       let(:page) { make_post(meta) }
@@ -255,7 +304,7 @@ EOS
       {
         "admins"    => "jekyllrb-fb-admins",
         "app_id"    => "jekyllrb-fb-app_id",
-        "publisher" => "jekyllrb-fb-publisher"
+        "publisher" => "jekyllrb-fb-publisher",
       }
     end
 
@@ -366,6 +415,55 @@ EOS
     end
   end
 
+  context "author" do
+    let(:site) { make_site("author" => "Site Author") }
+
+    context "with site.author" do
+      it "outputs site author metadata" do
+        expected = %r!<meta name="author" content="Site Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "with page.author" do
+      let(:page) { make_page("author" => "Page Author") }
+
+      it "outputs page author metadata" do
+        expected = %r!<meta name="author" content="Page Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "without page.author" do
+      let(:page) { make_page("author" => "") }
+
+      it "outputs site author metadata" do
+        expected = %r!<meta name="author" content="Site Author" />!
+        expect(output).to match(expected)
+      end
+    end
+
+    context "with site.data.authors" do
+      let(:author_data) { { "renshuki" => { "name" => "Site Data Author" } } }
+      let(:data) { { "authors" => author_data } }
+
+      context "with the author in site.data.authors" do
+        let(:site) { make_site("data" => data, "author" => "renshuki") }
+        it "outputs the author metadata" do
+          expected = %r!<meta name="author" content="Site Data Author" />!
+          expect(output).to match(expected)
+        end
+      end
+
+      context "without the author in site.data.authors" do
+        it "outputs site author metadata" do
+          expected = %r!<meta name="author" content="Site Author" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+  end
+
   context "with site.social" do
     let(:links) { ["http://foo.invalid", "http://bar.invalid"] }
     let(:social_namespace) { { "name" => "Ben", "links" => links } }
@@ -377,8 +475,8 @@ EOS
         {
           "permalink" => "/",
           "seo"       => {
-            "type" => "person"
-          }
+            "type" => "person",
+          },
         }
       end
 
@@ -448,7 +546,7 @@ EOS
           "google" => "foo",
           "bing"   => "bar",
           "alexa"  => "baz",
-          "yandex" => "bat"
+          "yandex" => "bat",
         }
       end
 
@@ -480,6 +578,40 @@ EOS
 
       it "outputs google verification meta" do
         expected = %r!<meta name="google-site-verification" content="foo" />!
+        expect(output).to match(expected)
+      end
+    end
+  end
+
+  context "with locale" do
+    it "uses en_US when no locale is specified" do
+      expected = %r!<meta property="og:locale" content="en_US" />!
+      expect(output).to match(expected)
+    end
+
+    context "with site.lang" do
+      let(:site)  { make_site("lang" => "en_US") }
+
+      it "uses site.lang if page.lang is not present" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
+        expect(output).to match(expected)
+      end
+
+      context "with page.lang" do
+        let(:page)  { make_page("lang" => "en_UK") }
+
+        it "uses page.lang if both site.lang and page.lang are present" do
+          expected = %r!<meta property="og:locale" content="en_UK" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+
+    context "with site.lang hyphenated" do
+      let(:site)  { make_site("lang" => "en-US") }
+
+      it "coerces hyphen to underscore" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
         expect(output).to match(expected)
       end
     end
