@@ -102,12 +102,15 @@ webmaster_verifications:
   yandex: 1234
 ```
 
+* `lang` - The locale these tags are marked up in. Of the format `language_TERRITORY`. Default is `en_US`.
+
 The SEO tag will respect the following YAML front matter if included in a post, page, or document:
 
 * `title` - The title of the post, page, or document
 * `description` - A short description of the page's content
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
+* `lang` - Page-, post-, or document-specific language information
 
 ## Advanced usage
 
