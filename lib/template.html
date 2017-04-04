@@ -111,7 +111,7 @@
   <meta name="author" content="{{ seo_author_name }}" />
 {% endif %}
 
-<meta property="og:locale" content="{{ seo_page_lang }}" />
+<meta property="og:locale" content="{{ seo_page_lang | replace:'-','_' }}" />
 
 {% if seo_description %}
   <meta name="description" content="{{ seo_description }}" />
@@ -128,7 +128,6 @@
 {% endif %}
 
 {% if seo_page_image %}
-
   <meta property="og:image" content="{{ seo_page_image }}" />
   {% if page.image.height %}
     <meta property="og:image:height" content="{{ page.image.height }}" />

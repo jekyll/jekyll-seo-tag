@@ -606,5 +606,14 @@ EOS
         end
       end
     end
+    
+    context "with site.lang hyphenated" do
+      let(:site)  { make_site("lang" => "en-US") }
+
+      it "coerces hyphen to underscore" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
+        expect(output).to match(expected)
+      end
+    end
   end
 end
