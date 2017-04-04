@@ -44,7 +44,7 @@ module Jekyll
     end
 
     def title?
-      !(@text =~ %r!title=false!i)
+      @text !~ %r!title=false!i
     end
 
     def info
