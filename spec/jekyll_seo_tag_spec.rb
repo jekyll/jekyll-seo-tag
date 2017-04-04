@@ -31,7 +31,7 @@ describe Jekyll::SeoTag do
       :check_html       => true,
       :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck),
     }
-    status = HTML::Proofer.new(dest_dir, options).run
+    status = HTMLProofer.check_directory(dest_dir, options).run
     expect(status).to eql(true)
   end
 
