@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "jekyll"
 require "jekyll-seo-tag"
-require "html/proofer"
+require "html-proofer"
 
 ENV["JEKYLL_LOG_LEVEL"] = "error"
 
