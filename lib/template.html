@@ -219,6 +219,10 @@
     "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
 {% endif %}
 
+{% if page.last_modified_at %}
+    "dateModified": {{ page.last_modified_at | date_to_xmlschema | jsonify }},
+{% endif %}
+
 {% if seo_description %}
     "description": {{ seo_description | jsonify }},
 {% endif %}
