@@ -606,7 +606,7 @@ EOS
         end
       end
     end
-    
+
     context "with site.lang hyphenated" do
       let(:site)  { make_site("lang" => "en-US") }
 
