@@ -172,7 +172,7 @@ describe Jekyll::SeoTag do
     context "with relative page.image as a string" do
       let(:page) { make_page("image" => "/img/foo.png") }
 
-      it "outputs the image" do
+      it "outputs an open graph image" do
         expected = '<meta property="og:image" content="http://example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
@@ -181,7 +181,7 @@ describe Jekyll::SeoTag do
     context "with absolute page.image" do
       let(:page) { make_page("image" => "http://cdn.example.invalid/img/foo.png") }
 
-      it "outputs the image" do
+      it "outputs an open graph image" do
         expected = '<meta property="og:image" content="http://cdn.example.invalid/img/foo.png" />'
         expect(output).to include(expected)
       end
@@ -191,7 +191,7 @@ describe Jekyll::SeoTag do
       context "when given a path" do
         let(:page) { make_page("image" => { "path" => "/img/foo.png" }) }
 
-        it "outputs the image" do
+        it "outputs an open graph image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
         end
@@ -200,7 +200,7 @@ describe Jekyll::SeoTag do
       context "when given a facebook image" do
         let(:page) { make_page("image" => { "facebook" => "/img/facebook.png" }) }
 
-        it "outputs the image" do
+        it "outputs an open graph image" do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/facebook.png" />!
           expect(output).to match(expected)
         end
@@ -209,17 +209,17 @@ describe Jekyll::SeoTag do
       context "when given a twitter image" do
         let(:page) { make_page("image" => { "twitter" => "/img/twitter.png" }) }
 
-        it "outputs the image" do
-          expected = %r!<meta name="twitter:image" content="http://example.invalid/img/twitter.png" />!
+        it "outputs an open graph image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/img/twitter.png" />!
           expect(output).to match(expected)
         end
       end
 
-      context "when given the image height and width" do
-        let(:image) { { "facebook" => "/img/foo.png", "height" => 1, "width" => 2 } }
+      context "when given an image height and width" do
+        let(:image) { { "path" => "/img/foo.png", "height" => 1, "width" => 2 } }
         let(:page) { make_page("image" => image) }
 
-        it "outputs the image" do
+        it "outputs an open graph image width and height" do
           expected = %r!<meta property="og:image:height" content="1" />!
           expect(output).to match(expected)
           expected = %r!<meta property="og:image:width" content="2" />!
@@ -257,6 +257,7 @@ describe Jekyll::SeoTag do
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
+<meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
 <meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
@@ -577,6 +578,40 @@ EOS
 
       it "outputs google verification meta" do
         expected = %r!<meta name="google-site-verification" content="foo" />!
+        expect(output).to match(expected)
+      end
+    end
+  end
+
+  context "with locale" do
+    it "uses en_US when no locale is specified" do
+      expected = %r!<meta property="og:locale" content="en_US" />!
+      expect(output).to match(expected)
+    end
+
+    context "with site.lang" do
+      let(:site)  { make_site("lang" => "en_US") }
+
+      it "uses site.lang if page.lang is not present" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
+        expect(output).to match(expected)
+      end
+
+      context "with page.lang" do
+        let(:page)  { make_page("lang" => "en_UK") }
+
+        it "uses page.lang if both site.lang and page.lang are present" do
+          expected = %r!<meta property="og:locale" content="en_UK" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+
+    context "with site.lang hyphenated" do
+      let(:site)  { make_site("lang" => "en-US") }
+
+      it "coerces hyphen to underscore" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
         expect(output).to match(expected)
       end
     end
