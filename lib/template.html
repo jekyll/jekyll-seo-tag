@@ -101,6 +101,8 @@
   {% assign seo_page_image = seo_page_image | escape %}
 {% endif %}
 
+{% assign seo_page_lang = page.lang | default: site.lang | default: "en_US" %}
+
 {% if seo_tag.title and seo_title %}
   <title>{{ seo_title }}</title>
 {% endif %}
@@ -112,6 +114,8 @@
 {% if seo_author_name %}
   <meta name="author" content="{{ seo_author_name }}" />
 {% endif %}
+
+<meta property="og:locale" content="{{ seo_page_lang | replace:'-','_' }}" />
 
 {% if seo_description %}
   <meta name="description" content="{{ seo_description }}" />
@@ -128,7 +132,6 @@
 {% endif %}
 
 {% if seo_page_image %}
-
   <meta property="og:image" content="{{ seo_page_image }}" />
   {% if page.image.height %}
     <meta property="og:image:height" content="{{ page.image.height }}" />

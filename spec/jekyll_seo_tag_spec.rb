@@ -31,7 +31,7 @@ describe Jekyll::SeoTag do
       :check_html       => true,
       :checks_to_ignore => %w(ScriptCheck LinkCheck ImageCheck),
     }
-    status = HTML::Proofer.new(dest_dir, options).run
+    status = HTMLProofer.check_directory(dest_dir, options).run
     expect(status).to eql(true)
   end
 
@@ -299,6 +299,7 @@ describe Jekyll::SeoTag do
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
 <meta property="og:title" content="Foo" />
+<meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
 <meta property="og:url" content="http://example.invalid/page.html" />
 <meta property="og:site_name" content="Foo" />
@@ -619,6 +620,40 @@ EOS
 
       it "outputs google verification meta" do
         expected = %r!<meta name="google-site-verification" content="foo" />!
+        expect(output).to match(expected)
+      end
+    end
+  end
+
+  context "with locale" do
+    it "uses en_US when no locale is specified" do
+      expected = %r!<meta property="og:locale" content="en_US" />!
+      expect(output).to match(expected)
+    end
+
+    context "with site.lang" do
+      let(:site)  { make_site("lang" => "en_US") }
+
+      it "uses site.lang if page.lang is not present" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
+        expect(output).to match(expected)
+      end
+
+      context "with page.lang" do
+        let(:page)  { make_page("lang" => "en_UK") }
+
+        it "uses page.lang if both site.lang and page.lang are present" do
+          expected = %r!<meta property="og:locale" content="en_UK" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+
+    context "with site.lang hyphenated" do
+      let(:site)  { make_site("lang" => "en-US") }
+
+      it "coerces hyphen to underscore" do
+        expected = %r!<meta property="og:locale" content="en_US" />!
         expect(output).to match(expected)
       end
     end
