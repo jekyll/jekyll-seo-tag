@@ -1,5 +1,7 @@
 ## HEAD
 
+## 2.2.0
+
 ### Major Enhancements
 
   * Add author meta (#103)
