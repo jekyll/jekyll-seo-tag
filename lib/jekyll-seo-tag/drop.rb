@@ -108,13 +108,12 @@ module Jekyll
         end
       end
 
-      # TODO: escape
       def logo
         return unless site["logo"]
         if absolute_url? site["logo"]
-          site["logo"]
+          uri_escape site["logo"]
         else
-          absolute_url site["logo"]
+          uri_escape absolute_url site["logo"]
         end
       end
 
@@ -127,7 +126,6 @@ module Jekyll
       # 4. The `image.twitter` key
       #
       # The resulting path is always an absolute URL
-      # TODO escape
       def image
         return unless image = page["image"]
 
@@ -137,6 +135,8 @@ module Jekyll
         unless absolute_url? image["path"]
           image["path"] = absolute_url image["path"]
         end
+
+        image["path"] = uri_escape image["path"]
 
         image.to_liquid
       end
