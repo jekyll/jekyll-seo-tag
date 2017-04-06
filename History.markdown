@@ -5,7 +5,8 @@
   * Add author meta (#103)
   * Add og:locale support #166
   * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
-
+  * Add SEO author and date modified to validate JSON-LD output (#151)
+  
 ### Minor Enhancements
 
   * Use `|` for title separator (#162)
