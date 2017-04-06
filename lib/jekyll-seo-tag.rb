@@ -1,4 +1,6 @@
+require "jekyll"
 require "jekyll-seo-tag/version"
+require "jekyll-seo-tag/drop"
 
 module Jekyll
   class SeoTag < Liquid::Tag
@@ -36,15 +38,15 @@ module Jekyll
 
     def payload
       {
-        "page"      => context.registers[:page],
-        "site"      => context.registers[:site].site_payload["site"],
+        "page"      => @context.registers[:page],
+        "site"      => @context.registers[:site].site_payload["site"],
         "paginator" => context["paginator"],
-        "seo_tag"   => options,
+        "seo_tag"   => drop,
       }
     end
 
-    def title?
-      @text !~ %r!title=false!i
+    def drop
+      Jekyll::SeoTag::Drop.new(@text, @context)
     end
 
     def info
