@@ -1,12 +1,12 @@
 module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
-      TITLE_SEPARATOR = " | "
+      TITLE_SEPARATOR = " | ".freeze
       include Jekyll::Filters
       include Liquid::StandardFilters
 
       def initialize(text, context)
-        @obj     = {}
+        @obj = {}
         @mutations = {}
         @text    = text
         @context = context
@@ -71,15 +71,15 @@ module Jekyll
         return if author.to_s.empty?
 
         if author.is_a?(String)
-          if site.data["authors"] && site.data["authors"][author]
-            author = site.data["authors"][author]
-          else
-            author = { "name" => author }
-          end
+          author = if site.data["authors"] && site.data["authors"][author]
+                     site.data["authors"][author]
+                   else
+                     { "name" => author }
+                   end
         end
 
         author["twitter"] ||= author["name"]
-        author["twitter"].gsub! "@", ""
+        author["twitter"].delete! "@"
         author.to_liquid
       end
 
@@ -108,7 +108,7 @@ module Jekyll
         end
       end
 
-      # TODO escape
+      # TODO: escape
       def logo
         return unless site["logo"]
         if absolute_url? site["logo"]
@@ -159,9 +159,7 @@ module Jekyll
         ["/", "/index.html", "/about/"].include? page["url"]
       end
 
-      def context
-        @context
-      end
+      attr_reader :context
 
       def fallback_data
         {}
@@ -172,7 +170,7 @@ module Jekyll
       end
 
       def format_string(string)
-        methods = %i(markdownify strip_html normalize_whitespace escape_once)
+        methods = %i[markdownify strip_html normalize_whitespace escape_once]
         methods.each do |method|
           string = public_send(method, string)
         end
