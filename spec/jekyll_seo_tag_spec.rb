@@ -244,6 +244,48 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with site.logo and page.author" do
+      let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid", "author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with page author" do
+      let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
+      let(:page) { make_post("author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["author"]["@type"]).to eql("Person")
+        expect(json_data["author"]["name"]).to eql("Mr. Foo")
+      end
+
+      it "outputs the publisher author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with seo type is BlogPosting" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => { "type" => "BlogPosting" }, "permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
+    context "with seo type is CreativeWork" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => { "type" => "CreativeWork" }, "permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
