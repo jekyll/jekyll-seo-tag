@@ -23,38 +23,44 @@ module Jekyll
       end
 
       def site_title
-        format_string(site["title"] || site["name"])
+        @site_title ||= format_string(site["title"] || site["name"])
       end
 
       # Page title without site title or description appended
       def page_title
-        format_string(page["title"] || site_title)
+        @page_title ||= format_string(page["title"] || site_title)
       end
 
       # Page title with site title or description appended
       def title
-        if page["title"] && site_title
-          page_title + TITLE_SEPARATOR + site_title
-        elsif site["description"] && site_title
-          site_title + TITLE_SEPARATOR + format_string(site["description"])
-        else
-          page_title || site_title
+        @title ||= begin
+          if page["title"] && site_title
+            page_title + TITLE_SEPARATOR + site_title
+          elsif site["description"] && site_title
+            site_title + TITLE_SEPARATOR + format_string(site["description"])
+          else
+            page_title || site_title
+          end
         end
       end
 
       def name
-        return format_string(seo_name) if seo_name
-        return unless homepage_or_about?
+        @name ||= begin
+          return seo_name if seo_name
+          return unless homepage_or_about?
 
-        if site["social"] && site["social"]["name"]
-          format_string site["social"]["name"]
-        elsif site_title
-          format_string site_title
+          if site["social"] && site["social"]["name"]
+            format_string site["social"]["name"]
+          elsif site_title
+            format_string site_title
+          end
         end
       end
 
       def description
-        format_string(page["description"] || page["excerpt"] || site["description"])
+        @description ||= begin
+          format_string(page["description"] || page["excerpt"] || site["description"])
+        end
       end
 
       # Returns a nil or a hash representing the author
@@ -67,50 +73,60 @@ module Jekyll
       # If the result from the name search is a string, we'll also check
       # to see if the author exists in `site.data.authors`
       def author
-        return if author_string_or_hash.to_s.empty?
+        @author ||= begin
+          return if author_string_or_hash.to_s.empty?
 
-        author = if author_string_or_hash.is_a?(String)
-                   author_hash(author_string_or_hash)
-                 else
-                   author_string_or_hash
-                 end
+          author = if author_string_or_hash.is_a?(String)
+                     author_hash(author_string_or_hash)
+                   else
+                     author_string_or_hash
+                   end
 
-        author["twitter"] ||= author["name"]
-        author["twitter"].delete! "@"
-        author.to_liquid
+          author["twitter"] ||= author["name"]
+          author["twitter"].delete! "@"
+          author.to_liquid
+        end
       end
 
       def date_modified
-        return page["seo"].date_modified if page["seo"] && page["seo"]["date_modified"]
-        page["last_modified_at"] || page["date"]
+        @date_modified ||= begin
+          return page["seo"].date_modified if page["seo"] && page["seo"]["date_modified"]
+          page["last_modified_at"] || page["date"]
+        end
       end
 
       def type
-        if page["seo"] && page["seo"]["type"]
-          page["seo"]["type"]
-        elsif homepage_or_about?
-          "WebSite"
-        elsif page["date"]
-          "BlogPosting"
-        else
-          "WebPage"
+        @type ||= begin
+          if page["seo"] && page["seo"]["type"]
+            page["seo"]["type"]
+          elsif homepage_or_about?
+            "WebSite"
+          elsif page["date"]
+            "BlogPosting"
+          else
+            "WebPage"
+          end
         end
       end
 
       def links
-        if page["seo"] && page["seo"]["links"]
-          page["seo"]["links"]
-        elsif homepage_or_about? && site["social"] && site["social"]["links"]
-          site["social"]["links"]
+        @links ||= begin
+          if page["seo"] && page["seo"]["links"]
+            page["seo"]["links"]
+          elsif homepage_or_about? && site["social"] && site["social"]["links"]
+            site["social"]["links"]
+          end
         end
       end
 
       def logo
-        return unless site["logo"]
-        if absolute_url? site["logo"]
-          uri_escape site["logo"]
-        else
-          uri_escape absolute_url site["logo"]
+        @logo ||= begin
+          return unless site["logo"]
+          if absolute_url? site["logo"]
+            uri_escape site["logo"]
+          else
+            uri_escape absolute_url site["logo"]
+          end
         end
       end
 
@@ -124,6 +140,8 @@ module Jekyll
       #
       # The resulting path is always an absolute URL
       def image
+        return @image if defined?(@image)
+
         image = page["image"]
         return unless image
 
@@ -136,11 +154,11 @@ module Jekyll
 
         image["path"] = uri_escape image["path"]
 
-        image.to_liquid
+        @image = image.to_liquid
       end
 
       def page_lang
-        page["lang"] || site["lang"] || "en_US"
+        @page_lang ||= page["lang"] || site["lang"] || "en_US"
       end
 
       private
@@ -177,10 +195,12 @@ module Jekyll
       end
 
       def author_string_or_hash
-        author = page["author"]
-        author = page["authors"][0] if author.to_s.empty? && page["authors"]
-        author = site["author"] if author.to_s.empty?
-        author
+        @author_string_or_hash ||= begin
+          author = page["author"]
+          author = page["authors"][0] if author.to_s.empty? && page["authors"]
+          author = site["author"] if author.to_s.empty?
+          author
+        end
       end
 
       def author_hash(author_string)
@@ -194,7 +214,7 @@ module Jekyll
       end
 
       def seo_name
-        page["seo"] && page["seo"]["name"]
+        @seo_name ||= format_string(page["seo"]["name"]) if page["seo"]
       end
     end
   end
