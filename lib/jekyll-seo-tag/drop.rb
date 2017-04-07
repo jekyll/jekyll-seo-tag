@@ -2,6 +2,9 @@ module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
       TITLE_SEPARATOR = " | ".freeze
+      FORMAT_STRING_METHODS = %i[
+        markdownify strip_html normalize_whitespace escape_once
+      ].freeze
 
       def initialize(text, context)
         @obj = {}
@@ -190,8 +193,7 @@ module Jekyll
       end
 
       def format_string(string)
-        methods = %i[markdownify strip_html normalize_whitespace escape_once]
-        methods.each do |method|
+        FORMAT_STRING_METHODS.each do |method|
           string = filters.public_send(method, string)
         end
 
