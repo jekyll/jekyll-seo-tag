@@ -230,4 +230,158 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
   end
+
+  context "date modified" do
+    context "with seo.date_modified" do
+      let(:page) { make_page({ "seo" => { "date_modified" => "tuesday" } }) }
+
+      it "uses seo.date_modified" do
+        expect(subject.date_modified).to eql("tuesday")
+      end
+    end
+
+    context "with page.last_modified_at" do
+      let(:page) { make_page({ "last_modified_at" => "tuesday" }) }
+
+      it "uses page.last_modified_at" do
+        expect(subject.date_modified).to eql("tuesday")
+      end
+    end
+
+    context "date" do
+      let(:page) { make_page({ "date" => "tuesday" }) }
+
+      it "uses page.date" do
+        expect(subject.date_modified).to eql("tuesday")
+      end
+    end
+  end
+
+  context "type" do
+    context "with seo.type set" do
+      let(:page) { make_page({ "seo" => { "type" => "test" } }) }
+
+      it "uses seo.type" do
+        expect(subject.type).to eql("test")
+      end
+    end
+
+    context "the homepage" do
+      let(:page) { make_page({ "permalink" => "/" }) }
+
+      it "is a website" do
+        expect(subject.type).to eql("WebSite")
+      end
+    end
+
+    context "the about page" do
+      let(:page) { make_page({ "permalink" => "/about/" }) }
+
+      it "is a website" do
+        expect(subject.type).to eql("WebSite")
+      end
+    end
+
+    context "a blog post" do
+      let(:page) { make_page({ "date" => "2017-01-01" }) }
+
+      it "is a blog post" do
+        expect(subject.type).to eql("BlogPosting")
+      end
+    end
+
+    it "is a webpage" do
+      expect(subject.type).to eql("WebPage")
+    end
+  end
+
+  context "links" do
+    context "with seo.links" do
+      let(:page) { make_page({ "seo" => { "links" => %w(foo bar) } }) }
+
+      it "uses seo.links" do
+        expect(subject.links).to eql(%w(foo bar))
+      end
+    end
+
+    context "with site.social.links" do
+      let(:site) { make_site({ "social" => { "links"=> %w(a b) } }) }
+
+      it "doesn't use site.social.links" do
+        expect(subject.links).to be_nil
+      end
+
+      context "the homepage" do
+        let(:page) { make_page({ "permalink" => "/" }) }
+
+        it "uses site.social.links" do
+          expect(subject.links).to eql(%w(a b))
+        end
+      end
+    end
+  end
+
+  context "logo" do
+    context "without site.logo" do
+      it "returns nothing" do
+        expect(subject.logo).to be_nil
+      end
+    end
+
+    context "with an absolute site.logo" do
+      let(:site) { make_site({ "logo" => "http://example.com/image.png" }) }
+
+      it "uses site.logo" do
+        expect(subject.logo).to eql("http://example.com/image.png")
+      end
+    end
+
+    context "with a relative site.logo" do
+      let(:site) do
+        make_site({
+          "logo" => "image.png",
+          "url"  => "http://example.com",
+        })
+      end
+
+      it "uses site.logo" do
+        expect(subject.logo).to eql("http://example.com/image.png")
+      end
+    end
+
+    context "with a uri-escaped logo" do
+      let(:site) { make_site({ "logo" => "some image.png" }) }
+
+      it "escapes the logo" do
+        expect(subject.logo).to eql("/some%20image.png")
+      end
+    end
+  end
+
+  context "image" do
+  end
+
+  context "lang" do
+    context "with page.lang" do
+      let(:page) { make_page({ "lang" => "en_GB" }) }
+
+      it "uses page.lang" do
+        expect(subject.page_lang).to eql("en_GB")
+      end
+    end
+
+    context "with site.lang" do
+      let(:site) { make_site({ "lang" => "en_GB" }) }
+
+      it "uses site.lang" do
+        expect(subject.page_lang).to eql("en_GB")
+      end
+    end
+
+    context "with nothing" do
+      it "defaults" do
+        expect(subject.page_lang).to eql("en_US")
+      end
+    end
+  end
 end
