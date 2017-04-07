@@ -7,6 +7,14 @@ RSpec.describe Jekyll::SeoTag::Drop do
   let(:text) { "" }
   subject { described_class.new(text, context) }
 
+  # Drop includes liquid filters which expect arguments
+  # By default, in drops, `to_h` will call each public method with no arugments
+  # Here, that would cause the filters to explode. This test ensures that all
+  # public methods don't explode when called without arguments. Don't explode.
+  it "doesn't blow up on to_h" do
+    expect { subject.to_h }.to_not raise_error
+  end
+
   it "returns the version" do
     expect(subject.version).to eql(Jekyll::SeoTag::VERSION)
   end
