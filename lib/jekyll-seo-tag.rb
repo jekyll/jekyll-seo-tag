@@ -46,7 +46,7 @@ module Jekyll
     end
 
     def drop
-      Jekyll::SeoTag::Drop.new(@text, @context)
+      @drop ||= Jekyll::SeoTag::Drop.new(@text, @context)
     end
 
     def info
