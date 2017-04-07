@@ -40,8 +40,8 @@ module Jekyll
 
     def payload
       {
-        "page"      => @context.registers[:page],
-        "site"      => @context.registers[:site].site_payload["site"],
+        "page"      => context.registers[:page],
+        "site"      => context.registers[:site].site_payload["site"],
         "paginator" => context["paginator"],
         "seo_tag"   => drop,
       }
