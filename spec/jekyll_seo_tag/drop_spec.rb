@@ -359,6 +359,61 @@ RSpec.describe Jekyll::SeoTag::Drop do
   end
 
   context "image" do
+    let(:page) { make_page({"image" => image })}
+
+    context "with image as a string" do
+      let(:image) { "image.png" }
+
+      it "returns a hash" do
+        expect(subject.image).to be_a(Hash)
+      end
+
+      it "returns the image" do
+        expect(subject.image["path"]).to eql("/image.png")
+      end
+
+      context "with site.url" do
+        let(:site) { make_site({"url" => "http://example.com"})}
+
+        it "makes the path absolute" do
+          expect(subject.image["path"]).to eql("http://example.com/image.png")
+        end
+      end
+
+      context "with a URL-escaped path" do
+        let(:image) { "some image.png" }
+
+        it "URL-escapes the image" do
+          expect(subject.image["path"]).to eql("/some%20image.png")
+        end
+      end
+    end
+
+    context "with image as a hash" do
+      context "with a path" do
+        let(:image) { { "path" => "image.png" } }
+
+        it "returns the image" do
+          expect(subject.image["path"]).to eql("/image.png")
+        end
+      end
+
+      context "with facebook" do
+        let(:image) { { "facebook" => "image.png" } }
+
+        it "returns the image" do
+          expect(subject.image["path"]).to eql("/image.png")
+        end
+      end
+
+      context "with twitter" do
+        let(:image) { { "twitter" => "image.png" } }
+
+        it "returns the image" do
+          expect(subject.image["path"]).to eql("/image.png")
+        end
+      end
+    end
   end
 
   context "lang" do

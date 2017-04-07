@@ -143,7 +143,7 @@ module Jekyll
         return @image if defined?(@image)
 
         image = page["image"]
-        return unless image
+        return @image = nil unless image
 
         image = { "path" => image } if image.is_a?(String)
         image["path"] ||= image["facebook"] || image["twitter"]
