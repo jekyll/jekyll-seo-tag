@@ -403,6 +403,7 @@ EOS
 
           context "with the author in site.data.authors" do
             let(:author_data) { { "benbalter" => { "twitter" => "test" } } }
+
             it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@test" />!
               expect(output).to match(expected)

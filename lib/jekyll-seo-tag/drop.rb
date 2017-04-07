@@ -18,7 +18,8 @@ module Jekyll
 
       # Should the `<title>` tag be generated for this page?
       def title?
-        @text !~ %r!title=false!i && title
+        return false unless title
+        @text !~ %r!title=false!i
       end
 
       def site_title
@@ -33,20 +34,21 @@ module Jekyll
       # Page title with site title or description appended
       def title
         if page["title"] && site_title
-          format_string(page["title"]) + TITLE_SEPARATOR + site_title
+          page_title + TITLE_SEPARATOR + site_title
         elsif site["description"] && site_title
           site_title + TITLE_SEPARATOR + format_string(site["description"])
         else
-          format_string(page["title"]) || site_title
+          page_title || site_title
         end
       end
 
       def name
-        if page["seo"] && page["seo"]["name"]
-          format_string page["seo"]["name"]
-        elsif homepage_or_about? && site["social"] && site["social"]["name"]
+        return format_string(seo_name) if seo_name
+        return unless homepage_or_about?
+
+        if site["social"] && site["social"]["name"]
           format_string site["social"]["name"]
-        elsif homepage_or_about? && site_title
+        elsif site_title
           format_string site_title
         end
       end
@@ -65,18 +67,13 @@ module Jekyll
       # If the result from the name search is a string, we'll also check
       # to see if the author exists in `site.data.authors`
       def author
-        author = page["author"]
-        author = page["authors"][0] if author.to_s.empty? && page["authors"]
-        author = site["author"] if author.to_s.empty?
-        return if author.to_s.empty?
+        return if author_string_or_hash.to_s.empty?
 
-        if author.is_a?(String)
-          author = if site.data["authors"] && site.data["authors"][author]
-                     site.data["authors"][author]
-                   else
-                     { "name" => author }
-                   end
-        end
+        author = if author_string_or_hash.is_a?(String)
+                   author_hash(author_string_or_hash)
+                 else
+                   author_string_or_hash
+                 end
 
         author["twitter"] ||= author["name"]
         author["twitter"].delete! "@"
@@ -127,7 +124,8 @@ module Jekyll
       #
       # The resulting path is always an absolute URL
       def image
-        return unless image = page["image"]
+        image = page["image"]
+        return unless image
 
         image = { "path" => image } if image.is_a?(String)
         image["path"] ||= image["facebook"] || image["twitter"]
@@ -176,6 +174,27 @@ module Jekyll
         end
 
         string unless string.empty?
+      end
+
+      def author_string_or_hash
+        author = page["author"]
+        author = page["authors"][0] if author.to_s.empty? && page["authors"]
+        author = site["author"] if author.to_s.empty?
+        author
+      end
+
+      def author_hash(author_string)
+        if site.data["authors"] && site.data["authors"][author_string]
+          hash = site.data["authors"][author_string]
+          hash["twitter"] ||= author_string
+          hash
+        else
+          { "name" => author_string }
+        end
+      end
+
+      def seo_name
+        page["seo"] && page["seo"]["name"]
       end
     end
   end

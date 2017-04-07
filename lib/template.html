@@ -49,7 +49,6 @@
   <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
 {% endif %}
 
-{{ seo_tag.author | jsonify }}
 {% if site.twitter %}
   {% if seo_tag.image %}
     <meta name="twitter:card" content="summary_large_image" />
