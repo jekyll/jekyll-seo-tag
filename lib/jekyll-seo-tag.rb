@@ -1,9 +1,11 @@
 require "jekyll"
 require "jekyll-seo-tag/version"
-require "jekyll-seo-tag/drop"
 
 module Jekyll
   class SeoTag < Liquid::Tag
+    autoload :Drop,    "jekyll-seo-tag/drop"
+    autoload :Filters, "jekyll-seo-tag/filters"
+
     attr_accessor :context
 
     # Matches all whitespace that follows either

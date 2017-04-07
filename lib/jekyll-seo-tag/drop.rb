@@ -2,12 +2,6 @@ module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
       TITLE_SEPARATOR = " | ".freeze
-      INCLUDES = [Jekyll::Filters, Liquid::StandardFilters].freeze
-
-      INCLUDES.each do |klass|
-        include klass
-        klass.instance_methods.each { |method| private method }
-      end
 
       def initialize(text, context)
         @obj = {}
@@ -129,9 +123,9 @@ module Jekyll
         @logo ||= begin
           return unless site["logo"]
           if absolute_url? site["logo"]
-            uri_escape site["logo"]
+            filters.uri_escape site["logo"]
           else
-            uri_escape absolute_url site["logo"]
+            filters.uri_escape filters.absolute_url site["logo"]
           end
         end
       end
@@ -155,10 +149,10 @@ module Jekyll
         image["path"] ||= image["facebook"] || image["twitter"]
 
         unless absolute_url? image["path"]
-          image["path"] = absolute_url image["path"]
+          image["path"] = filters.absolute_url image["path"]
         end
 
-        image["path"] = uri_escape image["path"]
+        image["path"] = filters.uri_escape image["path"]
 
         @image = image.to_liquid
       end
@@ -168,6 +162,10 @@ module Jekyll
       end
 
       private
+
+      def filters
+        @filters ||= Jekyll::SeoTag::Filters.new(@context)
+      end
 
       def page
         @page ||= @context.registers[:page].to_liquid
@@ -194,7 +192,7 @@ module Jekyll
       def format_string(string)
         methods = %i[markdownify strip_html normalize_whitespace escape_once]
         methods.each do |method|
-          string = send(method, string)
+          string = filters.public_send(method, string)
         end
 
         string unless string.empty?
