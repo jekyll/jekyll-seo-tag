@@ -90,7 +90,9 @@ module Jekyll
 
       def date_modified
         @date_modified ||= begin
-          return page["seo"]["date_modified"] if page["seo"] && page["seo"]["date_modified"]
+          if page["seo"] && page["seo"]["date_modified"]
+            return page["seo"]["date_modified"]
+          end
           page["last_modified_at"] || page["date"]
         end
       end
