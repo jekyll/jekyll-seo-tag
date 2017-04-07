@@ -1,6 +1,8 @@
 RSpec.describe Jekyll::SeoTag::Drop do
-  let(:page)      { make_page({ "title" => "page title" }) }
-  let(:site)      { make_site({ "title" => "site title" }) }
+  let(:config)    { { "title" => "site title" } }
+  let(:page_meta) { { "title" => "page title" } }
+  let(:page)      { make_page(page_meta) }
+  let(:site)      { make_site(config) }
   let(:context)   { make_context(:page => page, :site => site) }
   let(:text) { "" }
   subject { described_class.new(text, context) }
@@ -28,7 +30,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with site.name" do
-        let(:site)  { make_site({ "name" => "site title" }) }
+        let(:config) { { "name" => "site title" } }
 
         it "knows the site title" do
           expect(subject.site_title).to eql("site title")
@@ -59,8 +61,8 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
       context "with a site description but no page title" do
         let(:page)  { make_page }
-        let(:site) do
-          make_site({ "title" => "site title", "description" => "site description" })
+        let(:config) do
+          { "title" => "site title", "description" => "site description" }
         end
 
         it "builds the title" do
@@ -88,7 +90,9 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "name" do
     context "with seo.name" do
-      let(:page)  { make_page({ "seo" => { "name" => "seo name" } }) }
+      let(:page_meta) do
+        { "seo" => { "name" => "seo name" } }
+      end
 
       it "uses the seo name" do
         expect(subject.name).to eql("seo name")
@@ -96,10 +100,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "the index" do
-      let(:page) { make_page({ "permalink" => "/" }) }
+      let(:page_meta) { { "permalink" => "/" } }
 
       context "with site.social.name" do
-        let(:site) { make_site({ "social" => { "name" => "social name" } }) }
+        let(:config) { { "social" => { "name" => "social name" } } }
 
         it "uses site.social.name" do
           expect(subject.name).to eql("social name")
@@ -113,7 +117,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
     context "description" do
       context "with a page description" do
-        let(:page) { make_page({ "description"=> "page description" }) }
+        let(:page_meta) { { "description"=> "page description" } }
 
         it "uses the page description" do
           expect(subject.description).to eql("page description")
@@ -121,7 +125,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with a page excerpt" do
-        let(:page) { make_page({ "description"=> "page excerpt" }) }
+        let(:page_meta) { { "description"=> "page excerpt" } }
 
         it "uses the page description" do
           expect(subject.description).to eql("page excerpt")
@@ -129,7 +133,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with a site description" do
-        let(:site) { make_site({ "description"=> "site description" }) }
+        let(:config) { { "description"=> "site description" } }
 
         it "uses the page description" do
           expect(subject.description).to eql("site description")
@@ -138,11 +142,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "author" do
-      let(:page_data) { {} }
-      let(:page) { make_page(page_data) }
       let(:data) { {} }
+      let(:config) { { "author" => "author" } }
       let(:site) do
-        site = make_site({ "author" => "author" })
+        site = make_site(config)
         site.data = data
         site
       end
@@ -169,7 +172,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
             :hash         => { "author" => { "name" => "author" } },
           }.each do |author_type, data|
             context "with author as #{author_type}" do
-              let(:page_data) { data }
+              let(:page_meta) { data }
 
               it "returns a hash" do
                 expect(subject.author).to be_a(Hash)
@@ -192,14 +195,14 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "twitter" do
-        let(:page_data) { { "author" => "author" } }
+        let(:page_meta) { { "author" => "author" } }
 
         it "pulls the handle from the author" do
           expect(subject.author["twitter"]).to eql("author")
         end
 
         context "with an @" do
-          let(:page_data) do
+          let(:page_meta) do
             {
               "author" => {
                 "name"    => "author",
@@ -214,7 +217,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
 
         context "with an explicit handle" do
-          let(:page_data) do
+          let(:page_meta) do
             {
               "author" => {
                 "name"    => "author",
@@ -233,7 +236,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "date modified" do
     context "with seo.date_modified" do
-      let(:page) { make_page({ "seo" => { "date_modified" => "tuesday" } }) }
+      let(:page_meta) { { "seo" => { "date_modified" => "tuesday" } } }
 
       it "uses seo.date_modified" do
         expect(subject.date_modified).to eql("tuesday")
@@ -241,7 +244,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with page.last_modified_at" do
-      let(:page) { make_page({ "last_modified_at" => "tuesday" }) }
+      let(:page_meta) { { "last_modified_at" => "tuesday" } }
 
       it "uses page.last_modified_at" do
         expect(subject.date_modified).to eql("tuesday")
@@ -249,7 +252,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "date" do
-      let(:page) { make_page({ "date" => "tuesday" }) }
+      let(:page_meta) { { "date" => "tuesday" } }
 
       it "uses page.date" do
         expect(subject.date_modified).to eql("tuesday")
@@ -259,7 +262,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "type" do
     context "with seo.type set" do
-      let(:page) { make_page({ "seo" => { "type" => "test" } }) }
+      let(:page_meta) { { "seo" => { "type" => "test" } } }
 
       it "uses seo.type" do
         expect(subject.type).to eql("test")
@@ -267,7 +270,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "the homepage" do
-      let(:page) { make_page({ "permalink" => "/" }) }
+      let(:page_meta) { { "permalink" => "/" } }
 
       it "is a website" do
         expect(subject.type).to eql("WebSite")
@@ -283,7 +286,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "a blog post" do
-      let(:page) { make_page({ "date" => "2017-01-01" }) }
+      let(:page_meta) { { "date" => "2017-01-01" } }
 
       it "is a blog post" do
         expect(subject.type).to eql("BlogPosting")
@@ -297,7 +300,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "links" do
     context "with seo.links" do
-      let(:page) { make_page({ "seo" => { "links" => %w(foo bar) } }) }
+      let(:page_meta) { { "seo" => { "links" => %w(foo bar) } } }
 
       it "uses seo.links" do
         expect(subject.links).to eql(%w(foo bar))
@@ -305,14 +308,14 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with site.social.links" do
-      let(:site) { make_site({ "social" => { "links"=> %w(a b) } }) }
+      let(:config) { { "social" => { "links"=> %w(a b) } } }
 
       it "doesn't use site.social.links" do
         expect(subject.links).to be_nil
       end
 
       context "the homepage" do
-        let(:page) { make_page({ "permalink" => "/" }) }
+        let(:page_meta) { { "permalink" => "/" } }
 
         it "uses site.social.links" do
           expect(subject.links).to eql(%w(a b))
@@ -329,7 +332,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with an absolute site.logo" do
-      let(:site) { make_site({ "logo" => "http://example.com/image.png" }) }
+      let(:config) { { "logo" => "http://example.com/image.png" } }
 
       it "uses site.logo" do
         expect(subject.logo).to eql("http://example.com/image.png")
@@ -337,11 +340,11 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with a relative site.logo" do
-      let(:site) do
-        make_site({
+      let(:config) do
+        {
           "logo" => "image.png",
           "url"  => "http://example.com",
-        })
+        }
       end
 
       it "uses site.logo" do
@@ -350,7 +353,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with a uri-escaped logo" do
-      let(:site) { make_site({ "logo" => "some image.png" }) }
+      let(:config) { { "logo" => "some image.png" } }
 
       it "escapes the logo" do
         expect(subject.logo).to eql("/some%20image.png")
@@ -359,7 +362,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
   end
 
   context "image" do
-    let(:page) { make_page({"image" => image })}
+    let(:page_meta) { { "image" => image } }
 
     context "with image as a string" do
       let(:image) { "image.png" }
@@ -373,7 +376,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with site.url" do
-        let(:site) { make_site({"url" => "http://example.com"})}
+        let(:config) { { "url" => "http://example.com" } }
 
         it "makes the path absolute" do
           expect(subject.image["path"]).to eql("http://example.com/image.png")
@@ -418,7 +421,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "lang" do
     context "with page.lang" do
-      let(:page) { make_page({ "lang" => "en_GB" }) }
+      let(:page_meta) { { "lang" => "en_GB" } }
 
       it "uses page.lang" do
         expect(subject.page_lang).to eql("en_GB")
@@ -426,7 +429,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with site.lang" do
-      let(:site) { make_site({ "lang" => "en_GB" }) }
+      let(:config) { { "lang" => "en_GB" } }
 
       it "uses site.lang" do
         expect(subject.page_lang).to eql("en_GB")
