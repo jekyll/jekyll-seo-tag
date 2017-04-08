@@ -244,26 +244,26 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
   context "date modified" do
     context "with seo.date_modified" do
-      let(:page_meta) { { "seo" => { "date_modified" => "tuesday" } } }
+      let(:page_meta) { { "seo" => { "date_modified" => "2017-01-01" } } }
 
       it "uses seo.date_modified" do
-        expect(subject.date_modified).to eql("tuesday")
+        expect(subject.date_modified).to eql("2017-01-01T00:00:00-05:00")
       end
     end
 
     context "with page.last_modified_at" do
-      let(:page_meta) { { "last_modified_at" => "tuesday" } }
+      let(:page_meta) { { "last_modified_at" => "2017-01-01" } }
 
       it "uses page.last_modified_at" do
-        expect(subject.date_modified).to eql("tuesday")
+        expect(subject.date_modified).to eql("2017-01-01T00:00:00-05:00")
       end
     end
 
     context "date" do
-      let(:page_meta) { { "date" => "tuesday" } }
+      let(:page_meta) { { "date" => "2017-01-01" } }
 
       it "uses page.date" do
-        expect(subject.date_modified).to eql("tuesday")
+        expect(subject.date_modified).to eql("2017-01-01T00:00:00-05:00")
       end
     end
   end

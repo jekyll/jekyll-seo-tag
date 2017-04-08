@@ -1,6 +1,8 @@
 module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
+      include Jekyll::SeoTag::JSONLD
+
       TITLE_SEPARATOR = " | ".freeze
       FORMAT_STRING_METHODS = %i[
         markdownify strip_html normalize_whitespace escape_once
@@ -91,10 +93,12 @@ module Jekyll
 
       def date_modified
         @date_modified ||= begin
-          if page["seo"] && page["seo"]["date_modified"]
-            return page["seo"]["date_modified"]
-          end
-          page["last_modified_at"] || page["date"]
+          date = if page["seo"] && page["seo"]["date_modified"]
+                   page["seo"]["date_modified"]
+                 else
+                   page["last_modified_at"] || page["date"]
+                 end
+          filters.date_to_xmlschema(date) if date
         end
       end
 
@@ -162,6 +166,10 @@ module Jekyll
 
       def page_lang
         @page_lang ||= page["lang"] || site["lang"] || "en_US"
+      end
+
+      def canonical_url
+        @canonical_url ||= filters.absolute_url(page["url"]).gsub(%r!/index\.html$!, "/")
       end
 
       private

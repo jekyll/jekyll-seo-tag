@@ -331,10 +331,8 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS
-{"@context": "http://schema.org",
-"@type": "BlogPosting",
-"headline": "post",
+        expected = <<-EOS.strip
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"post",
 EOS
         expect(output).to match(expected)
       end

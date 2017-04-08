@@ -19,8 +19,8 @@
 {% endif %}
 
 {% if site.url %}
-  <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
-  <meta property="og:url" content="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
+  <link rel="canonical" href="{{ seo_tag.canonical_url }}" />
+  <meta property="og:url" content="{{ seo_tag.canonical_url }}" />
 {% endif %}
 
 {% if seo_tag.site_title %}
@@ -99,70 +99,7 @@
 
 
 <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-
-{% if seo_tag.type %}
-    "@type": {{ seo_tag.type | jsonify }},
-{% endif %}
-
-{% if seo_tag.name %}
-    "name": {{ seo_tag.name | jsonify }},
-{% endif %}
-
-{% if seo_tag.page_title %}
-    "headline": {{ seo_tag.page_title | jsonify }},
-{% endif %}
-
-{% if seo_tag.author %}
-    "author": {
-       "@type": "Person",
-       "name": {{ seo_tag.author.name | jsonify }}
-    },
-{% endif %}
-
-{% if seo_tag.image %}
-    "image": {{ seo_tag.image.path | jsonify }},
-{% endif %}
-
-{% if page.date %}
-    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-{% endif %}
-
-{% if seo_tag.date_modified %}
-    "dateModified": {{ seo_tag.date_modified | date_to_xmlschema | jsonify }},
-{% endif %}
-
-{% if seo_tag.description %}
-    "description": {{ seo_tag.description | jsonify }},
-{% endif %}
-
-{% if seo_tag.logo %}
-    "publisher": {
-        "@type": "Organization",
-        {% if seo_tag.author %}
-            "name": {{ seo_tag.author.name | jsonify }},
-        {% endif %}
-        "logo": {
-            "@type": "ImageObject",
-            "url": {{ seo_tag.logo | jsonify }}
-        }
-    },
-{% endif %}
-
-{% if seo_tag.type == "BlogPosting" or seo_tag.type == "CreativeWork"%}
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
-    },
-{% endif %}
-
-{% if seo_tag.links %}
-    "sameAs": {{ seo_tag.links | jsonify }},
-{% endif %}
-
-    "url": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
-  }
+  {{ seo_tag.json_ld | jsonify }}
 </script>
 
 <!-- End Jekyll SEO tag -->

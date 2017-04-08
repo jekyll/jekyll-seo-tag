@@ -3,6 +3,7 @@ require "jekyll-seo-tag/version"
 
 module Jekyll
   class SeoTag < Liquid::Tag
+    autoload :JSONLD,  "jekyll-seo-tag/json_ld"
     autoload :Drop,    "jekyll-seo-tag/drop"
     autoload :Filters, "jekyll-seo-tag/filters"
 
