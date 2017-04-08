@@ -47,10 +47,6 @@ module Jekyll
         image["path"] if image
       end
 
-      def date
-        filters.date_to_xmlschema(page["date"]) if page["date"]
-      end
-
       def publisher
         return unless logo
         output = {
