@@ -15,7 +15,8 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
   end
   let(:config) do
     {
-      "logo" => "logo",
+      "logo"     => "logo",
+      "timezone" => "America/New_York",
     }
   end
   let(:page)      { make_page(metadata) }

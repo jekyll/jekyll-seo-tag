@@ -243,6 +243,8 @@ RSpec.describe Jekyll::SeoTag::Drop do
   end
 
   context "date modified" do
+    let(:config) { { "timezone" => "America/New_York" } }
+
     context "with seo.date_modified" do
       let(:page_meta) { { "seo" => { "date_modified" => "2017-01-01" } } }
 
