@@ -7,6 +7,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
   let(:text) { "" }
   subject { described_class.new(text, context) }
 
+  before do
+    Jekyll.logger.log_level = :error
+  end
+
   # Drop includes liquid filters which expect arguments
   # By default, in drops, `to_h` will call each public method with no arugments
   # Here, that would cause the filters to explode. This test ensures that all

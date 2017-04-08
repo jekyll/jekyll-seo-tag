@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Jekyll::SeoTag do
+RSpec.describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
   let(:post)      { make_post }

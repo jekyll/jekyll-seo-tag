@@ -4,6 +4,10 @@ RSpec.describe Jekyll::SeoTag::Filters do
   let(:context)   { make_context(:page => page, :site => site) }
   subject { described_class.new(context) }
 
+  before do
+    Jekyll.logger.log_level = :error
+  end
+
   it "stores the context" do
     expect(subject.instance_variable_get("@context")).to be_a(Liquid::Context)
   end

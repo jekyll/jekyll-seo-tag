@@ -1,4 +1,8 @@
 RSpec.describe Jekyll::SeoTag::JSONLD do
+  before do
+    Jekyll.logger.log_level = :error
+  end
+
   let(:metadata) do
     {
       "title"       => "title",
