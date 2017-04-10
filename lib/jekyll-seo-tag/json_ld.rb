@@ -4,18 +4,19 @@ module Jekyll
 
       # A hash of instance methods => key in resulting JSON-LD hash
       METHODS_KEYS = {
-        :json_context  => "@context",
-        :type          => "@type",
-        :name          => "name",
-        :page_title    => "headline",
-        :json_author   => "author",
-        :image_path    => "image",
-        :date_modified => "dateModified",
-        :description   => "description",
-        :publisher     => "publisher",
-        :main_entity   => "mainEntityOfPage",
-        :links         => "sameAs",
-        :canonical_url => "url",
+        :json_context   => "@context",
+        :type           => "@type",
+        :name           => "name",
+        :page_title     => "headline",
+        :json_author    => "author",
+        :image_path     => "image",
+        :date_published => "datePublished",
+        :date_modified  => "dateModified",
+        :description    => "description",
+        :publisher      => "publisher",
+        :main_entity    => "mainEntityOfPage",
+        :links          => "sameAs",
+        :canonical_url  => "url",
       }.freeze
 
       def json_ld

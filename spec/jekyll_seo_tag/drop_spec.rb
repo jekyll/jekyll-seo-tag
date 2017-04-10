@@ -246,6 +246,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
   end
 
+  context "date published" do
+    let(:config) { { "timezone" => "America/New_York" } }
+    let(:page_meta) { { "date" => "2017-01-01" } }
+
+    it "uses page.date" do
+      expect(subject.date_published).to eql("2017-01-01T00:00:00-05:00")
+    end
+  end
+
   context "date modified" do
     let(:config) { { "timezone" => "America/New_York" } }
 

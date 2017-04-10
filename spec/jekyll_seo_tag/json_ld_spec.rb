@@ -12,7 +12,7 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
       "description" => "description",
       "seo"         => {
         "name"          => "seo name",
-        "date_modified" => "2017-01-01",
+        "date_modified" => "2017-01-02",
         "links"         => %w(a b),
       },
     }
@@ -62,9 +62,14 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
     expect(subject["image"]).to eql("/image")
   end
 
+  it "returns the datePublished" do
+    expect(subject).to have_key("datePublished")
+    expect(subject["datePublished"]).to eql("2017-01-01T00:00:00-05:00")
+  end
+
   it "returns the dateModified" do
     expect(subject).to have_key("dateModified")
-    expect(subject["dateModified"]).to eql("2017-01-01T00:00:00-05:00")
+    expect(subject["dateModified"]).to eql("2017-01-02T00:00:00-05:00")
   end
 
   it "returns the description" do

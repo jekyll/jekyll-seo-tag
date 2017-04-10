@@ -102,6 +102,10 @@ module Jekyll
         end
       end
 
+      def date_published
+        @date_published ||= filters.date_to_xmlschema(page["date"]) if page["date"]
+      end
+
       def type
         @type ||= begin
           if page["seo"] && page["seo"]["type"]
