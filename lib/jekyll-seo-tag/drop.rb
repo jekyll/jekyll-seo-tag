@@ -198,7 +198,7 @@ module Jekyll
       attr_reader :context
 
       def fallback_data
-        {}
+        @fallback_data ||= {}
       end
 
       def absolute_url?(string)
