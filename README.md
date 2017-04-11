@@ -127,7 +127,7 @@ If for some reason, you don't want the plugin to output `<title>` tags on each p
 
 ### Author information
 
-Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
+Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`). If you’d like to use [Google Plus Direct Connect](https://developers.google.com/+/web/badge/#direct-connect), you can specify the `googleplus` account as well.
 
 *TL;DR: In most cases, put `author: [your Twitter handle]` in the document's front matter, for sites with multiple authors. If you need something more complicated, read on.*
 
@@ -138,6 +138,7 @@ There are several ways to convey this author-specific information. Author inform
   ```yml
   author:
     twitter: benbalter
+    googleplus: benbalter
   ```
 
 2. An `author` object, in the site's `_config.yml`, e.g.:
@@ -145,6 +146,7 @@ There are several ways to convey this author-specific information. Author inform
   ```yml
   author:
     twitter: benbalter
+    googleplus: benbalter
   ```
 
 3. `site.data.authors[author]`, if an author is specified in the document's front matter, and a corresponding key exists in `site.data.authors`. E.g., you have the following in the document's front matter:
@@ -159,10 +161,12 @@ There are several ways to convey this author-specific information. Author inform
   benbalter:
     picture: /img/benbalter.png
     twitter: jekyllrb
+    googleplus: benbalter
 
   potus:
     picture: /img/potus.png
     twitter: whitehouse
+    googleplus: whitehouse
   ```
 
   In the above example, the author `benbalter`'s Twitter handle will be resolved to `@jekyllrb`. This allows you to centralize author information in a single `_data/authors` file for site with many authors that require more than just the author's username.

@@ -467,6 +467,75 @@ EOS
     end
   end
 
+  context "googleplus" do
+    context "with site.author as a hash" do
+      let(:site_author) { { "name" => "JekyllRB", "googleplus" => "jekyllrb" } }
+      let(:site) { make_site("author" => site_author) }
+
+      it "outputs googleplus link" do
+        expected = %r!<link href="https://plus.google.com/\+jekyllrb" rel="publisher" />!
+        expect(output).to match(expected)
+      end
+
+      context "with page.author as a string" do
+        let(:page) { make_page("author" => "benbalter") }
+
+        it "outputs googleplus link" do
+          expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
+          expect(output).to match(expected)
+        end
+
+        context "with a +" do
+          let(:page) { make_page("author" => "+benbalter") }
+
+          it "outputs googleplus link" do
+            expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
+            expect(output).to match(expected)
+          end
+        end
+
+        context "with site.data.authors" do
+          let(:author_data) { {} }
+          let(:data) { { "authors" => author_data } }
+          let(:site) { make_site("data" => data, "author" => site_author) }
+
+          context "with the author in site.data.authors" do
+            let(:author_data) { { "benbalter" => { "googleplus" => "test" } } }
+            it "outputs googleplus link" do
+              expected = %r!<link href="https://plus.google.com/\+test" rel="publisher" />!
+              expect(output).to match(expected)
+            end
+          end
+
+          context "without the author in site.data.authors" do
+            it "outputs googleplus link" do
+              expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
+              expect(output).to match(expected)
+            end
+          end
+        end
+      end
+
+      context "with page.author as a hash" do
+        let(:page) { make_page("author" => { "googleplus" => "benbalter" }) }
+
+        it "supports author data as a hash" do
+          expected = %r!<link href="https://plus.google.com/\+benbalter" rel="publisher" />!
+          expect(output).to match(expected)
+        end
+      end
+
+      context "with page.authors as an array" do
+        let(:page) { make_page("authors" => %w(test foo)) }
+
+        it "supports author data as an array" do
+          expected = %r!<link href="https://plus.google.com/\+test" rel="publisher" />!
+          expect(output).to match(expected)
+        end
+      end
+    end
+  end
+
   context "author" do
     let(:site) { make_site("author" => "Site Author") }
 
