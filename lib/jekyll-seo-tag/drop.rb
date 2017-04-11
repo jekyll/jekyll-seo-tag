@@ -7,6 +7,7 @@ module Jekyll
       FORMAT_STRING_METHODS = %i[
         markdownify strip_html normalize_whitespace escape_once
       ].freeze
+      HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!
 
       def initialize(text, context)
         @obj = {}
@@ -192,7 +193,7 @@ module Jekyll
       end
 
       def homepage_or_about?
-        ["/", "/index.html", "/about/"].include? page["url"]
+        page["url"] =~ HOMEPAGE_OR_ABOUT_REGEX
       end
 
       attr_reader :context

@@ -465,4 +465,27 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
   end
+
+  context "homepage_or_about?" do
+    [
+      "/", "/index.html", "index.html", "/index.htm",
+      "/about/", "/about/index.html",
+    ].each do |permalink|
+      context "when passed '#{permalink}' as a permalink" do
+        let(:page_meta) { { "permalink" => permalink } }
+
+        it "knows it's the home or about page" do
+          expect(subject.send(:homepage_or_about?)).to be_truthy
+        end
+      end
+    end
+
+    context "a random URL" do
+      let(:page_meta) { { "permalink" => "/about-foo/" } }
+
+      it "knows it's not the home or about page" do
+        expect(subject.send(:homepage_or_about?)).to be_falsy
+      end
+    end
+  end
 end
