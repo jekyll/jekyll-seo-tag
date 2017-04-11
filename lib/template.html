@@ -223,7 +223,16 @@
 {% endif %}
 
 {% if seo_page_image %}
+  {% if page.image.height && page.image.width %}
+    "image": {
+        "@type": "ImageObject",
+        "url": {{ seo_page_image | jsonify }},
+        "height": {{ page.image.height | jsonify }},
+        "width": {{ page.image.width | jsonify }}
+    },
+  {% else %}
     "image": {{ seo_page_image | jsonify }},
+  {% endif %}
 {% endif %}
 
 {% if page.date %}
