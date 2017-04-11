@@ -196,7 +196,7 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
         end
 
-        it "outputs the default image JSON item" do
+        it "outputs the image JSON item" do
           expect(json_data["image"]).to eql("http://example.invalid/img/foo.png")
         end
       end
@@ -230,7 +230,7 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
         end
 
-        it "outputs the default image JSON object with dimensions" do
+        it "outputs the image JSON object with dimensions" do
           expect(json_data["image"]["url"]).to         eql("http://example.invalid/img/foo.png")
           expect(json_data["image"]["height"]).to eql(1)
           expect(json_data["image"]["width"]).to eql(2)
