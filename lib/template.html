@@ -1,5 +1,7 @@
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
 
+{% assign seo_page_url = page.url | replace:'/index.html','/' | absolute_url %}
+
 {% if page.url == "/" or page.url == "/about/" %}
   {% assign seo_homepage_or_about = true %}
 {% endif %}
@@ -123,8 +125,8 @@
 {% endif %}
 
 {% if page.url %}
-  <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
-  <meta property="og:url" content="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
+  <link rel="canonical" href="{{ seo_page_url }}" />
+  <meta property="og:url" content="{{ seo_page_url }}" />
 {% endif %}
 
 {% if seo_site_title %}
@@ -271,7 +273,7 @@
     "sameAs": {{ seo_links | jsonify }},
 {% endif %}
 
-    "url": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
+    "url": {{ seo_page_url | jsonify }}
   }
 </script>
 
