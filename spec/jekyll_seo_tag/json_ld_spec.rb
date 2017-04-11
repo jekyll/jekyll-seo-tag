@@ -3,10 +3,11 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
     Jekyll.logger.log_level = :error
   end
 
+  let(:author) { "author" }
   let(:metadata) do
     {
       "title"       => "title",
-      "author"      => "author",
+      "author"      => author,
       "image"       => "image",
       "date"        => "2017-01-01",
       "description" => "description",
@@ -48,13 +49,25 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
     expect(subject["headline"]).to eql("title")
   end
 
-  it "returns the author" do
-    expect(subject).to have_key("author")
-    expect(subject["author"]).to be_a(Hash)
-    expect(subject["author"]).to have_key("@type")
-    expect(subject["author"]["@type"]).to eql("Person")
-    expect(subject["author"]).to have_key("name")
-    expect(subject["author"]["name"]).to eql("author")
+  context "author" do
+    {
+      "string" => "author",
+      "hash"   => { "name" => "author" },
+    }.each do |key, value|
+      context "when passed as a #{key}" do
+        let(:author) { value }
+
+        it "returns the author" do
+          expect(subject).to have_key("author")
+          expect(subject["author"]).to be_a(Hash)
+          expect(subject["author"]).to have_key("@type")
+          expect(subject["author"]["@type"]).to eql("Person")
+          expect(subject["author"]).to have_key("name")
+          expect(subject["author"]["name"]).to be_a(String)
+          expect(subject["author"]["name"]).to eql("author")
+        end
+      end
+    end
   end
 
   it "returns the image" do
