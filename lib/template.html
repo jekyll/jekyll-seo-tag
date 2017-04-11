@@ -1,143 +1,39 @@
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
-
-{% if page.url == "/" or page.url == "/about/" %}
-  {% assign seo_homepage_or_about = true %}
+{% if seo_tag.title? %}
+  <title>{{ seo_tag.title }}</title>
 {% endif %}
 
-{% assign seo_site_title = site.title | default: site.name %}
-{% assign seo_page_title = page.title | default: seo_site_title %}
-{% assign seo_title = page.title | default: seo_site_title %}
-
-{% if page.title and seo_site_title %}
-  {% assign seo_title = page.title | append:" | " | append: seo_site_title %}
-{% elsif site.description and seo_site_title %}
-  {% assign seo_title = seo_site_title | append:" | " | append: site.description %}
+{% if seo_tag.page_title %}
+  <meta property="og:title" content="{{ seo_tag.page_title }}" />
 {% endif %}
 
-{% if page.seo and page.seo.name %}
-    {% assign seo_name = page.seo.name %}
-{% elsif seo_homepage_or_about and site.social and site.social.name %}
-    {% assign seo_name = site.social.name %}
-{% elsif seo_homepage_or_about and seo_site_title %}
-    {% assign seo_name = seo_site_title %}
-{% endif %}
-{% if seo_name %}
-  {% assign seo_name = seo_name | smartify | strip_html | normalize_whitespace | escape_once %}
+{% if seo_tag.author.name %}
+  <meta name="author" content="{{ seo_tag.author.name }}" />
 {% endif %}
 
-{% if seo_title %}
-  {% assign seo_title = seo_title | smartify | strip_html | normalize_whitespace | escape_once %}
+<meta property="og:locale" content="{{ seo_tag.page_lang | replace:'-','_' }}" />
+
+{% if seo_tag.description %}
+  <meta name="description" content="{{ seo_tag.description }}" />
+  <meta property="og:description" content="{{ seo_tag.description }}" />
 {% endif %}
 
-{% if seo_site_title %}
-  {% assign seo_site_title = seo_site_title | smartify | strip_html | normalize_whitespace | escape_once %}
+{% if site.url %}
+  <link rel="canonical" href="{{ seo_tag.canonical_url }}" />
+  <meta property="og:url" content="{{ seo_tag.canonical_url }}" />
 {% endif %}
 
-{% if seo_page_title %}
-  {% assign seo_page_title = seo_page_title | smartify | strip_html | normalize_whitespace | escape_once %}
+{% if seo_tag.site_title %}
+  <meta property="og:site_name" content="{{ seo_tag.site_title }}" />
 {% endif %}
 
-{% assign seo_description = page.description | default: page.excerpt | default: site.description %}
-{% if seo_description %}
-  {% assign seo_description = seo_description | markdownify | strip_html | normalize_whitespace | escape_once %}
-{% endif %}
-
-{% assign seo_author = page.author | default: page.authors[0] | default: site.author %}
-{% if seo_author %}
-  {% if seo_author.name %}
-    {% assign seo_author_name = seo_author.name %}
-  {% else %}
-    {% if site.data.authors and site.data.authors[seo_author] %}
-      {% assign seo_author_name = site.data.authors[seo_author].name %}
-    {% else %}
-      {% assign seo_author_name = seo_author  %}
-    {% endif %}
+{% if seo_tag.image %}
+  <meta property="og:image" content="{{ seo_tag.image.path }}" />
+  {% if seo_tag.image.height %}
+    <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
   {% endif %}
-  {% if seo_author.twitter %}
-    {% assign seo_author_twitter = seo_author.twitter %}
-  {% else %}
-    {% if site.data.authors and site.data.authors[seo_author] %}
-      {% assign seo_author_twitter = site.data.authors[seo_author].twitter  %}
-    {% else %}
-      {% assign seo_author_twitter = seo_author  %}
-    {% endif %}
-  {% endif %}
-  {% assign seo_author_twitter = seo_author_twitter | replace:"@","" %}
-{% endif %}
-
-{% if page.date_modified or page.last_modified_at or page.date %}
-  {% assign seo_date_modified = page.seo.date_modified | default: page.last_modified_at %}
-{% endif %}
-
-{% if page.seo and page.seo.type %}
-    {% assign seo_type = page.seo.type %}
-{% elsif seo_homepage_or_about %}
-    {% assign seo_type = "WebSite" %}
-{% elsif page.date %}
-    {% assign seo_type = "BlogPosting" %}
-{% else %}
-    {% assign seo_type = "WebPage" %}
-{% endif %}
-
-{% if page.seo and page.seo.links %}
-    {% assign seo_links = page.seo.links %}
-{% elsif seo_homepage_or_about and site.social and site.social.links %}
-    {% assign seo_links = site.social.links %}
-{% endif %}
-
-{% if site.logo %}
-  {% assign seo_site_logo = site.logo %}
-  {% unless seo_site_logo contains "://" %}
-    {% assign seo_site_logo = seo_site_logo | absolute_url %}
-  {% endunless %}
-  {% assign seo_site_logo = seo_site_logo | escape %}
-{% endif %}
-
-{% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image.twitter | default: page.image %}
-  {% unless seo_page_image contains "://" %}
-    {% assign seo_page_image = seo_page_image | absolute_url %}
-  {% endunless %}
-  {% assign seo_page_image = seo_page_image | escape %}
-{% endif %}
-
-{% assign seo_page_lang = page.lang | default: site.lang | default: "en_US" %}
-
-{% if seo_tag.title and seo_title %}
-  <title>{{ seo_title }}</title>
-{% endif %}
-
-{% if seo_page_title %}
-  <meta property="og:title" content="{{ seo_page_title }}" />
-{% endif %}
-
-{% if seo_author_name %}
-  <meta name="author" content="{{ seo_author_name }}" />
-{% endif %}
-
-<meta property="og:locale" content="{{ seo_page_lang | replace:'-','_' }}" />
-
-{% if seo_description %}
-  <meta name="description" content="{{ seo_description }}" />
-  <meta property="og:description" content="{{ seo_description }}" />
-{% endif %}
-
-{% if page.url %}
-  <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
-  <meta property="og:url" content="{{ page.url | replace:'/index.html','/' | absolute_url }}" />
-{% endif %}
-
-{% if seo_site_title %}
-  <meta property="og:site_name" content="{{ seo_site_title }}" />
-{% endif %}
-
-{% if seo_page_image %}
-  <meta property="og:image" content="{{ seo_page_image }}" />
-  {% if page.image.height %}
-    <meta property="og:image:height" content="{{ page.image.height }}" />
-  {% endif %}
-  {% if page.image.width %}
-    <meta property="og:image:width" content="{{ page.image.width }}" />
+  {% if seo_tag.image.width %}
+    <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
   {% endif %}
 {% endif %}
 
@@ -154,7 +50,7 @@
 {% endif %}
 
 {% if site.twitter %}
-  {% if seo_page_image or page.image.twitter %}
+  {% if seo_tag.image %}
     <meta name="twitter:card" content="summary_large_image" />
   {% else %}
     <meta name="twitter:card" content="summary" />
@@ -162,8 +58,8 @@
 
   <meta name="twitter:site" content="@{{ site.twitter.username | replace:"@","" }}" />
 
-  {% if seo_author_twitter %}
-    <meta name="twitter:creator" content="@{{ seo_author_twitter }}" />
+  {% if seo_tag.author.twitter %}
+    <meta name="twitter:creator" content="@{{ seo_tag.author.twitter }}" />
   {% endif %}
 {% endif %}
 
@@ -185,12 +81,15 @@
   {% if site.webmaster_verifications.google %}
     <meta name="google-site-verification" content="{{ site.webmaster_verifications.google }}">
   {% endif %}
+
   {% if site.webmaster_verifications.bing %}
     <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing }}">
   {% endif %}
+
   {% if site.webmaster_verifications.alexa %}
     <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa }}">
   {% endif %}
+
   {% if site.webmaster_verifications.yandex %}
     <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex }}">
   {% endif %}
@@ -198,81 +97,8 @@
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
-
 <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-
-{% if seo_type %}
-    "@type": {{ seo_type | jsonify }},
-{% endif %}
-
-{% if seo_name %}
-    "name": {{ seo_name | jsonify }},
-{% endif %}
-
-{% if seo_page_title %}
-    "headline": {{ seo_page_title | jsonify }},
-{% endif %}
-
-{% if seo_author %}
-    "author": {
-       "@type": "Person",
-       "name": {{ seo_author | jsonify }}
-    },
-{% endif %}
-
-{% if seo_page_image %}
-  {% if page.image.height && page.image.width %}
-    "image": {
-        "@type": "ImageObject",
-        "url": {{ seo_page_image | jsonify }},
-        "height": {{ page.image.height | jsonify }},
-        "width": {{ page.image.width | jsonify }}
-    },
-  {% else %}
-    "image": {{ seo_page_image | jsonify }},
-  {% endif %}
-{% endif %}
-
-{% if page.date %}
-    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-{% endif %}
-
-{% if seo_date_modified %}
-    "dateModified": {{ seo_date_modified | date_to_xmlschema | jsonify }},
-{% endif %}
-
-{% if seo_description %}
-    "description": {{ seo_description | jsonify }},
-{% endif %}
-
-{% if seo_site_logo %}
-    "publisher": {
-        "@type": "Organization",
-        {% if seo_author %}
-            "name": {{ seo_author | jsonify }},
-        {% endif %}
-        "logo": {
-            "@type": "ImageObject",
-            "url": {{ seo_site_logo | jsonify }}
-        }
-    },
-{% endif %}
-
-{% if seo_type == "BlogPosting" or seo_type == "CreativeWork"%}
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
-    },
-{% endif %}
-
-{% if seo_links %}
-    "sameAs": {{ seo_links | jsonify }},
-{% endif %}
-
-    "url": {{ page.url | replace:'/index.html','/' | absolute_url | jsonify }}
-  }
+  {{ seo_tag.json_ld | jsonify }}
 </script>
 
 <!-- End Jekyll SEO tag -->

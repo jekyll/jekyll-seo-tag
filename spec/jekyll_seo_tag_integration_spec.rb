@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Jekyll::SeoTag do
+RSpec.describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
   let(:post)      { make_post }
@@ -195,10 +193,6 @@ describe Jekyll::SeoTag do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
         end
-
-        it "outputs the image JSON item" do
-          expect(json_data["image"]).to eql("http://example.invalid/img/foo.png")
-        end
       end
 
       context "when given a facebook image" do
@@ -228,12 +222,6 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
           expected = %r!<meta property="og:image:width" content="2" />!
           expect(output).to match(expected)
-        end
-
-        it "outputs the image JSON object with dimensions" do
-          expect(json_data["image"]["url"]).to eql("http://example.invalid/img/foo.png")
-          expect(json_data["image"]["height"]).to eql(1)
-          expect(json_data["image"]["width"]).to eql(2)
         end
       end
     end
@@ -341,10 +329,8 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS
-{"@context": "http://schema.org",
-"@type": "BlogPosting",
-"headline": "post",
+        expected = <<-EOS.strip
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"post",
 EOS
         expect(output).to match(expected)
       end
@@ -413,6 +399,7 @@ EOS
 
           context "with the author in site.data.authors" do
             let(:author_data) { { "benbalter" => { "twitter" => "test" } } }
+
             it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@test" />!
               expect(output).to match(expected)
