@@ -1,5 +1,8 @@
 ## HEAD
 
+* Convert template logic to a Liquid Drop (significant performance improvement) (#184)
+* Fix for JSON-LD validation warning for images missing required properties (#183)
+
 ## 2.2.0
 
 ### Major Enhancements
