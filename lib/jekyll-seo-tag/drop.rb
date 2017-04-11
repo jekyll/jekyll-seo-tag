@@ -207,8 +207,8 @@ module Jekyll
       end
 
       def format_string(string)
-        FORMAT_STRING_METHODS.each do |method|
-          string = filters.public_send(method, string)
+        string = FORMAT_STRING_METHODS.reduce(string) do |memo, method|
+          filters.public_send(method, memo)
         end
 
         string unless string.empty?
