@@ -62,9 +62,9 @@ module Jekyll
       end
 
       def description
-        @description ||= begin
-          format_string(page["description"] || page["excerpt"] || site["description"])
-        end
+        @description ||= format_string(
+          page["description"] || page["excerpt"] || site["description"]
+        )
       end
 
       # Returns a nil or a hash representing the author
