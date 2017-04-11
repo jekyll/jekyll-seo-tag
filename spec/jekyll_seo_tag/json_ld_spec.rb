@@ -149,4 +149,22 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
     expect(subject).to have_key("url")
     expect(subject["url"]).to eql("/page.html")
   end
+
+  context "validating" do
+    let(:html) do
+      "<script type=\"application/ld+json\">#{subject.to_json}</script>"
+    end
+    let(:image) { { "path" => "image", "height" => "100%", "width" => "10px" } }
+    let(:config) do
+      {
+        "logo"     => "logo",
+        "timezone" => "America/New_York",
+        "url"      => "http://example.com",
+      }
+    end
+
+    it "validates" do
+      expect(html).to be_valid_json_ld
+    end
+  end
 end
