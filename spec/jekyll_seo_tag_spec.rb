@@ -244,6 +244,13 @@ describe Jekyll::SeoTag do
       it "outputs the logo" do
         expect(json_data["publisher"]["logo"]["url"]).to eql("http://example.invalid/logo.png")
       end
+
+      context "with no page.image" do
+        it "outputs the logo as og:image" do
+          expected = %r!<meta property="og:image" content="http://example.invalid/logo.png" />!
+          expect(output).to match(expected)
+        end
+      end      
     end
 
     context "with absolute site.logo" do
