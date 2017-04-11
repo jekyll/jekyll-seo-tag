@@ -37,7 +37,7 @@
   {% assign seo_page_title = seo_page_title | smartify | strip_html | normalize_whitespace | escape_once %}
 {% endif %}
 
-{% assign seo_description = page.description | default: page.excerpt | default: site.description %}
+{% assign seo_description = page.tagline | default: page.excerpt | default: site.description %}
 {% if seo_description %}
   {% assign seo_description = seo_description | markdownify | strip_html | normalize_whitespace | escape_once %}
 {% endif %}
