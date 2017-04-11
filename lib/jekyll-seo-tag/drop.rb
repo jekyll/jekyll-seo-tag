@@ -203,7 +203,7 @@ module Jekyll
       end
 
       def absolute_url?(string)
-        string.include? "://"
+        Addressable::URI.parse(string).absolute?
       end
 
       def format_string(string)
