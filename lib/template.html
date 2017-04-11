@@ -1,4 +1,6 @@
-<!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
+{% if jekyll.environment != "production" %}
+  <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
+{% endif %}
 
 {% if page.url == "/" or page.url == "/about/" %}
   {% assign seo_homepage_or_about = true %}
@@ -275,4 +277,6 @@
   }
 </script>
 
-<!-- End Jekyll SEO tag -->
+{% if jekyll.environment != "production" %}
+  <!-- End Jekyll SEO tag -->
+{% endif %}
