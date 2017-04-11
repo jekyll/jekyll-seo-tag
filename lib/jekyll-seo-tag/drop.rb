@@ -22,7 +22,8 @@ module Jekyll
       # Should the `<title>` tag be generated for this page?
       def title?
         return false unless title
-        @text !~ %r!title=false!i
+        return @display_title if defined?(@display_title)
+        @display_title = (@text !~ %r!title=false!i)
       end
 
       def site_title
