@@ -49,16 +49,16 @@ module Jekyll
       end
 
       def name
-        @name ||= begin
-          return seo_name if seo_name
-          return unless homepage_or_about?
-
-          if site["social"] && site["social"]["name"]
-            format_string site["social"]["name"]
-          elsif site_title
-            format_string site_title
-          end
-        end
+        return @name if defined?(@name)
+        @name = if seo_name
+                  seo_name
+                elsif !homepage_or_about?
+                  nil
+                elsif site["social"] && site["social"]["name"]
+                  format_string site["social"]["name"]
+                elsif site_title
+                  format_string site_title
+                end
       end
 
       def description
