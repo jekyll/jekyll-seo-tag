@@ -98,7 +98,7 @@ module Jekyll
           date = if page["seo"] && page["seo"]["date_modified"]
                    page["seo"]["date_modified"]
                  else
-                   page["last_modified_at"] || page["date"]
+                   page["last_modified_at"].to_liquid || page["date"]
                  end
           filters.date_to_xmlschema(date) if date
         end
