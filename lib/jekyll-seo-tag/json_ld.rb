@@ -9,7 +9,7 @@ module Jekyll
         :name           => "name",
         :page_title     => "headline",
         :json_author    => "author",
-        :image_path     => "image",
+        :json_image     => "image",
         :date_published => "datePublished",
         :date_modified  => "dateModified",
         :description    => "description",
@@ -44,8 +44,14 @@ module Jekyll
         }
       end
 
-      def image_path
-        image["path"] if image
+      def json_image
+        return unless image
+        return image["path"] if image.length == 1
+
+        hash = image.dup
+        hash["url"]   = hash.delete("path")
+        hash["@type"] = "imageObject"
+        hash
       end
 
       def publisher

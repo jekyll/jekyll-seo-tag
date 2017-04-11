@@ -4,11 +4,12 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
   end
 
   let(:author) { "author" }
+  let(:image) { "image" }
   let(:metadata) do
     {
       "title"       => "title",
       "author"      => author,
-      "image"       => "image",
+      "image"       => image,
       "date"        => "2017-01-01",
       "description" => "description",
       "seo"         => {
@@ -70,9 +71,31 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
     end
   end
 
-  it "returns the image" do
-    expect(subject).to have_key("image")
-    expect(subject["image"]).to eql("/image")
+  context "image" do
+    context "with image as a string" do
+      let(:image) { "image" }
+
+      it "returns the image as a string" do
+        expect(subject).to have_key("image")
+        expect(subject["image"]).to be_a(String)
+        expect(subject["image"]).to eql("/image")
+      end
+    end
+
+    context "with image as a hash" do
+      let(:image) { { "path" => "image", "height" => 5, "width" => 10 } }
+
+      it "returns the image as a hash" do
+        expect(subject).to have_key("image")
+        expect(subject["image"]).to be_a(Hash)
+        expect(subject["image"]).to eql({
+          "@type"  => "imageObject",
+          "url"    => "/image",
+          "height" => 5,
+          "width"  => 10,
+        })
+      end
+    end
   end
 
   it "returns the datePublished" do
