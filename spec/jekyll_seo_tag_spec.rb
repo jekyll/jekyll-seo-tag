@@ -195,6 +195,10 @@ describe Jekyll::SeoTag do
           expected = %r!<meta property="og:image" content="http://example.invalid/img/foo.png" />!
           expect(output).to match(expected)
         end
+
+        it "outputs the default image JSON item" do
+          expect(json_data["image"]).to eql("http://example.invalid/img/foo.png")
+        end
       end
 
       context "when given a facebook image" do
@@ -224,6 +228,12 @@ describe Jekyll::SeoTag do
           expect(output).to match(expected)
           expected = %r!<meta property="og:image:width" content="2" />!
           expect(output).to match(expected)
+        end
+
+        it "outputs the default image JSON object with dimensions" do
+          expect(json_data["image"]["url"]).to         eql("http://example.invalid/img/foo.png")
+          expect(json_data["image"]["height"]).to eql(1)
+          expect(json_data["image"]["width"]).to eql(2)
         end
       end
     end
