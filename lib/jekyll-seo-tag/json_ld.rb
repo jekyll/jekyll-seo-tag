@@ -65,7 +65,7 @@ module Jekyll
             "url"   => logo,
           },
         }
-        output["name"] = author["name"] if author
+        output["name"] = author["name"] || page["author"] if author
         output
       end
 
