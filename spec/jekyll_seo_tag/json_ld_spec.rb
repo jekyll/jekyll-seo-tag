@@ -96,22 +96,6 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
         })
       end
     end
-
-    context "with image as a hash and extra tags" do
-      let(:image) { { "path" => "image", "height" => 5, "width" => 10, "alt" => "alt_text" } }
-
-      it "returns the image as a hash without extra tags" do
-        expect(subject).to have_key("image")
-        expect(subject["image"]).to be_a(Hash)
-        expect(subject["image"]).to eql({
-          "@type"  => "imageObject",
-          "url"    => "/image",
-          "height" => 5,
-          "width"  => 10,
-        })
-        expect(subject["image"]).not_to include("alt")
-      end
-    end
   end
 
   it "returns the datePublished" do
