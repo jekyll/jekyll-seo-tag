@@ -51,6 +51,8 @@ module Jekyll
         hash = image.dup
         hash["url"]   = hash.delete("path")
         hash["@type"] = "imageObject"
+        keepers = ["@type", "height", "width", "url"]
+        hash.keep_if { |k, _| keepers.include?(k) }
         hash
       end
 
