@@ -155,7 +155,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
     context "author" do
       let(:data) { {} }
-      let(:config) { { "author" => "author" } }
+      let(:config) { { "author" => "site_author" } }
       let(:site) do
         site = make_site(config)
         site.data = data
@@ -168,7 +168,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
             if site_data_type == :with
               {
                 "authors" => {
-                  "author" => { "name" => "Author" },
+                  "author"        => { "name" => "data_author", "image" => "author.png" },
+                  "array_author"  => { "image" => "author.png" },
+                  "string_author" => { "image" => "author.png" },
+                  "site_author"   => { "image" => "author.png" },
                 },
               }
             else
@@ -177,29 +180,34 @@ RSpec.describe Jekyll::SeoTag::Drop do
           end
 
           {
-            :string       => { "author" => "author" },
-            :array        => { "authors" => %w(author author2) },
+            :string       => { "author" => "string_author" },
+            :array        => { "authors" => %w(array_author author2) },
             :empty_string => { "author" => "" },
             :nil          => { "author" => nil },
-            :hash         => { "author" => { "name" => "author" } },
+            :hash         => { "author" => { "name" => "hash_author" } },
           }.each do |author_type, data|
             context "with author as #{author_type}" do
               let(:page_meta) { data }
+              let(:expected_author) do
+                "#{author_type}_author".sub("nil_", "site_").sub("empty_string_", "site_")
+              end
 
               it "returns a hash" do
                 expect(subject.author).to be_a(Hash)
               end
 
               it "returns the name" do
-                if site_data_type == :with && author_type != :hash
-                  expect(subject.author["name"]).to eql("Author")
-                else
-                  expect(subject.author["name"]).to eql("author")
-                end
+                expect(subject.author["name"]).to eql(expected_author)
               end
 
               it "returns the twitter handle" do
-                expect(subject.author["twitter"]).to eql("author")
+                expect(subject.author["twitter"]).to eql(expected_author)
+              end
+
+              if site_data_type == :with && author_type != :hash
+                it "returns the image" do
+                  expect(subject.author["image"]).to eql("author.png")
+                end
               end
             end
           end
