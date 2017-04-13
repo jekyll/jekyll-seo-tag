@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Jekyll::SeoTag do
+RSpec.describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
   let(:post)      { make_post }
@@ -331,10 +329,8 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS
-{"@context": "http://schema.org",
-"@type": "BlogPosting",
-"headline": "post",
+        expected = <<-EOS.strip
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"post",
 EOS
         expect(output).to match(expected)
       end
@@ -403,6 +399,7 @@ EOS
 
           context "with the author in site.data.authors" do
             let(:author_data) { { "benbalter" => { "twitter" => "test" } } }
+
             it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@test" />!
               expect(output).to match(expected)
