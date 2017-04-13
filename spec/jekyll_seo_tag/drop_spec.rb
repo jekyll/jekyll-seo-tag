@@ -206,6 +206,23 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
       end
 
+      context "with author as a front matter default" do
+        let(:config) do
+          {
+            "defaults" => [
+              {
+                "scope"  => { "path" => "" },
+                "values" => { "author" => "front matter default" },
+              },
+            ],
+          }
+        end
+
+        it "uses the author from the front matter default" do
+          expect(subject.author["name"]).to eql("front matter default")
+        end
+      end
+
       context "twitter" do
         let(:page_meta) { { "author" => "author" } }
 
