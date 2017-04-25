@@ -228,6 +228,7 @@ module Jekyll
       def author_hash(author_string)
         if site.data["authors"] && site.data["authors"][author_string]
           hash = site.data["authors"][author_string]
+          hash["name"]    ||= author_string
           hash["twitter"] ||= author_string
           hash
         else
