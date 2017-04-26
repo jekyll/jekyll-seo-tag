@@ -1,5 +1,7 @@
 ## HEAD
 
+* Guard against arrays in subhashes #197
+
 ## 2.2.1
 
 * Convert template logic to a Liquid Drop (significant performance improvement) (#184)
