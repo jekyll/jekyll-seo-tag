@@ -466,10 +466,18 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with some random hash" do
-        let(:image) { { "foo" => "bar"} }
+        let(:image) { { "foo" => "bar" } }
 
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
+        it "returns nil" do
+          expect(subject.image).to be_nil
+        end
+      end
+
+      context "with an invalid path" do
+        let(:image) { ":" }
+
+        it "returns nil" do
+          expect(subject.image["path"]).to eql("/:")
         end
       end
 
