@@ -55,8 +55,8 @@ module Jekyll
                   seo_name
                 elsif !homepage_or_about?
                   nil
-                elsif site["social"] && site["social"]["name"]
-                  format_string site["social"]["name"]
+                elsif site_social["name"]
+                  format_string site_social["name"]
                 elsif site_title
                   format_string site_title
                 end
@@ -95,8 +95,8 @@ module Jekyll
 
       def date_modified
         @date_modified ||= begin
-          date = if page["seo"] && page["seo"]["date_modified"]
-                   page["seo"]["date_modified"]
+          date = if page_seo["date_modified"]
+                   page_seo["date_modified"]
                  elsif page["last_modified_at"]
                    page["last_modified_at"].to_liquid
                  else
@@ -112,8 +112,8 @@ module Jekyll
 
       def type
         @type ||= begin
-          if page["seo"] && page["seo"]["type"]
-            page["seo"]["type"]
+          if page_seo["type"]
+            page_seo["type"]
           elsif homepage_or_about?
             "WebSite"
           elsif page["date"]
@@ -126,10 +126,10 @@ module Jekyll
 
       def links
         @links ||= begin
-          if page["seo"] && page["seo"]["links"]
-            page["seo"]["links"]
-          elsif homepage_or_about? && site["social"] && site["social"]["links"]
-            site["social"]["links"]
+          if page_seo["links"]
+            page_seo["links"]
+          elsif homepage_or_about? && site_social["links"]
+            site_social["links"]
           end
         end
       end
@@ -237,7 +237,29 @@ module Jekyll
       end
 
       def seo_name
-        @seo_name ||= format_string(page["seo"]["name"]) if page["seo"]
+        @seo_name ||= format_string(page_seo["name"]) if page_seo["name"]
+      end
+
+      def page_seo
+        @page_seo ||= sub_hash(page, "seo")
+      end
+
+      def site_social
+        @site_social ||= sub_hash(site, "social")
+      end
+
+      # Safely returns a sub hash
+      #
+      # hash - the parent hash
+      # key  - the key in the parent hash
+      #
+      # Returns the sub hash or an empty hash, if it does not exist
+      def sub_hash(hash, key)
+        if hash[key].is_a?(Hash)
+          hash[key]
+        else
+          {}
+        end
       end
     end
   end
