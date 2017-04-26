@@ -123,10 +123,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with site.social as an array" do
-        let(:config) { { "social" => ["a", "b"] } }
+        let(:config) { { "social" => %w(a b) } }
 
         it "uses site.social.name" do
-          expect(subject.name).to eql("social name")
+          expect(subject.name).to be_nil
         end
       end
 
@@ -326,10 +326,10 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "with seo as an array" do
-      let(:page_meta) { { "seo" => ["a", "b"] } }
+      let(:page_meta) { { "seo" => %w(a b) } }
 
       it "uses seo.type" do
-        expect(subject.type).to eql("test")
+        expect(subject.type).to eql("WebPage")
       end
     end
 
