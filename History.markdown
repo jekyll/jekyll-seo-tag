@@ -1,6 +1,7 @@
 ## HEAD
 
 * Guard against arrays in subhashes #197
+* Guard against invalid or missing URLs #199
 
 ## 2.2.1
 
