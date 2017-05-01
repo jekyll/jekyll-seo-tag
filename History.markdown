@@ -1,13 +1,33 @@
 ## HEAD
 
-### Development Fixes
+* Guard against arrays in subhashes #197
+* Guard against invalid or missing URLs #199
 
-  * Rubocop shouldn't worry if tests are too long (#149)
+## 2.2.1
 
+* Convert template logic to a Liquid Drop (significant performance improvement) (#184)
+* Fix for JSON-LD validation warning for images missing required properties (#183)
+
+## 2.2.0
+
+### Major Enhancements
+
+  * Add author meta (#103)
+  * Add og:locale support #166
+  * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
+  * Add SEO author and date modified to validate JSON-LD output (#151)
+  
 ### Minor Enhancements
 
-  * Add support for Bing and Yandex webmaster tools. Closes #147 (#148)
-  * Add author meta (#103)
+  * Use `|` for title separator (#162)
+  * Use `og:image` for twitter image (#174)
+
+### Development Fixes
+
+  * Style fixes (#170, #157, #149)
+  * Test against latest version of Jekyll (#171)
+  * Bump dev dependencies (#172)
+  * Remove Rake dependency (#180)
 
 ## 2.1.0
 

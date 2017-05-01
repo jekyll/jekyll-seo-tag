@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Jekyll::SeoTag do
+RSpec.describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
   let(:post)      { make_post }
@@ -244,6 +242,48 @@ describe Jekyll::SeoTag do
       end
     end
 
+    context "with site.logo and page.author" do
+      let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid", "author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with page author" do
+      let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
+      let(:page) { make_post("author" => "Mr. Foo") }
+
+      it "outputs the author" do
+        expect(json_data["author"]["@type"]).to eql("Person")
+        expect(json_data["author"]["name"]).to eql("Mr. Foo")
+      end
+
+      it "outputs the publisher author" do
+        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+      end
+    end
+
+    context "with seo type is BlogPosting" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => { "type" => "BlogPosting" }, "permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
+    context "with seo type is CreativeWork" do
+      let(:site) { make_site("url" => "http://example.invalid") }
+      let(:page) { make_post("seo" => { "type" => "CreativeWork" }, "permalink" => "/foo/") }
+
+      it "outputs the mainEntityOfPage" do
+        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+      end
+    end
+
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
 
@@ -289,10 +329,8 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS
-{"@context": "http://schema.org",
-"@type": "BlogPosting",
-"headline": "post",
+        expected = <<-EOS.strip
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"post",
 EOS
         expect(output).to match(expected)
       end
@@ -361,6 +399,7 @@ EOS
 
           context "with the author in site.data.authors" do
             let(:author_data) { { "benbalter" => { "twitter" => "test" } } }
+
             it "outputs the twitter card" do
               expected = %r!<meta name="twitter:creator" content="@test" />!
               expect(output).to match(expected)
