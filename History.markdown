@@ -1,7 +1,15 @@
 ## HEAD
 
+## 2.2.2
+
+### Minor Enhancements
+
 * Guard against arrays in subhashes #197
 * Guard against invalid or missing URLs #199
+
+### Development fixes
+
+* Remove dynamic GitHub Pages logic from Gemfile #194
 
 ## 2.2.1
 
