@@ -162,6 +162,7 @@ module Jekyll
 
         image = { "path" => image } if image.is_a?(String)
         image["path"] ||= image["facebook"] || image["twitter"]
+        return @image = nil unless image["path"]
 
         unless absolute_url? image["path"]
           image["path"] = filters.absolute_url image["path"]
@@ -177,7 +178,9 @@ module Jekyll
       end
 
       def canonical_url
-        @canonical_url ||= filters.absolute_url(page["url"]).gsub(%r!/index\.html$!, "/")
+        @canonical_url ||= begin
+          filters.absolute_url(page["url"]).to_s.gsub(%r!/index\.html$!, "/")
+        end
       end
 
       private
@@ -205,7 +208,10 @@ module Jekyll
       end
 
       def absolute_url?(string)
+        return unless string
         Addressable::URI.parse(string).absolute?
+      rescue Addressable::URI::InvalidURIError
+        nil
       end
 
       def format_string(string)
