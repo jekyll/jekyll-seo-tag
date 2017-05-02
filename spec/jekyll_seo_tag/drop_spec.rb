@@ -261,6 +261,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
           end
         end
 
+        # See https://github.com/jekyll/jekyll-seo-tag/issues/202
+        context "without an author name or handle" do
+          let(:page_meta) { { "author" => { "foo" => "bar" } } }
+
+          it "dosen't blow up" do
+            expect(subject.author["twitter"]).to be_nil
+          end
+        end
+
         context "with an explicit handle" do
           let(:page_meta) do
             {

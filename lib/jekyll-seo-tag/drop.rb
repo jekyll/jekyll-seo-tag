@@ -88,7 +88,7 @@ module Jekyll
                    end
 
           author["twitter"] ||= author["name"]
-          author["twitter"].delete! "@"
+          author["twitter"].delete! "@" if author["twitter"]
           author.to_liquid
         end
       end
