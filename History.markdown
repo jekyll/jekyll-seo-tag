@@ -1,5 +1,7 @@
 ## HEAD
 
+* Guard against the author's Twitter handle being Nil when stripping @'s #203
+
 ## 2.2.2
 
 ### Minor Enhancements
