@@ -33,7 +33,11 @@ module Jekyll
 
       # Page title without site title or description appended
       def page_title
-        @page_title ||= format_string(page["title"] || site_title)
+        @page_title ||= if page["title"] && !page["title"].empty?
+                          format_string(page["title"])
+                        else
+                          format_string(site_title)
+                        end
       end
 
       # Page title with site title or description appended
