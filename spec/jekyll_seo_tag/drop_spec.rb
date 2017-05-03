@@ -159,6 +159,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
           expect(subject.description).to eql("site description")
         end
       end
+
+      context "with no descriptions" do
+        let(:page_meta) { { "description"=> nil, "excerpt" => nil } }
+        let(:config) { { "description"=> nil } }
+
+        it "uses returns nil" do
+          expect(subject.description).to be_nil
+        end
+      end
     end
 
     context "author" do
