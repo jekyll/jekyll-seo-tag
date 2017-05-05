@@ -32,7 +32,7 @@ module Jekyll
       end
 
       def site_description
-        format_string site["description"]
+        @site_description ||= format_string site["description"]
       end
 
       # Page title without site title or description appended
