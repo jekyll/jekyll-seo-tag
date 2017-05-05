@@ -62,7 +62,7 @@ module Jekyll
                 elsif site_social["name"]
                   format_string site_social["name"]
                 elsif site_title
-                  format_string site_title
+                  site_title
                 end
       end
 
