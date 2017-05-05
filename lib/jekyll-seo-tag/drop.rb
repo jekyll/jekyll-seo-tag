@@ -31,18 +31,22 @@ module Jekyll
         @site_title ||= format_string(site["title"] || site["name"])
       end
 
+      def site_description
+        format_string site["description"]
+      end
+
       # Page title without site title or description appended
       def page_title
-        @page_title ||= format_string(page["title"] || site_title)
+        @page_title ||= format_string(page["title"]) || site_title
       end
 
       # Page title with site title or description appended
       def title
         @title ||= begin
-          if page["title"] && site_title
+          if site_title && page_title != site_title
             page_title + TITLE_SEPARATOR + site_title
-          elsif site["description"] && site_title
-            site_title + TITLE_SEPARATOR + format_string(site["description"])
+          elsif site_description && site_title
+            site_title + TITLE_SEPARATOR + site_description
           else
             page_title || site_title
           end

@@ -97,6 +97,40 @@ RSpec.describe Jekyll::SeoTag::Drop do
           expect(subject.title).to eql("site title")
         end
       end
+
+      context "without a page or site title" do
+        let(:page)  { make_page }
+        let(:site)  { make_site }
+
+        it "returns nil" do
+          expect(subject.title).to be_nil
+        end
+      end
+
+      context "with an empty page title" do
+        let(:page_meta) { { :title => "" } }
+
+        it "builds the title" do
+          expect(subject.title).to eql("site title")
+        end
+      end
+
+      context "with an empty site title" do
+        let(:config) { { :title => "" } }
+
+        it "builds the title" do
+          expect(subject.title).to eql("page title")
+        end
+      end
+
+      context "with an empty page and site title" do
+        let(:page_meta) { { :title => "" } }
+        let(:config) { { :title => "" } }
+
+        it "returns nil" do
+          expect(subject.title).to be_nil
+        end
+      end
     end
   end
 
@@ -135,7 +169,25 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
 
-    context "description" do
+    context "site description" do
+      context "with a site description" do
+        let(:config) { { :description => "site description " } }
+
+        it "returns the site discription" do
+          expect(subject.site_description).to eql("site description")
+        end
+      end
+
+      context "without a site description" do
+        let(:site) { make_site }
+
+        it "returns nil" do
+          expect(subject.site_description).to be_nil
+        end
+      end
+    end
+
+    context "page description" do
       context "with a page description" do
         let(:page_meta) { { "description"=> "page description" } }
 
