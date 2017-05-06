@@ -1,5 +1,7 @@
 ## HEAD
 
+## 2.2.3 
+
 * Guard against the author's Twitter handle being Nil when stripping @'s #203
 * Guard against empty title or description strings #206
 
