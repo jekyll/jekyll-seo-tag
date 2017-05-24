@@ -624,4 +624,23 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
   end
+
+  context "canonical url" do
+    context "when canonical url is specified for a page" do
+      let(:page) { make_page( { "title" => "page title", "canonical_url" => "https://github.com/jekyll/jekyll-seo-tag/"} ) }
+      let(:canonical_url) { 'https://github.com/jekyll/jekyll-seo-tag/' }
+      it "uses specified canonical url" do
+        puts subject.canonical_url
+        expect(subject.canonical_url).to eq(canonical_url)
+      end
+    end
+
+    context "when canonical url is not specified for a page" do
+      let(:canonical_url) { 'https://github.com/jekyll/jekyll-seo-tag/' }
+      it "uses site specific canonical url" do
+        expect(subject.canonical_url).not_to eq(canonical_url)
+      end
+    end
+  end
+  
 end
