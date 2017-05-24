@@ -630,7 +630,6 @@ RSpec.describe Jekyll::SeoTag::Drop do
       let(:page) { make_page({ "title" => "page title", "canonical_url" => "https://github.com/jekyll/jekyll-seo-tag/" }) }
       let(:canonical_url) { "https://github.com/jekyll/jekyll-seo-tag/" }
       it "uses specified canonical url" do
-        puts subject.canonical_url
         expect(subject.canonical_url).to eq(canonical_url)
       end
     end
