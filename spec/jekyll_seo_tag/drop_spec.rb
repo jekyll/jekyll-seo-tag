@@ -638,7 +638,6 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "when canonical url is not specified for a page" do
-
       it "uses site specific canonical url" do
         expect(subject.canonical_url).to eq("http://example.com/page.html")
       end

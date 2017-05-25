@@ -183,10 +183,10 @@ module Jekyll
 
       def canonical_url
         @canonical_url ||= begin
-          unless page["canonical_url"].to_s.empty?
-            page["canonical_url"]
-          else
+          if page["canonical_url"].to_s.empty?
             filters.absolute_url(page["url"]).to_s.gsub(%r!/index\.html$!, "/")
+          else
+            page["canonical_url"]
           end
         end
       end
