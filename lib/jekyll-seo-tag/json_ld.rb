@@ -40,7 +40,7 @@ module Jekyll
         return unless author
         {
           "@type" => "Person",
-          "name"  => author["name"],
+          "name"  => author["name"] || page["author"],
         }
       end
 
@@ -63,7 +63,7 @@ module Jekyll
             "url"   => logo,
           },
         }
-        output["name"] = author["name"] if author
+        output["name"] = author["name"] || page["author"] if author
         output
       end
 
