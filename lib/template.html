@@ -29,6 +29,7 @@
 
 {% if seo_tag.image %}
   <meta property="og:image" content="{{ seo_tag.image.path }}" />
+  <meta property="twitter:image" content="{{ seo_tag.image.path }}" />
   {% if seo_tag.image.height %}
     <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
   {% endif %}
