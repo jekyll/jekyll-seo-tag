@@ -35,6 +35,9 @@
   {% if seo_tag.image.width %}
     <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
   {% endif %}
+  {% unless page.image.twitter %}
+    <meta name="twitter:image" content="{{ seo_page_image }}" />
+  {% endunless %}
 {% endif %}
 
 {% if page.date %}
