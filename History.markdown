@@ -1,5 +1,12 @@
 ## HEAD
 
+* Use canonical_url specified in page if present #211
+
+## 2.2.3 
+
+* Guard against the author's Twitter handle being Nil when stripping @'s #203
+* Guard against empty title or description strings #206
+
 ## 2.2.2
 
 ### Minor Enhancements

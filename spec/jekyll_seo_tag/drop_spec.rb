@@ -97,6 +97,40 @@ RSpec.describe Jekyll::SeoTag::Drop do
           expect(subject.title).to eql("site title")
         end
       end
+
+      context "without a page or site title" do
+        let(:page)  { make_page }
+        let(:site)  { make_site }
+
+        it "returns nil" do
+          expect(subject.title).to be_nil
+        end
+      end
+
+      context "with an empty page title" do
+        let(:page_meta) { { :title => "" } }
+
+        it "builds the title" do
+          expect(subject.title).to eql("site title")
+        end
+      end
+
+      context "with an empty site title" do
+        let(:config) { { :title => "" } }
+
+        it "builds the title" do
+          expect(subject.title).to eql("page title")
+        end
+      end
+
+      context "with an empty page and site title" do
+        let(:page_meta) { { :title => "" } }
+        let(:config) { { :title => "" } }
+
+        it "returns nil" do
+          expect(subject.title).to be_nil
+        end
+      end
     end
   end
 
@@ -135,7 +169,25 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
 
-    context "description" do
+    context "site description" do
+      context "with a site description" do
+        let(:config) { { :description => "site description " } }
+
+        it "returns the site discription" do
+          expect(subject.site_description).to eql("site description")
+        end
+      end
+
+      context "without a site description" do
+        let(:site) { make_site }
+
+        it "returns nil" do
+          expect(subject.site_description).to be_nil
+        end
+      end
+    end
+
+    context "page description" do
       context "with a page description" do
         let(:page_meta) { { "description"=> "page description" } }
 
@@ -157,6 +209,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
         it "uses the page description" do
           expect(subject.description).to eql("site description")
+        end
+      end
+
+      context "with no descriptions" do
+        let(:page_meta) { { "description"=> nil, "excerpt" => nil } }
+        let(:config) { { "description"=> nil } }
+
+        it "uses returns nil" do
+          expect(subject.description).to be_nil
         end
       end
     end
@@ -258,6 +319,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
           it "strips the @" do
             expect(subject.author["twitter"]).to eql("twitter")
+          end
+        end
+
+        # See https://github.com/jekyll/jekyll-seo-tag/issues/202
+        context "without an author name or handle" do
+          let(:page_meta) { { "author" => { "foo" => "bar" } } }
+
+          it "dosen't blow up" do
+            expect(subject.author["twitter"]).to be_nil
           end
         end
 
@@ -551,6 +621,25 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
       it "knows it's not the home or about page" do
         expect(subject.send(:homepage_or_about?)).to be_falsy
+      end
+    end
+  end
+
+  context "canonical url" do
+    let(:config) { { :url => "http://example.com" } }
+
+    context "when canonical url is specified for a page" do
+      let(:canonical_url) { "https://github.com/jekyll/jekyll-seo-tag/" }
+      let(:page_meta) { { "title" => "page title", "canonical_url" => canonical_url } }
+
+      it "uses specified canonical url" do
+        expect(subject.canonical_url).to eq(canonical_url)
+      end
+    end
+
+    context "when canonical url is not specified for a page" do
+      it "uses site specific canonical url" do
+        expect(subject.canonical_url).to eq("http://example.com/page.html")
       end
     end
   end

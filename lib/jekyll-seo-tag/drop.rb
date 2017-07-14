@@ -31,18 +31,22 @@ module Jekyll
         @site_title ||= format_string(site["title"] || site["name"])
       end
 
+      def site_description
+        @site_description ||= format_string site["description"]
+      end
+
       # Page title without site title or description appended
       def page_title
-        @page_title ||= format_string(page["title"] || site_title)
+        @page_title ||= format_string(page["title"]) || site_title
       end
 
       # Page title with site title or description appended
       def title
         @title ||= begin
-          if page["title"] && site_title
+          if site_title && page_title != site_title
             page_title + TITLE_SEPARATOR + site_title
-          elsif site["description"] && site_title
-            site_title + TITLE_SEPARATOR + format_string(site["description"])
+          elsif site_description && site_title
+            site_title + TITLE_SEPARATOR + site_description
           else
             page_title || site_title
           end
@@ -58,14 +62,14 @@ module Jekyll
                 elsif site_social["name"]
                   format_string site_social["name"]
                 elsif site_title
-                  format_string site_title
+                  site_title
                 end
       end
 
       def description
-        @description ||= format_string(
-          page["description"] || page["excerpt"] || site["description"]
-        )
+        @description ||= begin
+          format_string(page["description"] || page["excerpt"]) || site_description
+        end
       end
 
       # Returns a nil or a hash representing the author
@@ -88,7 +92,7 @@ module Jekyll
                    end
 
           author["twitter"] ||= author["name"]
-          author["twitter"].delete! "@"
+          author["twitter"].delete! "@" if author["twitter"]
           author.to_liquid
         end
       end
@@ -179,7 +183,11 @@ module Jekyll
 
       def canonical_url
         @canonical_url ||= begin
-          filters.absolute_url(page["url"]).to_s.gsub(%r!/index\.html$!, "/")
+          if page["canonical_url"].to_s.empty?
+            filters.absolute_url(page["url"]).to_s.gsub(%r!/index\.html$!, "/")
+          else
+            page["canonical_url"]
+          end
         end
       end
 

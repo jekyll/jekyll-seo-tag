@@ -224,3 +224,30 @@ defaults:
 ### SmartyPants Titles
 
 Titles will be processed using [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/). This will use SmartyPants to translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a page title.
+
+### Setting customized Canonical URL
+
+You can set custom Canonical URL for a page by specifying canonical_url option in page front-matter.
+E.g., you have the following in the page's front matter:
+```yml
+layout: post
+title: Title of Your Post
+canonical_url: 'https://github.com/jekyll/jekyll-seo-tag/'
+```
+
+Which will generate canonical_url with specified link in canonical_url.
+```html
+<link rel="canonical" href="https://github.com/jekyll/jekyll-seo-tag/" />
+```
+
+If no canonical_url option was specified, then uses page url for generating canonical_url.
+E.g., you have not specified canonical_url in front-matter:
+```yml
+layout: post
+title: Title of Your Post
+```
+
+Which will generate following canonical_url:
+```html
+<link rel="canonical" href="http://yoursite.com/title-of-your-post" />
+```
