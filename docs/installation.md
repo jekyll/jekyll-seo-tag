@@ -1,6 +1,6 @@
 # Installing Jekyll SEO Tag
 
-2. 1. Add the following to your site's `Gemfile`:
+1. Add the following to your site's `Gemfile`:
 
   ```ruby
   gem 'jekyll-seo-tag'
