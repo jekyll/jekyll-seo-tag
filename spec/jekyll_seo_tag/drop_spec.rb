@@ -213,7 +213,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with no descriptions" do
-        let(:page_meta) { { "description"=> nil, "excerpt" => nil } }
+        let(:page_meta) { { "description" => nil, "excerpt" => nil } }
         let(:config) { { "description"=> nil } }
 
         it "uses returns nil" do
