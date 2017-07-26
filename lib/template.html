@@ -51,7 +51,11 @@
 
 {% if site.twitter %}
   {% if seo_tag.image %}
-    <meta name="twitter:card" content="summary_large_image" />
+      {% if site.twitter.smallSummary %}
+        <meta name="twitter:card" content="summary" />
+      {% else %}
+        <meta name="twitter:card" content="summary_large_image" />
+      {% endif %}
   {% else %}
     <meta name="twitter:card" content="summary" />
   {% endif %}
