@@ -53,6 +53,10 @@ module Jekyll
         end
       end
 
+      def twitterCardType
+        @twitterCardType ||= format_string page["twitterCardType"]
+      end
+      
       def name
         return @name if defined?(@name)
         @name = if seo_name
