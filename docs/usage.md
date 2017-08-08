@@ -67,4 +67,4 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `lang` - Page-, post-, or document-specific language information
 * `twitterCardType` - The type of twitter card to use
 
-*Note:* Front matter defaults can be used as described [here](https://github.com/BlythMeister/jekyll-seo-tag/blob/TwitterCard/docs/advanced-usage.md#setting-a-default-image)
+*Note:* Front matter defaults can be used for any of the above values as described [here] with an image example (https://github.com/BlythMeister/jekyll-seo-tag/blob/TwitterCard/docs/advanced-usage.md#setting-a-default-image)
