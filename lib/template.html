@@ -60,12 +60,8 @@
 {% endif %}
 
 {% if site.twitter %}
-  {% if seo_tag.image %}
-      {% if site.twitter.smallSummary %}
-        <meta name="twitter:card" content="summary" />
-      {% else %}
-        <meta name="twitter:card" content="summary_large_image" />
-      {% endif %}
+  {% if seo_tag.image or site.image %}
+    <meta name="twitter:card" content="{{ seo_tag.twittercard | default: site.twitter.card | default: "summary_large_image" }}" />
   {% else %}
     <meta name="twitter:card" content="summary" />
   {% endif %}
