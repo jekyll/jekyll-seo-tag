@@ -12,6 +12,8 @@ The SEO tag will respect any of the following if included in your site's `_confi
   * `twitter:username` - The site's Twitter handle
   * `twitter:card` - The global card setting (`summary`, `summary_large_image`)
 
+You'll want to describe one or more like so:
+
   ```yml
   twitter:
     username: benbalter
