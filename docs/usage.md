@@ -6,11 +6,16 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `author` - global author information (see below)
-* `twitter:username` - The site's Twitter handle. You'll want to describe it like so:
+* `image` - global image
+
+* `twitter` - The following properties are avaliable:
+  * `twitter:username` - The site's Twitter handle
+  * `twitter:card` - The global card setting (`summary`, `summary_large_image`)
 
   ```yml
   twitter:
     username: benbalter
+    card: summary
   ```
 
 * `facebook` - The following properties are available:
@@ -65,3 +70,4 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 * `lang` - Page-, post-, or document-specific language information
+* `twittercard` - Page-, post-, oe document-specific card size
