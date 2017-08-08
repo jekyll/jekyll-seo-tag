@@ -44,7 +44,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
       - https://github.com/benbalter
       - https://keybase.io/benbalter
     ```
-tre
+
 * `google_site_verification` for verifying ownership via Google webmaster tools
 * Alternatively, verify ownership with several services at once using the following format:
 
