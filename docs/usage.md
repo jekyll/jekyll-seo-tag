@@ -44,7 +44,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
       - https://github.com/benbalter
       - https://keybase.io/benbalter
     ```
-
+tre
 * `google_site_verification` for verifying ownership via Google webmaster tools
 * Alternatively, verify ownership with several services at once using the following format:
 
@@ -65,3 +65,6 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 * `lang` - Page-, post-, or document-specific language information
+* `twitterCardType` - The type of twitter card to use
+
+*Note:* Front matter defaults can be used as described [here](https://github.com/BlythMeister/jekyll-seo-tag/blob/TwitterCard/docs/advanced-usage.md#setting-a-default-image)
