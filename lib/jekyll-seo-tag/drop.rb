@@ -52,7 +52,7 @@ module Jekyll
           end
         end
       end
-
+      
       def name
         return @name if defined?(@name)
         @name = if seo_name

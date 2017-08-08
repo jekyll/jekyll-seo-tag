@@ -65,3 +65,6 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see below)
 * `lang` - Page-, post-, or document-specific language information
+* `twitterCardType` - The type of twitter card to use
+
+*Note:* Front matter defaults can be used for any of the above values as described [here] with an image example (https://github.com/BlythMeister/jekyll-seo-tag/blob/TwitterCard/docs/advanced-usage.md#setting-a-default-image)
