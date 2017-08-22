@@ -246,6 +246,10 @@ module Jekyll
         site_author_hash(author_string) || { "name" => author_string }
       end
 
+      # Given a string representing the current document's author, attempt
+      # to retrieve additional metadata from site.data.authors, if present
+      #
+      # Returns the author hash
       def site_author_hash(author_string)
         return unless site.data["authors"] && site.data["authors"].is_a?(Hash)
         author_hash = site.data["authors"][author_string]
