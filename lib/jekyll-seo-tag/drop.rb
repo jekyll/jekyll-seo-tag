@@ -240,15 +240,24 @@ module Jekyll
         end
       end
 
+      # Given a string representing the current document's author, return
+      # a normalized hash representing that author. Will try to pull from
+      # site.authors if present and in the proper format.
       def author_hash(author_string)
-        if site.data["authors"] && site.data["authors"][author_string]
-          hash = site.data["authors"][author_string]
-          hash["name"]    ||= author_string
-          hash["twitter"] ||= author_string
-          hash
-        else
-          { "name" => author_string }
-        end
+        site_author_hash(author_string) || { "name" => author_string }
+      end
+
+      # Given a string representing the current document's author, attempt
+      # to retrieve additional metadata from site.data.authors, if present
+      #
+      # Returns the author hash
+      def site_author_hash(author_string)
+        return unless site.data["authors"] && site.data["authors"].is_a?(Hash)
+        author_hash = site.data["authors"][author_string]
+        return unless author_hash.is_a?(Hash)
+        author_hash["name"] ||= author_string
+        author_hash["twitter"] ||= author_string
+        author_hash
       end
 
       def seo_name
