@@ -563,7 +563,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
         let(:image) { ":" }
 
         it "returns nil" do
-          expect(subject.image["path"]).to eql("/:")
+          expect(subject.image["path"]).to eql(":")
         end
       end
 

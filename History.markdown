@@ -1,6 +1,7 @@
 ## HEAD
 
 * Use canonical_url specified in page if present #211
+* Fix for image.path causing an invalid url error #228
 
 ## 2.2.3 
 
