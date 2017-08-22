@@ -232,11 +232,11 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with site.authors as an array" do
-        let("data") { ["foo", "bar"] }
+        let("data") { { "authors" => ["foo", "bar"] } }
         let(:page_meta) { {"author" => "foo"} }
 
         it "doesn't error" do
-          expect(subject.author).to eql("")
+          expect(subject.author).to eql({"name"=>"foo", "twitter"=>"foo"})
         end
       end
 
