@@ -168,7 +168,8 @@ module Jekyll
         image["path"] ||= image["facebook"] || image["twitter"]
         return @image = nil unless image["path"]
 
-        unless absolute_url? image["path"]
+        # absolute_url? will return nil for an invalid URL
+        if absolute_url?(image["path"]) == false
           image["path"] = filters.absolute_url image["path"]
         end
 
