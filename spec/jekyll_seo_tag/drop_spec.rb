@@ -231,6 +231,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
         site
       end
 
+      context "with site.authors as an array" do
+        let("data") { ["foo", "bar"] }
+        let(:page_meta) { {"author" => "foo"} }
+
+        it "doesn't error" do
+          expect(subject.author).to eql("")
+        end
+      end
+
       %i[with without].each do |site_data_type|
         context "#{site_data_type} site.author data" do
           let(:data) do
