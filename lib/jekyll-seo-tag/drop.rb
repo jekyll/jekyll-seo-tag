@@ -1,7 +1,6 @@
 module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
-      include Jekyll::SeoTag::JSONLD
       include Jekyll::SeoTag::UrlHelper
 
       TITLE_SEPARATOR = " | ".freeze
@@ -78,6 +77,18 @@ module Jekyll
         @author ||= AuthorDrop.new(:page => page, :site => site)
       end
 
+      # A drop representing the JSON-LD output
+      def json_ld
+        @json_ld ||= JSONLDDrop.new(self)
+      end
+
+      # Returns a Drop representing the page's image
+      # Returns nil if the image has no path, to preserve backwards compatability
+      def image
+        @image ||= ImageDrop.new(:page => page, :context => @context)
+        @image if @image.path
+      end
+
       def date_modified
         @date_modified ||= begin
           date = if page_seo["date_modified"]
@@ -128,13 +139,6 @@ module Jekyll
             filters.uri_escape filters.absolute_url site["logo"]
           end
         end
-      end
-
-      # Returns a Drop representing the page's image
-      # Returns nil if the image has no path, to preserve backwards compatability
-      def image
-        @image ||= ImageDrop.new(:page => page, :context => @context)
-        @image if @image.path
       end
 
       def page_lang
