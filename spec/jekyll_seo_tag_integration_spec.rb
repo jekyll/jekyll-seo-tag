@@ -329,8 +329,7 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = '{"name":null,"description":"description"'
-        expect(output).to match(expected)
+        expect(output).to_not match(/{.*?\s.*?}/)
       end
     end
   end
