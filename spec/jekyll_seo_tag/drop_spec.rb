@@ -479,4 +479,8 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
   end
+
+  it "exposes the JSON-LD drop" do
+    expect(subject.json_ld).to be_a(Jekyll::SeoTag::JSONLDDrop)
+  end
 end
