@@ -329,7 +329,7 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expect(output).to_not match(/{.*?\s.*?}/)
+        expect(output).to_not match(%r!{.*?\s.*?}!)
       end
     end
   end
