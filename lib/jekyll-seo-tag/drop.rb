@@ -130,8 +130,11 @@ module Jekyll
         end
       end
 
+      # Returns a Drop representing the page's image
+      # Returns nil if the image has no path, to preserve backwards compatability
       def image
         @image ||= ImageDrop.new(:page => page, :context => @context)
+        @image if @image.path
       end
 
       def page_lang

@@ -1,20 +1,19 @@
 module Jekyll
   class SeoTag
-    # Returns nil or a hash representing the page image
-    # The image hash will always contain a path, pulled from:
+    # A drop representing the page image
+    # The image path will be pulled from:
     #
     # 1. The `image` key if it's a string
     # 2. The `image.path` key if it's a hash
     # 3. The `image.facebook` key
     # 4. The `image.twitter` key
-    #
-    # The resulting path is always an absolute URL
     class ImageDrop < Jekyll::Drops::Drop
       include Jekyll::SeoTag::UrlHelper
 
       # Initialize a new ImageDrop
       #
       # page - The page hash (e.g., Page#to_liquid)
+      # context - the Liquid::Context
       def initialize(page: nil, context: nil)
         raise ArgumentError unless page && context
         @mutations = {}
@@ -22,6 +21,9 @@ module Jekyll
         @context = context
       end
 
+      # Called path for backwards compatability, this is really
+      # the escaped, absolute URL representing the page's image
+      # Returns nil if no image path can be determined
       def path
         @path ||= filters.uri_escape(absolute_url) if absolute_url
       end
@@ -32,9 +34,10 @@ module Jekyll
       attr_accessor :page
       attr_accessor :context
 
+      # The normalized image hash with a `path` key (which may be nil)
       def image_hash
         @image_hash ||= if page["image"].is_a?(Hash)
-                          page["image"]
+                          { "path" => nil }.merge(page["image"])
                         elsif page["image"].is_a?(String)
                           { "path" => page["image"] }
                         else

@@ -27,7 +27,7 @@
   <meta property="og:site_name" content="{{ seo_tag.site_title }}" />
 {% endif %}
 
-{% if seo_tag.image.path %}
+{% if seo_tag.image %}
   <meta property="og:image" content="{{ seo_tag.image.path }}" />
   {% if seo_tag.image.height %}
     <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
@@ -50,7 +50,7 @@
 {% endif %}
 
 {% if site.twitter %}
-  {% if seo_tag.image.path %}
+  {% if seo_tag.image %}
     <meta name="twitter:card" content="summary_large_image" />
   {% else %}
     <meta name="twitter:card" content="summary" />
