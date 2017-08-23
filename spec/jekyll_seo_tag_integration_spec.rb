@@ -329,9 +329,7 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS.strip
-{"name":null,"description":"description","author":null,"@type":"BlogPosting"
-EOS
+        expected = '{"name":null,"description":"description"'
         expect(output).to match(expected)
       end
     end
