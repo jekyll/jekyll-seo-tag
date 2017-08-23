@@ -402,85 +402,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
   end
 
   context "image" do
+    let(:image) { "foo.png" }
     let(:page_meta) { { "image" => image } }
 
-    context "with image as a string" do
-      let(:image) { "image.png" }
-
-      it "returns a hash" do
-        expect(subject.image).to be_a(Hash)
-      end
-
-      it "returns the image" do
-        expect(subject.image["path"]).to eql("/image.png")
-      end
-
-      context "with site.url" do
-        let(:config) { { "url" => "http://example.com" } }
-
-        it "makes the path absolute" do
-          expect(subject.image["path"]).to eql("http://example.com/image.png")
-        end
-      end
-
-      context "with a URL-escaped path" do
-        let(:image) { "some image.png" }
-
-        it "URL-escapes the image" do
-          expect(subject.image["path"]).to eql("/some%20image.png")
-        end
-      end
+    it "returns a Drop" do
+      expect(subject.image).to be_a(Jekyll::SeoTag::ImageDrop)
     end
 
-    context "with image as a hash" do
-      context "with a path" do
-        let(:image) { { "path" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with facebook" do
-        let(:image) { { "facebook" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with twitter" do
-        let(:image) { { "twitter" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with some random hash" do
-        let(:image) { { "foo" => "bar" } }
-
-        it "returns nil" do
-          expect(subject.image).to be_nil
-        end
-      end
-
-      context "with an invalid path" do
-        let(:image) { ":" }
-
-        it "returns nil" do
-          expect(subject.image["path"]).to eql(":")
-        end
-      end
-
-      context "with height and width" do
-        let(:image) { { "path" => "image.png", "height" => 5, "width" => 10 } }
-
-        it "returns the height and width" do
-          expect(subject.image["height"]).to eql(5)
-          expect(subject.image["width"]).to eql(10)
-        end
-      end
+    it "returns the image" do
+      expect(subject.image["path"]).to eql("/foo.png")
     end
   end
 

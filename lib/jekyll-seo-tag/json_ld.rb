@@ -46,9 +46,9 @@ module Jekyll
 
       def json_image
         return unless image
-        return image["path"] if image.length == 1
+        return image["path"] if image.keys.length == 1
 
-        hash = image.dup
+        hash = image.to_h
         hash["url"]   = hash.delete("path")
         hash["@type"] = "imageObject"
         hash

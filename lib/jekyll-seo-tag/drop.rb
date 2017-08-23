@@ -2,6 +2,7 @@ module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
       include Jekyll::SeoTag::JSONLD
+      include Jekyll::SeoTag::UrlHelper
 
       TITLE_SEPARATOR = " | ".freeze
       FORMAT_STRING_METHODS = %i[
@@ -129,33 +130,8 @@ module Jekyll
         end
       end
 
-      # Returns nil or a hash representing the page image
-      # The image hash will always contain a path, pulled from:
-      #
-      # 1. The `image` key if it's a string
-      # 2. The `image.path` key if it's a hash
-      # 3. The `image.facebook` key
-      # 4. The `image.twitter` key
-      #
-      # The resulting path is always an absolute URL
       def image
-        return @image if defined?(@image)
-
-        image = page["image"]
-        return @image = nil unless image
-
-        image = { "path" => image } if image.is_a?(String)
-        image["path"] ||= image["facebook"] || image["twitter"]
-        return @image = nil unless image["path"]
-
-        # absolute_url? will return nil for an invalid URL
-        if absolute_url?(image["path"]) == false
-          image["path"] = filters.absolute_url image["path"]
-        end
-
-        image["path"] = filters.uri_escape image["path"]
-
-        @image = image.to_liquid
+        @image ||= ImageDrop.new(:page => page, :context => @context)
       end
 
       def page_lang
@@ -194,13 +170,6 @@ module Jekyll
 
       def fallback_data
         @fallback_data ||= {}
-      end
-
-      def absolute_url?(string)
-        return unless string
-        Addressable::URI.parse(string).absolute?
-      rescue Addressable::URI::InvalidURIError
-        nil
       end
 
       def format_string(string)
