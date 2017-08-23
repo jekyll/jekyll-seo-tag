@@ -223,95 +223,20 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "author" do
-      let(:name) { "foo" }
-      let(:twitter) { "foo" }
-      let(:picture) { nil }
-      let(:expected_hash) do
-        {
-          "name"    => name,
-          "twitter" => twitter,
-          "picture" => picture,
-        }
-      end
-      let(:data) { {} }
-      let(:config) { { "author" => "site_author" } }
-      let(:site) do
-        site = make_site(config)
-        site.data = data
-        site
+      let(:page_meta) { { "author" => "foo" } }
+
+      it "returns an AuthorDrop" do
+        expect(subject.author).to be_a(Jekyll::SeoTag::AuthorDrop)
       end
 
-      context "with site.authors as an array" do
-        let("data") { { "authors" => %w(foo bar) } }
-        let(:page_meta) { { "author" => "foo" } }
-
-        it "doesn't error" do
-          expect(subject.author.to_h).to eql(expected_hash)
-        end
+      it "passes page information" do
+        expect(subject.author.name).to eql("foo")
       end
 
-      context "with site.authors[author] as string" do
-        let("data") { { "authors" => { "foo" => "bar" } } }
-        let(:page_meta) { { "author" => "foo" } }
-
-        it "doesn't error" do
-          expect(subject.author.to_h).to eql(expected_hash)
-        end
-      end
-
-      %i[with without].each do |site_data_type|
-        context "#{site_data_type} site.author data" do
-          let(:data) do
-            if site_data_type == :with
-              {
-                "authors" => {
-                  "author"        => { "name" => "data_author", "image" => "author.png" },
-                  "array_author"  => { "image" => "author.png" },
-                  "string_author" => { "image" => "author.png" },
-                  "site_author"   => { "image" => "author.png" },
-                },
-              }
-            else
-              {}
-            end
-          end
-
-          {
-            :string       => { "author" => "string_author" },
-            :array        => { "authors" => %w(array_author author2) },
-            :empty_string => { "author" => "" },
-            :nil          => { "author" => nil },
-            :hash         => { "author" => { "name" => "hash_author" } },
-          }.each do |author_type, data|
-            context "with author as #{author_type}" do
-              let(:page_meta) { data }
-              let(:expected_author) do
-                "#{author_type}_author".sub("nil_", "site_").sub("empty_string_", "site_")
-              end
-
-              it "returns a Drop" do
-                expect(subject.author).to be_a(Jekyll::SeoTag::AuthorDrop)
-              end
-
-              it "returns the name" do
-                expect(subject.author["name"]).to eql(expected_author)
-              end
-
-              it "returns the twitter handle" do
-                expect(subject.author["twitter"]).to eql(expected_author)
-              end
-
-              if site_data_type == :with && author_type != :hash
-                it "returns the image" do
-                  expect(subject.author["image"]).to eql("author.png")
-                end
-              end
-            end
-          end
-        end
-      end
-
+      # Regression test to ensure to_liquid is called on site and page
+      # before being passed to AuthorDrop
       context "with author as a front matter default" do
+        let(:page_meta) { {} }
         let(:config) do
           {
             "defaults" => [
@@ -325,53 +250,6 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
         it "uses the author from the front matter default" do
           expect(subject.author["name"]).to eql("front matter default")
-        end
-      end
-
-      context "twitter" do
-        let(:page_meta) { { "author" => "author" } }
-
-        it "pulls the handle from the author" do
-          expect(subject.author["twitter"]).to eql("author")
-        end
-
-        context "with an @" do
-          let(:page_meta) do
-            {
-              "author" => {
-                "name"    => "author",
-                "twitter" => "@twitter",
-              },
-            }
-          end
-
-          it "strips the @" do
-            expect(subject.author["twitter"]).to eql("twitter")
-          end
-        end
-
-        # See https://github.com/jekyll/jekyll-seo-tag/issues/202
-        context "without an author name or handle" do
-          let(:page_meta) { { "author" => { "foo" => "bar" } } }
-
-          it "dosen't blow up" do
-            expect(subject.author["twitter"]).to be_nil
-          end
-        end
-
-        context "with an explicit handle" do
-          let(:page_meta) do
-            {
-              "author" => {
-                "name"    => "author",
-                "twitter" => "twitter",
-              },
-            }
-          end
-
-          it "pulls the handle from the hash" do
-            expect(subject.author["twitter"]).to eql("twitter")
-          end
         end
       end
     end

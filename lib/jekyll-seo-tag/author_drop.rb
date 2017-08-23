@@ -1,35 +1,32 @@
 module Jekyll
   class SeoTag
+    # A drop representing the current page's author
+    #
+    # Author name will be pulled from:
+    #
+    # 1. The page's `author` key
+    # 2. The first author in the page's `authors` key
+    # 3. The `author` key in the site config
+    #
+    # If the result from the name search is a string, we'll also check
+    # for additional author metadata in `site.data.authors`
     class AuthorDrop < Jekyll::Drops::Drop
-      # A drop representing the current page's author
+      # Initialize a new AuthorDrop
       #
-      # Author name will be pulled from:
-      #
-      # 1. The page's `author` key
-      # 2. The first author in the page's `authors` key
-      # 3. The `author` key in the site config
-      #
-      # If the result from the name search is a string, we'll also check
-      # for additional author metadata in `site.data.authors`
+      # page - The page hash (e.g., Page#to_liquid)
+      # site - The Jekyll::Drops::SiteDrop
       def initialize(page: nil, site: nil)
-        raise ArugementError unless page && site
+        raise ArgumentError unless page && site
         @mutations = {}
         @page = page
         @site = site
       end
 
-      # Public methods to delegate to keys of the author hash
-      # Ensures keys will be present when `to_h` is called, even with nil values
-      DELEGATED_METHODS = %i[name picture].freeze
-
-      DELEGATED_METHODS.each do |meth|
-        define_method meth do
-          author_hash[meth.to_s]
-        end
-      end
-
       # AuthorDrop#to_s should return name, allowing the author drop to safely
       # replace `page.author`, if necessary, and remain backwards compatible
+      def name
+        author_hash["name"]
+      end
       alias_method :to_s, :name
 
       def twitter
