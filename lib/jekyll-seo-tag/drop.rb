@@ -72,29 +72,9 @@ module Jekyll
         end
       end
 
-      # Returns a nil or a hash representing the author
-      # Author name will be pulled from:
-      #
-      # 1. The `author` key, if the key is a string
-      # 2. The first author in the `authors` key
-      # 3. The `author` key in the site config
-      #
-      # If the result from the name search is a string, we'll also check
-      # to see if the author exists in `site.data.authors`
+      # A drop representing the page author
       def author
-        @author ||= begin
-          return if author_string_or_hash.to_s.empty?
-
-          author = if author_string_or_hash.is_a?(String)
-                     author_hash(author_string_or_hash)
-                   else
-                     author_string_or_hash
-                   end
-
-          author["twitter"] ||= author["name"]
-          author["twitter"].delete! "@" if author["twitter"]
-          author.to_liquid
-        end
+        @author ||= AuthorDrop.new(:page => page, :site => site)
       end
 
       def date_modified
@@ -229,35 +209,6 @@ module Jekyll
         end
 
         string unless string.empty?
-      end
-
-      def author_string_or_hash
-        @author_string_or_hash ||= begin
-          author = page["author"]
-          author = page["authors"][0] if author.to_s.empty? && page["authors"]
-          author = site["author"] if author.to_s.empty?
-          author
-        end
-      end
-
-      # Given a string representing the current document's author, return
-      # a normalized hash representing that author. Will try to pull from
-      # site.authors if present and in the proper format.
-      def author_hash(author_string)
-        site_author_hash(author_string) || { "name" => author_string }
-      end
-
-      # Given a string representing the current document's author, attempt
-      # to retrieve additional metadata from site.data.authors, if present
-      #
-      # Returns the author hash
-      def site_author_hash(author_string)
-        return unless site.data["authors"] && site.data["authors"].is_a?(Hash)
-        author_hash = site.data["authors"][author_string]
-        return unless author_hash.is_a?(Hash)
-        author_hash["name"] ||= author_string
-        author_hash["twitter"] ||= author_string
-        author_hash
       end
 
       def seo_name

@@ -223,6 +223,16 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "author" do
+      let(:name) { "foo" }
+      let(:twitter) { "foo" }
+      let(:picture) { nil }
+      let(:expected_hash) do
+        {
+          "name"    => name,
+          "twitter" => twitter,
+          "picture" => picture,
+        }
+      end
       let(:data) { {} }
       let(:config) { { "author" => "site_author" } }
       let(:site) do
@@ -236,7 +246,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
         let(:page_meta) { { "author" => "foo" } }
 
         it "doesn't error" do
-          expect(subject.author).to eql({ "name" => "foo", "twitter" => "foo" })
+          expect(subject.author.to_h).to eql(expected_hash)
         end
       end
 
@@ -245,7 +255,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
         let(:page_meta) { { "author" => "foo" } }
 
         it "doesn't error" do
-          expect(subject.author).to eql({ "name" => "foo", "twitter" => "foo" })
+          expect(subject.author.to_h).to eql(expected_hash)
         end
       end
 
@@ -279,8 +289,8 @@ RSpec.describe Jekyll::SeoTag::Drop do
                 "#{author_type}_author".sub("nil_", "site_").sub("empty_string_", "site_")
               end
 
-              it "returns a hash" do
-                expect(subject.author).to be_a(Hash)
+              it "returns a Drop" do
+                expect(subject.author).to be_a(Jekyll::SeoTag::AuthorDrop)
               end
 
               it "returns the name" do
