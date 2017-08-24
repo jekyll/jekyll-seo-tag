@@ -1,8 +1,4 @@
-RSpec.describe Jekyll::SeoTag::JSONLD do
-  before do
-    Jekyll.logger.log_level = :error
-  end
-
+RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   let(:author) { "author" }
   let(:image) { "image" }
   let(:metadata) do
@@ -28,7 +24,12 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
   let(:page)      { make_page(metadata) }
   let(:site)      { make_site(config) }
   let(:context)   { make_context(:page => page, :site => site) }
-  subject { Jekyll::SeoTag::Drop.new("", context).json_ld }
+  let(:page_drop) { Jekyll::SeoTag::Drop.new("", context) }
+  subject { described_class.new(page_drop) }
+
+  before do
+    Jekyll.logger.log_level = :error
+  end
 
   it "returns the context" do
     expect(subject).to have_key("@context")

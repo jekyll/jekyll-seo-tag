@@ -1,7 +1,7 @@
 module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
-      include Jekyll::SeoTag::JSONLD
+      include Jekyll::SeoTag::UrlHelper
 
       TITLE_SEPARATOR = " | ".freeze
       FORMAT_STRING_METHODS = %i[
@@ -72,29 +72,21 @@ module Jekyll
         end
       end
 
-      # Returns a nil or a hash representing the author
-      # Author name will be pulled from:
-      #
-      # 1. The `author` key, if the key is a string
-      # 2. The first author in the `authors` key
-      # 3. The `author` key in the site config
-      #
-      # If the result from the name search is a string, we'll also check
-      # to see if the author exists in `site.data.authors`
+      # A drop representing the page author
       def author
-        @author ||= begin
-          return if author_string_or_hash.to_s.empty?
+        @author ||= AuthorDrop.new(:page => page, :site => site)
+      end
 
-          author = if author_string_or_hash.is_a?(String)
-                     author_hash(author_string_or_hash)
-                   else
-                     author_string_or_hash
-                   end
+      # A drop representing the JSON-LD output
+      def json_ld
+        @json_ld ||= JSONLDDrop.new(self)
+      end
 
-          author["twitter"] ||= author["name"]
-          author["twitter"].delete! "@" if author["twitter"]
-          author.to_liquid
-        end
+      # Returns a Drop representing the page's image
+      # Returns nil if the image has no path, to preserve backwards compatability
+      def image
+        @image ||= ImageDrop.new(:page => page, :context => @context)
+        @image if @image.path
       end
 
       def date_modified
@@ -149,35 +141,6 @@ module Jekyll
         end
       end
 
-      # Returns nil or a hash representing the page image
-      # The image hash will always contain a path, pulled from:
-      #
-      # 1. The `image` key if it's a string
-      # 2. The `image.path` key if it's a hash
-      # 3. The `image.facebook` key
-      # 4. The `image.twitter` key
-      #
-      # The resulting path is always an absolute URL
-      def image
-        return @image if defined?(@image)
-
-        image = page["image"]
-        return @image = nil unless image
-
-        image = { "path" => image } if image.is_a?(String)
-        image["path"] ||= image["facebook"] || image["twitter"]
-        return @image = nil unless image["path"]
-
-        # absolute_url? will return nil for an invalid URL
-        if absolute_url?(image["path"]) == false
-          image["path"] = filters.absolute_url image["path"]
-        end
-
-        image["path"] = filters.uri_escape image["path"]
-
-        @image = image.to_liquid
-      end
-
       def page_lang
         @page_lang ||= page["lang"] || site["lang"] || "en_US"
       end
@@ -216,48 +179,12 @@ module Jekyll
         @fallback_data ||= {}
       end
 
-      def absolute_url?(string)
-        return unless string
-        Addressable::URI.parse(string).absolute?
-      rescue Addressable::URI::InvalidURIError
-        nil
-      end
-
       def format_string(string)
         string = FORMAT_STRING_METHODS.reduce(string) do |memo, method|
           filters.public_send(method, memo)
         end
 
         string unless string.empty?
-      end
-
-      def author_string_or_hash
-        @author_string_or_hash ||= begin
-          author = page["author"]
-          author = page["authors"][0] if author.to_s.empty? && page["authors"]
-          author = site["author"] if author.to_s.empty?
-          author
-        end
-      end
-
-      # Given a string representing the current document's author, return
-      # a normalized hash representing that author. Will try to pull from
-      # site.authors if present and in the proper format.
-      def author_hash(author_string)
-        site_author_hash(author_string) || { "name" => author_string }
-      end
-
-      # Given a string representing the current document's author, attempt
-      # to retrieve additional metadata from site.data.authors, if present
-      #
-      # Returns the author hash
-      def site_author_hash(author_string)
-        return unless site.data["authors"] && site.data["authors"].is_a?(Hash)
-        author_hash = site.data["authors"][author_string]
-        return unless author_hash.is_a?(Hash)
-        author_hash["name"] ||= author_string
-        author_hash["twitter"] ||= author_string
-        author_hash
       end
 
       def seo_name

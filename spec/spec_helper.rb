@@ -3,6 +3,15 @@ require "jekyll"
 require "jekyll-seo-tag"
 require "html-proofer"
 
+# Monkey patch Jekyll::Drops::Drop so Rspec's `have_key` works as expected
+module Jekyll
+  module Drops
+    class Drop
+      alias_method :has_key?, :key?
+    end
+  end
+end
+
 ENV["JEKYLL_LOG_LEVEL"] = "error"
 
 def dest_dir
