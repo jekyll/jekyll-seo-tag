@@ -12,7 +12,7 @@ module Jekyll
       def_delegator :page_drop, :links,          :sameAs
       def_delegator :page_drop, :logo,           :logo
 
-      # Expose #type and #logo and private methods and #@type as a public method
+      # Expose #type and #logo as private methods and #@type as a public method
       def_delegator :page_drop, :type, :type
       alias_method :"@type", :type
       private :type
