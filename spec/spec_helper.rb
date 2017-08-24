@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "jekyll"
 require "jekyll-seo-tag"
 require "html-proofer"
@@ -15,11 +15,11 @@ end
 ENV["JEKYLL_LOG_LEVEL"] = "error"
 
 def dest_dir
-  File.expand_path("../tmp/dest", File.dirname(__FILE__))
+  File.expand_path("tmp/dest", __dir__)
 end
 
 def source_dir
-  File.expand_path("./fixtures", File.dirname(__FILE__))
+  File.expand_path("./fixtures", __dir__)
 end
 
 CONFIG_DEFAULTS = {
