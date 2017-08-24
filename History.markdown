@@ -9,6 +9,7 @@
 * Ensure `site.data.authors` is properly formatted before attempting to retrieve author meta #227
 * Convert author, image, and JSON-LD to dedicated drops #229
 * Cache parsed template #231
+* Define path with __dir__ #232
 
 ### Documentation
 
