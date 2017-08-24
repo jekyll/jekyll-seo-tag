@@ -15,11 +15,11 @@ end
 ENV["JEKYLL_LOG_LEVEL"] = "error"
 
 def dest_dir
-  File.expand_path("tmp/dest", __dir__)
+  File.expand_path("../tmp/dest", __dir__)
 end
 
 def source_dir
-  File.expand_path("./fixtures", __dir__)
+  File.expand_path("fixtures", __dir__)
 end
 
 CONFIG_DEFAULTS = {
