@@ -1,8 +1,18 @@
 ## HEAD
 
+## 2.3.0
+
+### Minor Enhancements
+
 * Use canonical_url specified in page if present #211
 * Fix for image.path causing an invalid url error #228
 * Ensure `site.data.authors` is properly formatted before attempting to retrieve author meta #227
+* Convert author, image, and JSON-LD to dedicated drops #229
+* Cache parsed template #231
+
+### Documentation
+
+* gems: is deprecated in current Jekyll version of github-pages #230
 
 ## 2.2.3 
 
