@@ -1,7 +1,8 @@
 module Jekyll
   class SeoTag
+    # This module is deprecated, but is included in the Gem to avoid a breaking
+    # change and should be removed at the next major version bump
     module JSONLD
-      # Unused, but here to preserve backwards compatability
       METHODS_KEYS = {
         :json_context   => "@context",
         :type           => "@type",
@@ -17,6 +18,12 @@ module Jekyll
         :links          => "sameAs",
         :canonical_url  => "url",
       }.freeze
+
+      # Self should be a Jekyll::SeoTag::Drop instance (when extending the module)
+      def json_ld
+        Jekyll.logger.warn "Jekyll::SeoTag::JSONLD is deprecated"
+        @json_ld ||= JSONLDDrop.new(self)
+      end
     end
   end
 end
