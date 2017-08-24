@@ -31,7 +31,7 @@ module Jekyll
 
     def render(context)
       @context = context
-      template.render!(payload, info)
+      SeoTag.template.render!(payload, info)
     end
 
     private
@@ -63,19 +63,23 @@ module Jekyll
       }
     end
 
-    def template
-      @template ||= Liquid::Template.parse template_contents
-    end
-
-    def template_contents
-      @template_contents ||= begin
-        File.read(template_path).gsub(MINIFY_REGEX, "")
+    class << self
+      def template
+        @template ||= Liquid::Template.parse template_contents
       end
-    end
 
-    def template_path
-      @template_path ||= begin
-        File.expand_path "./template.html", File.dirname(__FILE__)
+      private
+
+      def template_contents
+        @template_contents ||= begin
+          File.read(template_path).gsub(MINIFY_REGEX, "")
+        end
+      end
+
+      def template_path
+        @template_path ||= begin
+          File.expand_path "./template.html", File.dirname(__FILE__)
+        end
       end
     end
   end
