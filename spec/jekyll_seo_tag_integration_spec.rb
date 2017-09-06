@@ -23,6 +23,10 @@ RSpec.describe Jekyll::SeoTag do
     expect(output).to match(%r!Jekyll SEO tag v#{version}!i)
   end
 
+  it "outputs meta generator" do
+    expect(output).to match(%r!Jekyll v#{Jekyll::VERSION}!i)
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {
@@ -296,6 +300,7 @@ RSpec.describe Jekyll::SeoTag do
         expected = <<-EOS
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
+<meta name="generator" content="Jekyll v#{Jekyll::VERSION}" />
 <meta property="og:title" content="Foo" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
