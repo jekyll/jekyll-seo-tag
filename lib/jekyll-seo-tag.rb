@@ -44,12 +44,12 @@ module Jekyll
     end
 
     def payload
-      {
+      # site_payload is an instance of UnifiedPayloadDrop. See https://git.io/v5ajm
+      @payload ||= context.registers[:site].site_payload.merge({
         "page"      => context.registers[:page],
-        "site"      => context.registers[:site].site_payload["site"],
         "paginator" => context["paginator"],
         "seo_tag"   => drop,
-      }
+      })
     end
 
     def drop
