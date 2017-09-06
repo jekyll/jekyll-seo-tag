@@ -20,10 +20,6 @@ module Jekyll
         Jekyll::SeoTag::VERSION
       end
 
-      def jekyll_version
-        Jekyll::VERSION
-      end
-
       # Should the `<title>` tag be generated for this page?
       def title?
         return false unless title
