@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::Filters do
   let(:page)      { make_page }
   let(:site)      { make_site }

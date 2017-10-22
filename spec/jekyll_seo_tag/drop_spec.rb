@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::Drop do
   let(:config)    { { "title" => "site title" } }
   let(:page_meta) { { "title" => "page title" } }
