@@ -13,6 +13,8 @@
     - jekyll-seo-tag
   ```
 
+:bulb: If you are using a Jekyll version less than `3.5.0`, use the `gems` key instead of `plugins`.
+
 3. Add the following right before `</head>` in your site's template(s):
 
   ```liquid
