@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   let(:author) { "author" }
   let(:image) { "image" }
