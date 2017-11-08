@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::ImageDrop do
   let(:config)    { { "title" => "site title" } }
   let(:image)     { nil }
