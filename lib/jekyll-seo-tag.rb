@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "jekyll"
 require "jekyll-seo-tag/version"
 
