@@ -338,6 +338,10 @@ EOS
       it "minifies JSON-LD" do
         expect(output).to_not match(%r!{.*?\s.*?}!)
       end
+
+      it "removes null values from JSON-LD" do
+        expect(output).to_not match(%r!:null!)
+      end
     end
   end
 

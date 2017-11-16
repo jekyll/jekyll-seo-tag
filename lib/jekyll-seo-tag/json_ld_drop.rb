@@ -73,6 +73,10 @@ module Jekyll
       alias_method :mainEntityOfPage, :main_entity
       private :main_entity
 
+      def to_json
+        to_h.reject { |_k, v| v.nil? }.to_json
+      end
+
       private
 
       attr_reader :page_drop
