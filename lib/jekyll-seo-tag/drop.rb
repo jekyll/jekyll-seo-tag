@@ -53,6 +53,12 @@ module Jekyll
             page_title || site_title
           end
         end
+
+        if page_number
+          return page_number + @title
+        end
+
+        @title
       end
 
       def name
@@ -173,6 +179,17 @@ module Jekyll
 
       def homepage_or_about?
         page["url"] =~ HOMEPAGE_OR_ABOUT_REGEX
+      end
+
+      def page_number
+        return if !@context["paginator"] || !@context["paginator"]["page"]
+
+        current = @context["paginator"]["page"]
+        total = @context["paginator"]["total_pages"]
+
+        if current > 1
+          return "Page #{current} of #{total} for "
+        end
       end
 
       attr_reader :context
