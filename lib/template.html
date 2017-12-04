@@ -3,6 +3,8 @@
   <title>{{ seo_tag.title }}</title>
 {% endif %}
 
+<meta name="generator" content="Jekyll v{{ jekyll.version }}" />
+
 {% if seo_tag.page_title %}
   <meta property="og:title" content="{{ seo_tag.page_title }}" />
 {% endif %}
@@ -43,10 +45,10 @@
 {% endif %}
 
 {% if paginator.previous_page %}
-  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">
+  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}" />
 {% endif %}
 {% if paginator.next_page %}
-  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
+  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}" />
 {% endif %}
 
 {% if site.twitter %}
@@ -79,19 +81,19 @@
 
 {% if site.webmaster_verifications %}
   {% if site.webmaster_verifications.google %}
-    <meta name="google-site-verification" content="{{ site.webmaster_verifications.google }}">
+    <meta name="google-site-verification" content="{{ site.webmaster_verifications.google }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.bing %}
-    <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing }}">
+    <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.alexa %}
-    <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa }}">
+    <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.yandex %}
-    <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex }}">
+    <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex }}" />
   {% endif %}
 {% elsif site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />

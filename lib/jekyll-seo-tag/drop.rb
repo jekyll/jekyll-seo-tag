@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Jekyll
   class SeoTag
     class Drop < Jekyll::Drops::Drop
-      include Jekyll::SeoTag::JSONLD
+      include Jekyll::SeoTag::UrlHelper
 
       TITLE_SEPARATOR = " | ".freeze
       FORMAT_STRING_METHODS = %i[
@@ -72,29 +74,21 @@ module Jekyll
         end
       end
 
-      # Returns a nil or a hash representing the author
-      # Author name will be pulled from:
-      #
-      # 1. The `author` key, if the key is a string
-      # 2. The first author in the `authors` key
-      # 3. The `author` key in the site config
-      #
-      # If the result from the name search is a string, we'll also check
-      # to see if the author exists in `site.data.authors`
+      # A drop representing the page author
       def author
-        @author ||= begin
-          return if author_string_or_hash.to_s.empty?
+        @author ||= AuthorDrop.new(:page => page, :site => site)
+      end
 
-          author = if author_string_or_hash.is_a?(String)
-                     author_hash(author_string_or_hash)
-                   else
-                     author_string_or_hash
-                   end
+      # A drop representing the JSON-LD output
+      def json_ld
+        @json_ld ||= JSONLDDrop.new(self)
+      end
 
-          author["twitter"] ||= author["name"]
-          author["twitter"].delete! "@" if author["twitter"]
-          author.to_liquid
-        end
+      # Returns a Drop representing the page's image
+      # Returns nil if the image has no path, to preserve backwards compatability
+      def image
+        @image ||= ImageDrop.new(:page => page, :context => @context)
+        @image if @image.path
       end
 
       def date_modified
@@ -149,34 +143,6 @@ module Jekyll
         end
       end
 
-      # Returns nil or a hash representing the page image
-      # The image hash will always contain a path, pulled from:
-      #
-      # 1. The `image` key if it's a string
-      # 2. The `image.path` key if it's a hash
-      # 3. The `image.facebook` key
-      # 4. The `image.twitter` key
-      #
-      # The resulting path is always an absolute URL
-      def image
-        return @image if defined?(@image)
-
-        image = page["image"]
-        return @image = nil unless image
-
-        image = { "path" => image } if image.is_a?(String)
-        image["path"] ||= image["facebook"] || image["twitter"]
-        return @image = nil unless image["path"]
-
-        unless absolute_url? image["path"]
-          image["path"] = filters.absolute_url image["path"]
-        end
-
-        image["path"] = filters.uri_escape image["path"]
-
-        @image = image.to_liquid
-      end
-
       def page_lang
         @page_lang ||= page["lang"] || site["lang"] || "en_US"
       end
@@ -215,39 +181,12 @@ module Jekyll
         @fallback_data ||= {}
       end
 
-      def absolute_url?(string)
-        return unless string
-        Addressable::URI.parse(string).absolute?
-      rescue Addressable::URI::InvalidURIError
-        nil
-      end
-
       def format_string(string)
         string = FORMAT_STRING_METHODS.reduce(string) do |memo, method|
           filters.public_send(method, memo)
         end
 
         string unless string.empty?
-      end
-
-      def author_string_or_hash
-        @author_string_or_hash ||= begin
-          author = page["author"]
-          author = page["authors"][0] if author.to_s.empty? && page["authors"]
-          author = site["author"] if author.to_s.empty?
-          author
-        end
-      end
-
-      def author_hash(author_string)
-        if site.data["authors"] && site.data["authors"][author_string]
-          hash = site.data["authors"][author_string]
-          hash["name"]    ||= author_string
-          hash["twitter"] ||= author_string
-          hash
-        else
-          { "name" => author_string }
-        end
       end
 
       def seo_name
