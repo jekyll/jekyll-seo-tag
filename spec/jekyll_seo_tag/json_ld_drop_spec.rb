@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   let(:author) { "author" }
   let(:image) { "image" }
@@ -149,5 +151,13 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   it "returns the url" do
     expect(subject).to have_key("url")
     expect(subject["url"]).to eql("/page.html")
+  end
+
+  context "with null values" do
+    let(:metadata) { {} }
+
+    it "does not return null values as json" do
+      expect(subject.to_json).to_not match(%r!:null!)
+    end
   end
 end

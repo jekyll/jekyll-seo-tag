@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Jekyll
   class SeoTag
     # This module is deprecated, but is included in the Gem to avoid a breaking
