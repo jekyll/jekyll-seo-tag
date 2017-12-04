@@ -5,6 +5,7 @@
 ### Minor
 
   * Add meta generator (#236)
+  * Consistently use self-closing tags (#246)
   * Strip null values from JSON-LD hash (#249)
 
 ### Documentation
