@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Jekyll
   class SeoTag
     class JSONLDDrop < Jekyll::Drops::Drop
@@ -70,6 +72,10 @@ module Jekyll
       end
       alias_method :mainEntityOfPage, :main_entity
       private :main_entity
+
+      def to_json
+        to_h.reject { |_k, v| v.nil? }.to_json
+      end
 
       private
 

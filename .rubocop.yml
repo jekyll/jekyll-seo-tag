@@ -10,16 +10,11 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
-Style/Documentation:
-  Enabled: false
-
-Style/FileName:
-  Enabled: false
-
-Style/IndentHeredoc:
+Layout/IndentHeredoc:
   Exclude:
     - spec/**/*
 
 AllCops:
+  TargetRubyVersion: 2.1
   Exclude:
     - vendor/**/*

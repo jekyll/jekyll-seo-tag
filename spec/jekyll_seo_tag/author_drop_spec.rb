@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::AuthorDrop do
   let(:data) { {} }
   let(:config) { { "author" => "site_author" } }
