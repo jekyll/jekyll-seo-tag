@@ -4,6 +4,10 @@
 
   * Avoid deprecation warning when building docs (#243)
 
+### Development Fixes
+
+  * Travis: Test against Rubies (#242)
+
 ## 2.3.0
 
 ### Minor Enhancements
