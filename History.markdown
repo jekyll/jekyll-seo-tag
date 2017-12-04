@@ -7,6 +7,7 @@
 ### Development Fixes
 
   * Travis: Test against Rubies (#242)
+  * Try testing on Ruby v2.3 and 2.4 (#181)
 
 ## 2.3.0
 
