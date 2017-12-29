@@ -80,6 +80,7 @@ The following options can be set for any particular page. While the default opti
 For most users, setting `image: [path-to-image]` on a per-page basis should be enough. If you need more control over how images are represented, the `image` property can also be an object, with the following options:
 
 * `path` - The relative path to the image. Same as `image: [path-to-image]`
+* `asset` - The Jekyll Assets filename of the image if `path` is not provided
 * `height` - The height of the Open Graph (`og:image`) image
 * `width` - The width of the Open Graph (`og:image`) image
 
@@ -87,7 +88,8 @@ You can use any of the above, optional properties, like so:
 
 ```yml
 image:
-  path: /img/twitter.png
+  path: /assets/twitter.png
+  asset: twitter.png
   height: 100
   width: 100
 ```
