@@ -36,15 +36,42 @@ module Jekyll
       attr_accessor :page
       attr_accessor :context
 
+      def sprockets
+        @sprockets ||= if context.registers[:site].respond_to? :sprockets
+                         context.registers[:site].sprockets
+                       end
+      end
+
+      def digest_path
+        if sprockets.nil?
+          raise "Jekyll Assets is required"
+        else
+          @digest_path ||= begin
+            asset = sprockets.find_asset! @image_hash["asset"]
+            sprockets.manifest.compile(asset.logical_path)
+
+            sprockets.prefix_url(asset.digest_path)
+          end
+        end
+      end
+
       # The normalized image hash with a `path` key (which may be nil)
       def image_hash
-        @image_hash ||= if page["image"].is_a?(Hash)
-                          { "path" => nil }.merge(page["image"])
-                        elsif page["image"].is_a?(String)
-                          { "path" => page["image"] }
-                        else
-                          { "path" => nil }
-                        end
+        return @image_hash if defined? @image_hash
+
+        @image_hash = if page["image"].is_a?(Hash)
+                        { "path" => nil }.merge(page["image"])
+                      elsif page["image"].is_a?(String)
+                        { "path" => page["image"] }
+                      else
+                        { "path" => nil }
+                      end
+
+        unless @image_hash["asset"].nil?
+          @image_hash["path"] ||= digest_path
+        end
+
+        @image_hash
       end
       alias_method :fallback_data, :image_hash
 
