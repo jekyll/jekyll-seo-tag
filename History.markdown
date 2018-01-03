@@ -1,5 +1,9 @@
 ## HEAD
 
+### Documentation
+
+  * Use gems config key for Jekyll &lt; 3.5.0 (#255)
+
 ## 2.4.0 / 2017-12-04
 
 ### Minor
