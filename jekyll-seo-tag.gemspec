@@ -30,5 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "html-proofer", "~> 3.7"
   spec.add_development_dependency "rspec", "~> 3.5"
-  spec.add_development_dependency "rubocop", "~> 0.5"
+  spec.add_development_dependency "rubocop", "0.51"
 end
