@@ -54,6 +54,7 @@ webmaster_verifications:
   bing: 1234
   alexa: 1234
   yandex: 1234
+  baidu: 1234
 ```
 
 * `lang` - The locale these tags are marked up in. Of the format `language_TERRITORY`. Default is `en_US`.
