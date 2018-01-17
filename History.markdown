@@ -8,6 +8,10 @@
 
   * Test against Ruby 2.5 (#260)
 
+### Minor Enhancements
+
+  * Add webmaster_verifications for baidu (#263)
+
 ## 2.4.0 / 2017-12-04
 
 ### Minor
