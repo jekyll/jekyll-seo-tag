@@ -17,6 +17,8 @@ If you are using a Jekyll version less than `3.5.0`, use the `gems` key instead 
 
 3. Add the following right before `</head>` in your site's template(s):
 
+{% raw %}
   ```liquid
   {% seo %}
   ```
+{% endraw %}
