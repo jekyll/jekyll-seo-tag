@@ -4,6 +4,14 @@
 
   * Use gems config key for Jekyll &lt; 3.5.0 ([#255](https://github.com/jekyll/jekyll-seo-tag/pull/#255))
 
+### Development Fixes
+
+  * Test against Ruby 2.5 (#260)
+
+### Minor Enhancements
+
+  * Add webmaster_verifications for baidu (#263)
+
 ## 2.4.0 / 2017-12-04
 
 ### Minor
