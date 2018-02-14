@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Jekyll
   class SeoTag
+    # This module is deprecated, but is included in the Gem to avoid a breaking
+    # change and should be removed at the next major version bump
     module JSONLD
-
-      # A hash of instance methods => key in resulting JSON-LD hash
       METHODS_KEYS = {
         :json_context   => "@context",
         :type           => "@type",
@@ -19,60 +21,10 @@ module Jekyll
         :canonical_url  => "url",
       }.freeze
 
+      # Self should be a Jekyll::SeoTag::Drop instance (when extending the module)
       def json_ld
-        @json_ld ||= begin
-          output = {}
-          METHODS_KEYS.each do |method, key|
-            value = send(method)
-            output[key] = value unless value.nil?
-          end
-          output
-        end
-      end
-
-      private
-
-      def json_context
-        "http://schema.org"
-      end
-
-      def json_author
-        return unless author
-        {
-          "@type" => "Person",
-          "name"  => author["name"],
-        }
-      end
-
-      def json_image
-        return unless image
-        return image["path"] if image.length == 1
-
-        hash = image.dup
-        hash["url"]   = hash.delete("path")
-        hash["@type"] = "imageObject"
-        hash
-      end
-
-      def publisher
-        return unless logo
-        output = {
-          "@type" => "Organization",
-          "logo"  => {
-            "@type" => "ImageObject",
-            "url"   => logo,
-          },
-        }
-        output["name"] = author["name"] if author
-        output
-      end
-
-      def main_entity
-        return unless %w(BlogPosting CreativeWork).include?(type)
-        {
-          "@type" => "WebPage",
-          "@id"   => canonical_url,
-        }
+        Jekyll.logger.warn "Jekyll::SeoTag::JSONLD is deprecated"
+        @json_ld ||= JSONLDDrop.new(self)
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag do
   let(:page)      { make_page }
   let(:site)      { make_site }
@@ -21,6 +23,10 @@ RSpec.describe Jekyll::SeoTag do
   it "outputs the plugin version" do
     version = Jekyll::SeoTag::VERSION
     expect(output).to match(%r!Jekyll SEO tag v#{version}!i)
+  end
+
+  it "outputs meta generator" do
+    expect(output).to match(%r!Jekyll v#{Jekyll::VERSION}!i)
   end
 
   it "outputs valid HTML" do
@@ -296,6 +302,7 @@ RSpec.describe Jekyll::SeoTag do
         expected = <<-EOS
 <!-- Begin Jekyll SEO tag v#{version} -->
 <title>Foo</title>
+<meta name="generator" content="Jekyll v#{Jekyll::VERSION}" />
 <meta property="og:title" content="Foo" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://example.invalid/page.html" />
@@ -329,10 +336,11 @@ EOS
       end
 
       it "minifies JSON-LD" do
-        expected = <<-EOS.strip
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"post",
-EOS
-        expect(output).to match(expected)
+        expect(output).to_not match(%r!{.*?\s.*?}!)
+      end
+
+      it "removes null values from JSON-LD" do
+        expect(output).to_not match(%r!:null!)
       end
     end
   end
@@ -573,8 +581,8 @@ EOS
     let(:context) { make_context({}, "paginator" => paginator) }
 
     it "outputs pagination links" do
-      expect(output).to match(%r!<link rel="prev" href="/foo">!)
-      expect(output).to match(%r!<link rel="next" href="/bar">!)
+      expect(output).to match(%r!<link rel="prev" href="/foo" />!)
+      expect(output).to match(%r!<link rel="next" href="/bar" />!)
     end
   end
 
@@ -592,22 +600,22 @@ EOS
       let(:site) { make_site("webmaster_verifications" => site_verifications) }
 
       it "outputs google verification meta" do
-        expected = %r!<meta name="google-site-verification" content="foo">!
+        expected = %r!<meta name="google-site-verification" content="foo" />!
         expect(output).to match(expected)
       end
 
       it "outputs bing verification meta" do
-        expected = %r!<meta name="msvalidate.01" content="bar">!
+        expected = %r!<meta name="msvalidate.01" content="bar" />!
         expect(output).to match(expected)
       end
 
       it "outputs alexa verification meta" do
-        expected = %r!<meta name="alexaVerifyID" content="baz">!
+        expected = %r!<meta name="alexaVerifyID" content="baz" />!
         expect(output).to match(expected)
       end
 
       it "outputs yandex verification meta" do
-        expected = %r!<meta name="yandex-verification" content="bat">!
+        expected = %r!<meta name="yandex-verification" content="bat" />!
         expect(output).to match(expected)
       end
     end

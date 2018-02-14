@@ -3,7 +3,7 @@ description: A Jekyll plugin to add metadata tags for search engines and social 
 
 permalink: pretty
 
-gems:
+plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 

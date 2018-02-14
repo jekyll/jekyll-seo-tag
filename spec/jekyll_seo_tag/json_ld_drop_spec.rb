@@ -1,8 +1,6 @@
-RSpec.describe Jekyll::SeoTag::JSONLD do
-  before do
-    Jekyll.logger.log_level = :error
-  end
+# frozen_string_literal: true
 
+RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   let(:author) { "author" }
   let(:image) { "image" }
   let(:metadata) do
@@ -28,7 +26,12 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
   let(:page)      { make_page(metadata) }
   let(:site)      { make_site(config) }
   let(:context)   { make_context(:page => page, :site => site) }
-  subject { Jekyll::SeoTag::Drop.new("", context).json_ld }
+  let(:page_drop) { Jekyll::SeoTag::Drop.new("", context) }
+  subject { described_class.new(page_drop) }
+
+  before do
+    Jekyll.logger.log_level = :error
+  end
 
   it "returns the context" do
     expect(subject).to have_key("@context")
@@ -148,5 +151,13 @@ RSpec.describe Jekyll::SeoTag::JSONLD do
   it "returns the url" do
     expect(subject).to have_key("url")
     expect(subject["url"]).to eql("/page.html")
+  end
+
+  context "with null values" do
+    let(:metadata) { {} }
+
+    it "does not return null values as json" do
+      expect(subject.to_json).to_not match(%r!:null!)
+    end
   end
 end

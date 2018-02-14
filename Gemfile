@@ -1,6 +1,6 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
-require "json"
-require "open-uri"
 
 gemspec
 

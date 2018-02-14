@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Jekyll::SeoTag::Drop do
   let(:config)    { { "title" => "site title" } }
   let(:page_meta) { { "title" => "page title" } }
@@ -223,67 +225,20 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "author" do
-      let(:data) { {} }
-      let(:config) { { "author" => "site_author" } }
-      let(:site) do
-        site = make_site(config)
-        site.data = data
-        site
+      let(:page_meta) { { "author" => "foo" } }
+
+      it "returns an AuthorDrop" do
+        expect(subject.author).to be_a(Jekyll::SeoTag::AuthorDrop)
       end
 
-      %i[with without].each do |site_data_type|
-        context "#{site_data_type} site.author data" do
-          let(:data) do
-            if site_data_type == :with
-              {
-                "authors" => {
-                  "author"        => { "name" => "data_author", "image" => "author.png" },
-                  "array_author"  => { "image" => "author.png" },
-                  "string_author" => { "image" => "author.png" },
-                  "site_author"   => { "image" => "author.png" },
-                },
-              }
-            else
-              {}
-            end
-          end
-
-          {
-            :string       => { "author" => "string_author" },
-            :array        => { "authors" => %w(array_author author2) },
-            :empty_string => { "author" => "" },
-            :nil          => { "author" => nil },
-            :hash         => { "author" => { "name" => "hash_author" } },
-          }.each do |author_type, data|
-            context "with author as #{author_type}" do
-              let(:page_meta) { data }
-              let(:expected_author) do
-                "#{author_type}_author".sub("nil_", "site_").sub("empty_string_", "site_")
-              end
-
-              it "returns a hash" do
-                expect(subject.author).to be_a(Hash)
-              end
-
-              it "returns the name" do
-                expect(subject.author["name"]).to eql(expected_author)
-              end
-
-              it "returns the twitter handle" do
-                expect(subject.author["twitter"]).to eql(expected_author)
-              end
-
-              if site_data_type == :with && author_type != :hash
-                it "returns the image" do
-                  expect(subject.author["image"]).to eql("author.png")
-                end
-              end
-            end
-          end
-        end
+      it "passes page information" do
+        expect(subject.author.name).to eql("foo")
       end
 
+      # Regression test to ensure to_liquid is called on site and page
+      # before being passed to AuthorDrop
       context "with author as a front matter default" do
+        let(:page_meta) { {} }
         let(:config) do
           {
             "defaults" => [
@@ -297,53 +252,6 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
         it "uses the author from the front matter default" do
           expect(subject.author["name"]).to eql("front matter default")
-        end
-      end
-
-      context "twitter" do
-        let(:page_meta) { { "author" => "author" } }
-
-        it "pulls the handle from the author" do
-          expect(subject.author["twitter"]).to eql("author")
-        end
-
-        context "with an @" do
-          let(:page_meta) do
-            {
-              "author" => {
-                "name"    => "author",
-                "twitter" => "@twitter",
-              },
-            }
-          end
-
-          it "strips the @" do
-            expect(subject.author["twitter"]).to eql("twitter")
-          end
-        end
-
-        # See https://github.com/jekyll/jekyll-seo-tag/issues/202
-        context "without an author name or handle" do
-          let(:page_meta) { { "author" => { "foo" => "bar" } } }
-
-          it "dosen't blow up" do
-            expect(subject.author["twitter"]).to be_nil
-          end
-        end
-
-        context "with an explicit handle" do
-          let(:page_meta) do
-            {
-              "author" => {
-                "name"    => "author",
-                "twitter" => "twitter",
-              },
-            }
-          end
-
-          it "pulls the handle from the hash" do
-            expect(subject.author["twitter"]).to eql("twitter")
-          end
         end
       end
     end
@@ -496,85 +404,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
   end
 
   context "image" do
+    let(:image) { "foo.png" }
     let(:page_meta) { { "image" => image } }
 
-    context "with image as a string" do
-      let(:image) { "image.png" }
-
-      it "returns a hash" do
-        expect(subject.image).to be_a(Hash)
-      end
-
-      it "returns the image" do
-        expect(subject.image["path"]).to eql("/image.png")
-      end
-
-      context "with site.url" do
-        let(:config) { { "url" => "http://example.com" } }
-
-        it "makes the path absolute" do
-          expect(subject.image["path"]).to eql("http://example.com/image.png")
-        end
-      end
-
-      context "with a URL-escaped path" do
-        let(:image) { "some image.png" }
-
-        it "URL-escapes the image" do
-          expect(subject.image["path"]).to eql("/some%20image.png")
-        end
-      end
+    it "returns a Drop" do
+      expect(subject.image).to be_a(Jekyll::SeoTag::ImageDrop)
     end
 
-    context "with image as a hash" do
-      context "with a path" do
-        let(:image) { { "path" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with facebook" do
-        let(:image) { { "facebook" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with twitter" do
-        let(:image) { { "twitter" => "image.png" } }
-
-        it "returns the image" do
-          expect(subject.image["path"]).to eql("/image.png")
-        end
-      end
-
-      context "with some random hash" do
-        let(:image) { { "foo" => "bar" } }
-
-        it "returns nil" do
-          expect(subject.image).to be_nil
-        end
-      end
-
-      context "with an invalid path" do
-        let(:image) { ":" }
-
-        it "returns nil" do
-          expect(subject.image["path"]).to eql(":")
-        end
-      end
-
-      context "with height and width" do
-        let(:image) { { "path" => "image.png", "height" => 5, "width" => 10 } }
-
-        it "returns the height and width" do
-          expect(subject.image["height"]).to eql(5)
-          expect(subject.image["width"]).to eql(10)
-        end
-      end
+    it "returns the image" do
+      expect(subject.image["path"]).to eql("/foo.png")
     end
   end
 
@@ -642,5 +480,9 @@ RSpec.describe Jekyll::SeoTag::Drop do
         expect(subject.canonical_url).to eq("http://example.com/page.html")
       end
     end
+  end
+
+  it "exposes the JSON-LD drop" do
+    expect(subject.json_ld).to be_a(Jekyll::SeoTag::JSONLDDrop)
   end
 end
