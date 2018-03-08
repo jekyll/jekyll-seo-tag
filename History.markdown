@@ -1,5 +1,7 @@
 ## HEAD
 
+  * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
+
 ### Documentation
 
   * Use gems config key for Jekyll &lt; 3.5.0 (#255)
