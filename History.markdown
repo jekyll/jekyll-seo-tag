@@ -13,6 +13,7 @@
 ### Minor Enhancements
 
   * Add webmaster_verifications for baidu (#263)
+  * Include page number in title (#250)
 
 ## 2.4.0 / 2017-12-04
 
