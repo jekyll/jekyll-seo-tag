@@ -182,7 +182,7 @@ module Jekyll
       end
 
       def page_number
-        return if !@context["paginator"] || !@context["paginator"]["page"]
+        return unless @context["paginator"] && @context["paginator"]["page"]
 
         current = @context["paginator"]["page"]
         total = @context["paginator"]["total_pages"]
