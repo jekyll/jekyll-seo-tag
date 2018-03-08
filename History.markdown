@@ -1,13 +1,35 @@
 ## HEAD
 
+  * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
+
+### Documentation
+
+  * Use gems config key for Jekyll &lt; 3.5.0 (#255)
+
+### Development Fixes
+
+  * Test against Ruby 2.5 (#260)
+
+### Minor Enhancements
+
+  * Add webmaster_verifications for baidu (#263)
+
+## 2.4.0 / 2017-12-04
+
+### Minor
+
+  * Add meta generator (#236)
+  * Consistently use self-closing tags (#246)
+  * Strip null values from JSON-LD hash (#249)
+
 ### Documentation
 
   * Avoid deprecation warning when building docs (#243)
 
 ### Development Fixes
 
-  * Travis: Test against Rubies (#242)
-  * Try testing on Ruby v2.3 and 2.4 (#181)
+  * Test against latest Rubies (#242)
+  * Use Nokigiri on CI (#181)
 
 ## 2.3.0
 
