@@ -27,7 +27,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
     admins: 1234
    ```
 
-* `logo` - URL to a site-wide logo (e.g., `/assets/your-company-logo.png`)
+* `logo` - URL to a site-wide logo (e.g., `/assets/your-company-logo.png`) - If you would like the "publisher" property to be present, you must add this field to your site's configuration, during the validation of the structured data by Google web master tools, if the `logo` field is not validated, you will find errors inherent to the publisher in the [structured datas test](https://search.google.com/structured-data/testing-tool/u/0/)
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
