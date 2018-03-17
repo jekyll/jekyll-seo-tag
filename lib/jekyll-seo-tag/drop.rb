@@ -7,7 +7,7 @@ module Jekyll
 
       TITLE_SEPARATOR = " | ".freeze
       FORMAT_STRING_METHODS = %i[
-        markdownify strip_html normalize_whitespace escape_once
+        smartify strip_html normalize_whitespace escape_once
       ].freeze
       HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!
 
