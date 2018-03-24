@@ -5,6 +5,7 @@
 ### Documentation
 
   * Use gems config key for Jekyll &lt; 3.5.0 (#255)
+  * docs/usage - replace &#34;below&#34; with correct link (#280)
 
 ### Development Fixes
 
