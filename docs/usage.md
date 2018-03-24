@@ -5,7 +5,7 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `title` - Your site's title (e.g., Ben's awesome site, The GitHub Blog, etc.)
 * `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
-* `author` - global author information (see [Advanced usage](https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/advanced-usage.md#author-information))
+* `author` - global author information (see [Advanced usage](advanced-usage.md#author-information))
 * `twitter:username` - The site's Twitter handle. You'll want to describe it like so:
 
   ```yml
@@ -64,5 +64,5 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `title` - The title of the post, page, or document
 * `description` - A short description of the page's content
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
-* `author` - Page-, post-, or document-specific author information (see [Advanced usage](https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/advanced-usage.md#author-information))
+* `author` - Page-, post-, or document-specific author information (see [Advanced usage](advanced-usage.md#author-information))
 * `lang` - Page-, post-, or document-specific language information
