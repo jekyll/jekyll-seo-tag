@@ -1,8 +1,11 @@
 ## HEAD
 
+  * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
+
 ### Documentation
 
   * Use gems config key for Jekyll &lt; 3.5.0 (#255)
+  * docs/usage - replace &#34;below&#34; with correct link (#280)
 
 ### Development Fixes
 
@@ -11,6 +14,7 @@
 ### Minor Enhancements
 
   * Add webmaster_verifications for baidu (#263)
+  * Include page number in title (#250)
 
 ## 2.4.0 / 2017-12-04
 

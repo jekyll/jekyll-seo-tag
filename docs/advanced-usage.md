@@ -6,9 +6,11 @@ Jekyll SEO Tag is designed to implement SEO best practices by default and to be 
 
 If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
 
+<!-- {% raw %} -->
 ```
 {% seo title=false %}
 ```
+<!-- {% endraw %} -->
 
 ### Author information
 
