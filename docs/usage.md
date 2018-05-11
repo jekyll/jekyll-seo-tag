@@ -14,8 +14,8 @@ The SEO tag will respect any of the following if included in your site's `_confi
   ```yml
   twitter:
     username: benbalter
-    card: summary
-  ```
+    card: summary
+  ```
 
 * `facebook` - The following properties are available:
   * `facebook:app_id` - a Facebook app ID for Facebook insights
