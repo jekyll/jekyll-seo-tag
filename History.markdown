@@ -10,6 +10,7 @@
 ### Development Fixes
 
   * Test against Ruby 2.5 (#260)
+  * add tests for twitter.card types (#289)
 
 ### Minor Enhancements
 
