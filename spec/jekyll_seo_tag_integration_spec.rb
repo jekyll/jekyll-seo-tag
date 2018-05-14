@@ -424,11 +424,34 @@ EOS
       end
 
       context "with page.image" do
-        let(:page) { make_page("image" => "/img/foo.png") }
+        context "without *.twitter.card" do
+          let(:page) { make_page("image" => "/img/foo.png") }
 
-        it "outputs summary card with large image" do
-          expected = %r!<meta name="twitter:card" content="summary_large_image" />!
-          expect(output).to match(expected)
+          it "outputs summary card with large image" do
+            expected = %r!<meta name="twitter:card" content="summary_large_image" />!
+            expect(output).to match(expected)
+          end
+        end
+
+        context "with page.twitter.card" do
+          let(:page_twitter) { { "card" => "summary" } }
+          let(:page) { make_page("image" => "/img/foo.png", "twitter" => page_twitter) }
+
+          it "outputs summary card with small image" do
+            expected = %r!<meta name="twitter:card" content="summary" />!
+            expect(output).to match(expected)
+          end
+        end
+
+        context "with site.twitter.card" do
+          let(:site_twitter) { { "username" => "jekyllrb", "card" => "summary" } }
+          let(:site) { make_site("twitter" => site_twitter) }
+          let(:page) { make_page("image" => "/img/foo.png") }
+
+          it "outputs summary card with small image" do
+            expected = %r!<meta name="twitter:card" content="summary" />!
+            expect(output).to match(expected)
+          end
         end
       end
 

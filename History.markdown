@@ -10,11 +10,13 @@
 ### Development Fixes
 
   * Test against Ruby 2.5 (#260)
+  * add tests for twitter.card types (#289)
 
 ### Minor Enhancements
 
   * Add webmaster_verifications for baidu (#263)
   * Include page number in title (#250)
+  * Configure default Twitter summary card type (V2) (#225)
 
 ## 2.4.0 / 2017-12-04
 
