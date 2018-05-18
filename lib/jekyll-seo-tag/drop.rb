@@ -5,7 +5,7 @@ module Jekyll
     class Drop < Jekyll::Drops::Drop
       include Jekyll::SeoTag::UrlHelper
 
-      TITLE_SEPARATOR = " | ".freeze
+      TITLE_SEPARATOR = " | "
       FORMAT_STRING_METHODS = %i[
         markdownify strip_html normalize_whitespace escape_once
       ].freeze
