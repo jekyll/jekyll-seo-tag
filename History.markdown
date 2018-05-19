@@ -11,6 +11,7 @@
 
   * Test against Ruby 2.5 (#260)
   * add tests for twitter.card types (#289)
+  * Target Ruby 2.3 and Rubocop 0.56.0 (#292)
 
 ### Minor Enhancements
 
