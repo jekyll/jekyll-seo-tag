@@ -35,7 +35,7 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
 
   it "returns the context" do
     expect(subject).to have_key("@context")
-    expect(subject["@context"]).to eql("http://schema.org")
+    expect(subject["@context"]).to eql("https://schema.org")
   end
 
   it "returns the type" do
