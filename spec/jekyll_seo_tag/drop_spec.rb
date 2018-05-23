@@ -7,6 +7,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
   let(:site)      { make_site(config) }
   let(:context)   { make_context(:page => page, :site => site) }
   let(:text) { "" }
+
   subject { described_class.new(text, context) }
 
   before do
@@ -185,6 +186,23 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
         it "returns nil" do
           expect(subject.site_description).to be_nil
+        end
+      end
+
+      context 'with multiple pages' do
+        let(:config) { {
+          :description => "My site description",
+          :title => 'My site title',
+          :paginator => {
+            :page => 2,
+            :total_pages => 3
+          }
+        }}
+
+        let(:site) { make_site(config) }
+
+        it 'returns site description with page number' do
+          expect(subject.site_description).to eql("My site description - Page 2 of 3")
         end
       end
     end

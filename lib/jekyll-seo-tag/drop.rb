@@ -34,7 +34,7 @@ module Jekyll
       end
 
       def site_description
-        @site_description ||= format_string site["description"]
+        @site_description ||= page_description
       end
 
       # Page title without site title or description appended
@@ -54,9 +54,7 @@ module Jekyll
           end
         end
 
-        if page_number
-          return page_number + @title
-        end
+        return "#{page_number} for #{@title}" if page_number
 
         @title
       end
@@ -187,9 +185,7 @@ module Jekyll
         current = @context["paginator"]["page"]
         total = @context["paginator"]["total_pages"]
 
-        if current > 1
-          return "Page #{current} of #{total} for "
-        end
+        "Page #{current} of #{total}" if current > 1
       end
 
       attr_reader :context
@@ -230,6 +226,15 @@ module Jekyll
         else
           {}
         end
+      end
+
+      def page_description
+        return [
+          format_string(site['description']),
+          page_number
+        ].join(' - ') if page_number.present?
+
+        format_string(site['description'])
       end
     end
   end
