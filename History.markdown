@@ -1,3 +1,9 @@
+## HEAD
+
+### Bug Fixes
+
+  * Update url of schema website (#296)
+
 ## 2.5.0 / 2018-05-18
 
   * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
