@@ -4,6 +4,10 @@
 
   * Update url of schema website (#296)
 
+### Development Fixes
+
+  * Lint Ruby code with rubocop-jekyll gem (#302)
+
 ## 2.5.0 / 2018-05-18
 
   * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
