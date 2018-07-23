@@ -6,8 +6,8 @@ module Jekyll
       include Jekyll::SeoTag::UrlHelper
 
       TITLE_SEPARATOR = " | "
-      FORMAT_STRING_METHODS = %i[
-        markdownify strip_html normalize_whitespace escape_once
+      FORMAT_STRING_METHODS = [
+        :markdownify, :strip_html, :normalize_whitespace, :escape_once,
       ].freeze
       HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!
 
@@ -43,6 +43,7 @@ module Jekyll
       end
 
       # Page title with site title or description appended
+      # rubocop:disable Metrics/CyclomaticComplexity
       def title
         @title ||= begin
           if site_title && page_title != site_title
@@ -54,12 +55,11 @@ module Jekyll
           end
         end
 
-        if page_number
-          return page_number + @title
-        end
+        return page_number + @title if page_number
 
         @title
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def name
         return @name if defined?(@name)
@@ -187,9 +187,7 @@ module Jekyll
         current = @context["paginator"]["page"]
         total = @context["paginator"]["total_pages"]
 
-        if current > 1
-          return "Page #{current} of #{total} for "
-        end
+        return "Page #{current} of #{total} for " if current > 1
       end
 
       attr_reader :context
