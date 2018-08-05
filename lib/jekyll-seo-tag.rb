@@ -72,7 +72,9 @@ module Jekyll
 
     class << self
       def template
-        @template ||= Liquid::Template.parse template_contents
+        @template ||= Jekyll::Cache.new("jekyll-seo-tag").getset("template") do
+          Liquid::Template.parse template_contents
+        end
       end
 
       private
