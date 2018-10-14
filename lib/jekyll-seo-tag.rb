@@ -42,7 +42,7 @@ module Jekyll
       {
         "version" => Jekyll::SeoTag::VERSION,
         "title"   => title?,
-        "footprint" => footprint,
+        "footprint" => "true",
       }
     end
 
