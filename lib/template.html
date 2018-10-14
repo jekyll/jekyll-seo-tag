@@ -1,6 +1,6 @@
-{% if !site.seotag_footprint %}
+{% unless !site.seotag_footprint %}
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
-{% endif %}
+{% endunless %}
 
 {% if seo_tag.title? %}
   <title>{{ seo_tag.title }}</title>
