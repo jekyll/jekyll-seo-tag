@@ -1,4 +1,4 @@
-{% unless site.seotag_footprint %}
+{% unless seo_tag.footprint %}
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
 {% endunless %}
 
@@ -6,7 +6,7 @@
   <title>{{ seo_tag.title }}</title>
 {% endif %}
 
-{% unless site.seotag_footprint %}
+{% unless seo_tag.footprint %}
 <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
 {% endunless %}
 
@@ -112,6 +112,6 @@
   {{ seo_tag.json_ld | jsonify }}
 </script>
 
-{% unless site.seotag_footprint %}
+{% unless seo_tag.footprint %}
 <!-- End Jekyll SEO tag -->
 {% endunless %}
