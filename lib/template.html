@@ -1,9 +1,14 @@
+{% if seo_tag.footprint? %}
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
+{% endif %}
+
 {% if seo_tag.title? %}
   <title>{{ seo_tag.title }}</title>
 {% endif %}
 
+{% if seo_tag.footprint? %}
 <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
+{% endif %}
 
 {% if seo_tag.page_title %}
   <meta property="og:title" content="{{ seo_tag.page_title }}" />
@@ -107,4 +112,6 @@
   {{ seo_tag.json_ld | jsonify }}
 </script>
 
+{% if seo_tag.footprint? %}
 <!-- End Jekyll SEO tag -->
+{% endif %}
