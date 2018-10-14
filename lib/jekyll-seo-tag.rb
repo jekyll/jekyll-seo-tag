@@ -42,6 +42,7 @@ module Jekyll
       {
         "version" => Jekyll::SeoTag::VERSION,
         "title"   => title?,
+        "footprint" => "true",
       }
     end
 
@@ -55,6 +56,11 @@ module Jekyll
       )
     end
 
+    # The `drop` should not be cached since there is going to be just
+    # one instance of this class per `{% seo %}`
+    # i.e., if you're going to use `{% seo %}` in two templates that are
+    # collectively used by 50 documents, there's just going to be
+    # **2 instances of this class** instead of a **100**.
     def drop
       @drop ||= Jekyll::SeoTag::Drop.new(@text, @context)
     end
@@ -69,6 +75,8 @@ module Jekyll
     class << self
       def template
         @template ||= Liquid::Template.parse template_contents
+          Liquid::Template.parse template_contents
+        end
       end
 
       private
