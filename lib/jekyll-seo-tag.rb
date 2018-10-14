@@ -40,8 +40,8 @@ module Jekyll
 
     def options
       {
-        "version" =>  Jekyll::SeoTag::VERSION,
-        "title" =>  title?,
+        "version"   =>  Jekyll::SeoTag::VERSION,
+        "title"     =>  title?,
         "footprint" =>  footprint?,
       }
     end
