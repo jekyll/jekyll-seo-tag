@@ -12,6 +12,16 @@ If for some reason, you don't want the plugin to output `<title>` tags on each p
 ```
 <!-- {% endraw %} -->
 
+### Disabling `generator tag and comments` output
+
+If for some reason, you don't want the plugin to output `<!-- Begin Jekyll SEO tag v2.5.0 --> <meta name="generator" content="Jekyll vx.x.x" /><!-- End Jekyll SEO tag -->` tags on each page, simply invoke the plugin within your template like so:
+
+<!-- {% raw %} -->
+```
+{% seo footprint=false %}
+```
+<!-- {% endraw %} -->
+
 ### Author information
 
 Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
