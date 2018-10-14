@@ -29,6 +29,13 @@ module Jekyll
         @display_title = (@text !~ %r!title=false!i)
       end
 
+      # Should the `comments generator` tag be generated for this page?
+      def footprint?
+        return false unless footprint
+        return @display_footprint if defined?(@display_footprint)
+        @display_footprint = (@text !~ %r!footprint=false!i)
+      end
+
       def site_title
         @site_title ||= format_string(site["title"] || site["name"])
       end
