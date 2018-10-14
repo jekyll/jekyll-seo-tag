@@ -42,7 +42,7 @@ module Jekyll
       {
         "version" => Jekyll::SeoTag::VERSION,
         "title"   => title?,
-        "footprint" => footprint?,
+        "footprint" => footprint,
       }
     end
 
@@ -62,7 +62,7 @@ module Jekyll
     # collectively used by 50 documents, there's just going to be
     # **2 instances of this class** instead of a **100**.
     def drop
-      Jekyll::SeoTag::Drop.new(@text, @context)
+      @drop ||= Jekyll::SeoTag::Drop.new(@text, @context)
     end
 
     def info
@@ -74,7 +74,7 @@ module Jekyll
 
     class << self
       def template
-        @template ||= Jekyll::Cache.new("jekyll-seo-tag").getset("template") do
+        @template ||= Liquid::Template.parse template_contents
           Liquid::Template.parse template_contents
         end
       end
