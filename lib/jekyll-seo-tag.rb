@@ -24,7 +24,7 @@ module Jekyll
     # We will not strip any whitespace if the next character is a '-'
     #   so that we do not interfere with the HTML comment at the
     #   very begining
-    MINIFY_REGEX = %r!(?<=[{}]|[>,]\n)\s+(?\!-)!
+    MINIFY_REGEX = %r!(?<=[{}]|[>,]\n)\s+(?\!-)!.freeze
 
     def initialize(_tag_name, text, _tokens)
       super
