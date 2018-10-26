@@ -9,7 +9,7 @@ module Jekyll
       FORMAT_STRING_METHODS = [
         :markdownify, :strip_html, :normalize_whitespace, :escape_once,
       ].freeze
-      HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!
+      HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!.freeze
 
       def initialize(text, context)
         @obj = {}
@@ -26,6 +26,7 @@ module Jekyll
       def title?
         return false unless title
         return @display_title if defined?(@display_title)
+
         @display_title = (@text !~ %r!title=false!i)
       end
 
@@ -63,6 +64,7 @@ module Jekyll
 
       def name
         return @name if defined?(@name)
+
         @name = if seo_name
                   seo_name
                 elsif !homepage_or_about?
@@ -141,6 +143,7 @@ module Jekyll
       def logo
         @logo ||= begin
           return unless site["logo"]
+
           if absolute_url? site["logo"]
             filters.uri_escape site["logo"]
           else

@@ -19,6 +19,7 @@ module Jekyll
       # site - The Jekyll::Drops::SiteDrop
       def initialize(page: nil, site: nil)
         raise ArgumentError unless page && site
+
         @mutations = {}
         @page = page
         @site = site
@@ -33,6 +34,7 @@ module Jekyll
 
       def twitter
         return @twitter if defined? @twitter
+
         twitter = author_hash["twitter"] || author_hash["name"]
         @twitter = twitter.is_a?(String) ? twitter.sub(%r!^@!, "") : nil
       end
@@ -47,6 +49,7 @@ module Jekyll
       # Returns a string or hash representing the author
       def resolved_author
         return @resolved_author if defined? @resolved_author
+
         sources = [page["author"]]
         sources << page["authors"].first if page["authors"].is_a?(Array)
         sources << site["author"]
@@ -61,6 +64,7 @@ module Jekyll
         @site_data_hash ||= begin
           return {} unless resolved_author.is_a?(String)
           return {} unless site.data["authors"].is_a?(Hash)
+
           author_hash = site.data["authors"][resolved_author]
           author_hash.is_a?(Hash) ? author_hash : {}
         end
