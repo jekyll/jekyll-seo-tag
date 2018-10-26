@@ -22,3 +22,11 @@ If you are using a Jekyll version less than `3.5.0`, use the `gems` key instead 
   {% seo %}
   ```
 <!-- {% endraw %} -->
+
+Add a `prefix="og: http://ogp.me/ns#"` attribute to the `<html>` tag
+
+<!-- {% raw %} -->
+```html
+<html lang="{{ site.lang | default: "en-US" }}" prefix="og: http://ogp.me/ns#">
+```
+<!-- {% endraw %} -->
