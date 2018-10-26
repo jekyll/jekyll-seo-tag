@@ -33,6 +33,7 @@ module Jekyll
       # Should the `comments generator` tag be generated for this page?
       def footprint?
         return @display_footprint if defined?(@display_footprint)
+        
         @display_footprint = (@text !~ %r!footprint=false!i)
       end
 
