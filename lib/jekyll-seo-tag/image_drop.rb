@@ -18,6 +18,7 @@ module Jekyll
       # context - the Liquid::Context
       def initialize(page: nil, context: nil)
         raise ArgumentError unless page && context
+
         @mutations = {}
         @page = page
         @context = context
@@ -57,6 +58,7 @@ module Jekyll
       def absolute_url
         return unless raw_path
         return @absolute_url if defined? @absolute_url
+
         @absolute_url = if raw_path.is_a?(String) && absolute_url?(raw_path) == false
                           filters.absolute_url raw_path
                         else

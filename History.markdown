@@ -7,6 +7,7 @@
 ### Development Fixes
 
   * Lint Ruby code with rubocop-jekyll gem (#302)
+  * deps: bump rubocop-jekyll to 0.3.0 (#316)
 
 ## 2.5.0 / 2018-05-18
 

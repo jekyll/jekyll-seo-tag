@@ -34,6 +34,7 @@ module Jekyll
 
       def author
         return unless page_drop.author["name"]
+
         {
           "@type" => "Person",
           "name"  => page_drop.author["name"],
@@ -52,6 +53,7 @@ module Jekyll
 
       def publisher
         return unless logo
+
         output = {
           "@type" => "Organization",
           "logo"  => {
@@ -65,6 +67,7 @@ module Jekyll
 
       def main_entity
         return unless %w(BlogPosting CreativeWork).include?(type)
+
         {
           "@type" => "WebPage",
           "@id"   => page_drop.canonical_url,
