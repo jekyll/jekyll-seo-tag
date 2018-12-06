@@ -299,16 +299,16 @@ RSpec.describe Jekyll::SeoTag do
 
       it "minifies the output" do
         version = Jekyll::SeoTag::VERSION
-        expected = <<-EOS
-<!-- Begin Jekyll SEO tag v#{version} -->
-<title>Foo</title>
-<meta name="generator" content="Jekyll v#{Jekyll::VERSION}" />
-<meta property="og:title" content="Foo" />
-<meta property="og:locale" content="en_US" />
-<link rel="canonical" href="http://example.invalid/page.html" />
-<meta property="og:url" content="http://example.invalid/page.html" />
-<meta property="og:site_name" content="Foo" />
-EOS
+        expected = <<~HTML
+          <!-- Begin Jekyll SEO tag v#{version} -->
+          <title>Foo</title>
+          <meta name="generator" content="Jekyll v#{Jekyll::VERSION}" />
+          <meta property="og:title" content="Foo" />
+          <meta property="og:locale" content="en_US" />
+          <link rel="canonical" href="http://example.invalid/page.html" />
+          <meta property="og:url" content="http://example.invalid/page.html" />
+          <meta property="og:site_name" content="Foo" />
+        HTML
         expect(output).to match(expected)
       end
     end
