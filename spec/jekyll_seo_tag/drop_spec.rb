@@ -320,7 +320,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "the about page" do
-      let(:page) { make_page({ "permalink" => "/about/" }) }
+      let(:page) { make_page("permalink" => "/about/") }
 
       it "is a website" do
         expect(subject.type).to eql("WebSite")
