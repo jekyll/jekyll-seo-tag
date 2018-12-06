@@ -9,6 +9,7 @@
   * Lint Ruby code with rubocop-jekyll gem (#302)
   * deps: bump rubocop-jekyll to 0.3.0 (#316)
   * Correct RuboCop offenses in spec files (#319)
+  * chore(deps): :up: rubocop-jekyll 0.4 (#320)
 
 ## 2.5.0 / 2018-05-18
 
