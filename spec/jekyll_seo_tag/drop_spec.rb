@@ -482,6 +482,27 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
   end
 
+  context "pagination" do
+    let(:context) do
+      make_context(
+        { :page => page, :site => site },
+        "paginator" => { "page" => 2, "total_pages" => 10 }
+      )
+    end
+
+    it "render default pagination title" do
+      expect(subject.send(:page_number)).to eq("Page 2 of 10 for ")
+    end
+
+    context "render custom pagination title" do
+      let(:config) { { "paginator_message" => "%<current>s of %<total>s" } }
+
+      it "renders the correct page number" do
+        expect(subject.send(:page_number)).to eq("2 of 10")
+      end
+    end
+  end
+
   it "exposes the JSON-LD drop" do
     expect(subject.json_ld).to be_a(Jekyll::SeoTag::JSONLDDrop)
   end

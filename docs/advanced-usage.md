@@ -138,3 +138,12 @@ Which will generate following canonical_url:
 ```html
 <link rel="canonical" href="http://yoursite.com/title-of-your-post" />
 ```
+
+### Changing title message for paginated page
+
+You can override default title message for paginated page from `Page %<current>s of %<total>s for ` to custom message by adding parameter to `_config.yml`.  
+For example:  
+```yml
+paginator_message: "%<current>s / %<total>s |"
+```
+For key **paginator_message** please use string template with two variables `current` and `total`.

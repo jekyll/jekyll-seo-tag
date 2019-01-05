@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "jekyll"
 require "jekyll-seo-tag"
 require "html-proofer"
+require "jekyll-paginate"
 
 # Monkey patch Jekyll::Drops::Drop so Rspec's `have_key` works as expected
 module Jekyll
