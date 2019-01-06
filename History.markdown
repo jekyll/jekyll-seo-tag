@@ -11,6 +11,7 @@
   * Correct RuboCop offenses in spec files (#319)
   * chore(deps): :up: rubocop-jekyll 0.4 (#320)
   * Relax version constraint on Bundler (#325)
+  * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
 
 ## 2.5.0 / 2018-05-18
 
