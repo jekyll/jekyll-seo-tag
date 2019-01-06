@@ -139,11 +139,16 @@ Which will generate following canonical_url:
 <link rel="canonical" href="http://yoursite.com/title-of-your-post" />
 ```
 
-### Changing title message for paginated page
+### Customizing title modifier for paginated pages
 
-You can override default title message for paginated page from `Page %<current>s of %<total>s for ` to custom message by adding parameter to `_config.yml`.  
+You can override the default title modifier for paginated pages from `Page %{current} of %{total} for ` to a string of your
+choice by setting a `paginator_message` key in your `_config.yml`.
+
 For example:  
+
 ```yml
-paginator_message: "%<current>s / %<total>s |"
+paginator_message: "%<current>s / %<total>s | "
 ```
-For key **paginator_message** please use string template with two variables `current` and `total`.
+
+While the value can be any string text, we recommend using a Ruby string-template containing the variables `current` and `total`
+similar to the example above, to incorporate the current page-number and total number of paginated pages in the title.
