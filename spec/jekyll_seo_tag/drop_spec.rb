@@ -495,7 +495,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
 
     context "render custom pagination title" do
-      let(:config) { { "paginator_message" => "%<current>s of %<total>s" } }
+      let(:config) { { "seo_paginator_message" => "%<current>s of %<total>s" } }
 
       it "renders the correct page number" do
         expect(subject.send(:page_number)).to eq("2 of 10")

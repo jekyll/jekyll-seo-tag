@@ -142,12 +142,12 @@ Which will generate following canonical_url:
 ### Customizing title modifier for paginated pages
 
 You can override the default title modifier for paginated pages from `Page %{current} of %{total} for ` to a string of your
-choice by setting a `paginator_message` key in your `_config.yml`.
+choice by setting a `seo_paginator_message` key in your `_config.yml`.
 
 For example:  
 
 ```yml
-paginator_message: "%<current>s / %<total>s | "
+seo_paginator_message: "%<current>s / %<total>s | "
 ```
 
 While the value can be any string text, we recommend using a Ruby string-template containing the variables `current` and `total`
