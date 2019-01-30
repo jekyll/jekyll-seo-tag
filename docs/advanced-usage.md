@@ -76,6 +76,8 @@ The following options can be set for any particular page. While the default opti
   * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
   * `type` - The type of things that the page represents. This must be a [Schema.org type](http://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](http://schema.org/BlogPosting), [`NewsArticle`](http://schema.org/NewsArticle), [`Person`](http://schema.org/Person), [`Organization`](http://schema.org/Organization), etc.
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
+  * `date_modified` - Manually specify the `dateModified` field in the JSON-LD output to override Jekyll's own `dateModified`.
+  This field will take **first priority** for the `dateModified` JSON-LD output. This is useful when the file timestamp does not match the true time that the content was modified. A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
 
 ### Customizing image output
 
