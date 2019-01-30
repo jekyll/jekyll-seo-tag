@@ -13,6 +13,10 @@
   * Relax version constraint on Bundler (#325)
   * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
 
+### Documentation
+
+  * Rectify error in Usage documentation (#328)
+
 ## 2.5.0 / 2018-05-18
 
   * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
