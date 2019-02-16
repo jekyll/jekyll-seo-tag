@@ -17,6 +17,10 @@
 
   * Rectify error in Usage documentation (#328)
 
+### Minor Enhancements
+
+  * Twitter Image and Title (#330)
+
 ## 2.5.0 / 2018-05-18
 
   * Docs: Prevent GitHub Pages from processing Liquid raw tag (#276)
