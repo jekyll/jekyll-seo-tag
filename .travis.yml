@@ -1,11 +1,11 @@
+language: ruby
+cache: bundler
 rvm:
   - 2.4
   - 2.6
+
 before_install: gem install bundler
-language: ruby
 script: script/cibuild
-sudo: false
-cache: bundler
 
 env:
   global:
