@@ -12,6 +12,7 @@
   * chore(deps): :up: rubocop-jekyll 0.4 (#320)
   * Relax version constraint on Bundler (#325)
   * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
+  * chore (ci): remove deprecated `sudo: false` in .travis.yml (#333)
 
 ### Documentation
 
