@@ -1,27 +1,27 @@
-## HEAD
-
-### Bug Fixes
-
-  * Update url of schema website (#296)
-  * Do not cache the drop payload for SeoTag (#306)
-
-### Development Fixes
-
-  * Lint Ruby code with rubocop-jekyll gem (#302)
-  * deps: bump rubocop-jekyll to 0.3.0 (#316)
-  * Correct RuboCop offenses in spec files (#319)
-  * chore(deps): :up: rubocop-jekyll 0.4 (#320)
-  * Relax version constraint on Bundler (#325)
-  * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
-  * chore (ci): remove deprecated `sudo: false` in .travis.yml (#333)
-
-### Documentation
-
-  * Rectify error in Usage documentation (#328)
+## 2.6.0 / 2019-03-16
 
 ### Minor Enhancements
 
   * Twitter Image and Title (#330)
+
+### Bug Fixes
+
+  * Do not cache the drop payload for SeoTag (#306)
+  * Update url of schema website (#296)
+
+### Development Fixes
+
+  * Relax version constraint on Bundler (#325)
+  * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
+  * chore (ci): remove deprecated `sudo: false` in .travis.yml (#333)
+  * Lint Ruby code with rubocop-jekyll gem (#302)
+  * chore(deps): bump rubocop-jekyll to v0.4 (#320)
+  * chore(deps): bump rubocop-jekyll to v0.3 (#316)
+  * Correct RuboCop offenses in spec files (#319)
+
+### Documentation
+
+  * Rectify error in Usage documentation (#328)
 
 ## 2.5.0 / 2018-05-18
 
