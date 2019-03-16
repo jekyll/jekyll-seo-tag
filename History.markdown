@@ -1,3 +1,9 @@
+## HEAD
+
+### Minor Enhancements
+
+  * Release: v2.6.0 (#334)
+
 ## 2.6.0 / 2019-03-16
 
 ### Minor Enhancements
