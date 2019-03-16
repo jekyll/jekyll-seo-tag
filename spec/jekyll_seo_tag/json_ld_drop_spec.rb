@@ -91,12 +91,12 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
       it "returns the image as a hash" do
         expect(subject).to have_key("image")
         expect(subject["image"]).to be_a(Hash)
-        expect(subject["image"]).to eql({
+        expect(subject["image"]).to eql(
           "@type"  => "imageObject",
           "url"    => "/image",
           "height" => 5,
-          "width"  => 10,
-        })
+          "width"  => 10
+        )
       end
     end
   end
