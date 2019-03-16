@@ -3,6 +3,7 @@
 ### Bug Fixes
 
   * Update url of schema website (#296)
+  * Do not cache the drop payload for SeoTag (#306)
 
 ### Development Fixes
 
