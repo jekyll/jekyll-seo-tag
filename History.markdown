@@ -4,6 +4,10 @@
 
   * Release: v2.6.0 (#334)
 
+### Development Fixes
+
+  * Test against Jekyll 4.x (#336)
+
 ## 2.6.0 / 2019-03-16
 
 ### Minor Enhancements
