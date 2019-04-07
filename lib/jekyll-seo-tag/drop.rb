@@ -11,6 +11,14 @@ module Jekyll
       ].freeze
       HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!.freeze
 
+      # --
+
+      def self.format_string_cache
+        @format_string_cache ||= {}
+      end
+
+      # --
+
       def initialize(text, context)
         @obj = {}
         @mutations = {}
@@ -200,11 +208,13 @@ module Jekyll
       end
 
       def format_string(string)
-        string = FORMAT_STRING_METHODS.reduce(string) do |memo, method|
-          filters.public_send(method, memo)
-        end
+        Jekyll::SeoTag::Drop.format_string_cache[string] ||= begin
+          string = FORMAT_STRING_METHODS.reduce(string) do |memo, method|
+            filters.public_send(method, memo)
+          end
 
-        string unless string.empty?
+          string unless string.empty?
+        end
       end
 
       def seo_name
