@@ -16,12 +16,13 @@ module Jekyll
       #
       # page - The page hash (e.g., Page#to_liquid)
       # context - the Liquid::Context
-      def initialize(page: nil, context: nil)
+      def initialize(page: nil, context: nil, filters: nil)
         raise ArgumentError unless page && context
 
         @mutations = {}
         @page = page
         @context = context
+        @filters = filters || Jekyll::SeoTag::Filters.new(context)
       end
 
       # Called path for backwards compatability, this is really
@@ -36,6 +37,7 @@ module Jekyll
 
       attr_accessor :page
       attr_accessor :context
+      attr_reader   :filters
 
       # The normalized image hash with a `path` key (which may be nil)
       def image_hash
@@ -64,10 +66,6 @@ module Jekyll
                         else
                           raw_path
                         end
-      end
-
-      def filters
-        @filters ||= Jekyll::SeoTag::Filters.new(context)
       end
     end
   end
