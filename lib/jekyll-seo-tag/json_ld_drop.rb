@@ -33,11 +33,11 @@ module Jekyll
       end
 
       def author
-        return unless page_drop.author["name"]
+        return unless author_name
 
         {
           "@type" => "Person",
-          "name"  => page_drop.author["name"],
+          "name"  => author_name,
         }
       end
 
@@ -61,7 +61,7 @@ module Jekyll
             "url"   => logo,
           },
         }
-        output["name"] = page_drop.author.name if page_drop.author.name
+        output["name"] = author_name if author_name
         output
       end
 
@@ -83,6 +83,10 @@ module Jekyll
       private
 
       attr_reader :page_drop
+
+      def author_name
+        @author_name ||= page_drop.author.name
+      end
     end
   end
 end
