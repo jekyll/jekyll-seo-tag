@@ -101,13 +101,7 @@ module Jekyll
 
       def date_modified
         @date_modified ||= begin
-          date = if page_seo["date_modified"]
-                   page_seo["date_modified"]
-                 elsif page["last_modified_at"]
-                   page["last_modified_at"].to_liquid
-                 else
-                   page["date"]
-                 end
+          date = page_seo["date_modified"] || page["last_modified_at"].to_liquid || page["date"]
           filters.date_to_xmlschema(date) if date
         end
       end
