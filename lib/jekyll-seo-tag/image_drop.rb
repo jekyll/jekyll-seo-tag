@@ -22,7 +22,7 @@ module Jekyll
         @mutations = {}
         @page = page
         @context = context
-        @filters = filters || Jekyll::SeoTag::Filters.new(context)
+        @filters = filters
       end
 
       # Called path for backwards compatability, this is really
@@ -37,7 +37,6 @@ module Jekyll
 
       attr_accessor :page
       attr_accessor :context
-      attr_reader   :filters
 
       # The normalized image hash with a `path` key (which may be nil)
       def image_hash
@@ -66,6 +65,10 @@ module Jekyll
                         else
                           raw_path
                         end
+      end
+
+      def filters
+        @filters ||= Jekyll::SeoTag::Filters.new(context)
       end
     end
   end
