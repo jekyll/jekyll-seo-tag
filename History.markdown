@@ -1,8 +1,4 @@
-## HEAD
-
-### Minor Enhancements
-
-  * Release: v2.6.0 (#334)
+## 2.6.1 / 2019-05-10
 
 ### Development Fixes
 
