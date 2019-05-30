@@ -138,5 +138,5 @@ title: Title of Your Post
 
 Which will generate following canonical_url:
 ```html
-<link rel="canonical" href="http://yoursite.com/title-of-your-post" />
+<link rel="canonical" href="https://example.com/title-of-your-post" />
 ```
