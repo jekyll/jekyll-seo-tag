@@ -3,6 +3,7 @@
 ### Documentation
 
   * HTTPS links to schema.org (#350)
+  * use example.com for example URL (#351)
 
 ## 2.6.1 / 2019-05-17
 
