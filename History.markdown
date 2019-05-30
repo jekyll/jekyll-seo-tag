@@ -1,3 +1,9 @@
+## HEAD
+
+### Documentation
+
+  * HTTPS links to schema.org (#350)
+
 ## 2.6.1 / 2019-05-17
 
 ### Development Fixes
