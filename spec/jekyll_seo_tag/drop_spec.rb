@@ -84,6 +84,17 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
       end
 
+      context "with a site tagline but no page title" do
+        let(:page)  { make_page }
+        let(:config) do
+          { "title" => "site title", "description" => "site description", "tagline" => "site tagline" }
+        end
+
+        it "builds the title" do
+          expect(subject.title).to eql("site title | site tagline")
+        end
+      end
+
       context "with just a page title" do
         let(:site)  { make_site }
 
