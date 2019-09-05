@@ -5,6 +5,7 @@
   * HTTPS links to schema.org (#350)
   * use example.com for example URL (#351)
   * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
 
 ## 2.6.1 / 2019-05-17
 
