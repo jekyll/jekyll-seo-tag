@@ -1,16 +1,42 @@
 ## HEAD
 
+### Documentation
+
+  * HTTPS links to schema.org (#350)
+  * use example.com for example URL (#351)
+  * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
+
+## 2.6.1 / 2019-05-17
+
+### Development Fixes
+
+  * Test against Jekyll 4.x (#336)
+
+## 2.6.0 / 2019-03-16
+
+### Minor Enhancements
+
+  * Twitter Image and Title (#330)
+
 ### Bug Fixes
 
+  * Do not cache the drop payload for SeoTag (#306)
   * Update url of schema website (#296)
 
 ### Development Fixes
 
-  * Lint Ruby code with rubocop-jekyll gem (#302)
-  * deps: bump rubocop-jekyll to 0.3.0 (#316)
-  * Correct RuboCop offenses in spec files (#319)
-  * chore(deps): :up: rubocop-jekyll 0.4 (#320)
   * Relax version constraint on Bundler (#325)
+  * chore(ci): Add Ruby 2.6, drop Ruby 2.3 (#326)
+  * chore (ci): remove deprecated `sudo: false` in .travis.yml (#333)
+  * Lint Ruby code with rubocop-jekyll gem (#302)
+  * chore(deps): bump rubocop-jekyll to v0.4 (#320)
+  * chore(deps): bump rubocop-jekyll to v0.3 (#316)
+  * Correct RuboCop offenses in spec files (#319)
+
+### Documentation
+
+  * Rectify error in Usage documentation (#328)
 
 ## 2.5.0 / 2018-05-18
 

@@ -56,7 +56,11 @@ module Jekyll
     end
 
     def drop
-      @drop ||= Jekyll::SeoTag::Drop.new(@text, @context)
+      if context.registers[:site].liquid_renderer.respond_to?(:cache)
+        Jekyll::SeoTag::Drop.new(@text, @context)
+      else
+        @drop ||= Jekyll::SeoTag::Drop.new(@text, @context)
+      end
     end
 
     def info
