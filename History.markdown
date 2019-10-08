@@ -7,6 +7,10 @@
   * remove Google+ from example snippet (#358)
   * HTTPS link to https://ogp.me/ (#359)
 
+### Minor Enhancements
+
+  * Adding possibility to change pagination message by config file (#324)
+
 ## 2.6.1 / 2019-05-17
 
 ### Development Fixes
