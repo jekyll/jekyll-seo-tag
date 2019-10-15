@@ -50,7 +50,7 @@ RSpec.describe Jekyll::SeoTag::AuthorDrop do
     end
   end
 
-  %i[with without].each do |site_data_type|
+  [:with, :without].each do |site_data_type|
     context "#{site_data_type} site.author data" do
       let(:data) do
         if site_data_type == :with

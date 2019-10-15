@@ -35,7 +35,6 @@ The SEO tag will respect any of the following if included in your site's `_confi
 * `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles). The following properties are available:
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
-  * `date_modified` - Manually specify the `dateModified` field in the JSON-LD output to override Jekyll's own `dateModified`. This field will take **first priority** for the `dateModified` JSON-LD output. This is useful when the file timestamp does not match the true time that the content was modified. A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
 
   ```yml
   social:
@@ -44,7 +43,6 @@ The SEO tag will respect any of the following if included in your site's `_confi
       - https://twitter.com/BenBalter
       - https://www.facebook.com/ben.balter
       - https://www.linkedin.com/in/BenBalter
-      - https://plus.google.com/+BenBalter
       - https://github.com/benbalter
       - https://keybase.io/benbalter
   ```
