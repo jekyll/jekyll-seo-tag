@@ -10,6 +10,7 @@
 ### Minor Enhancements
 
   * Adding possibility to change pagination message by config file (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
 
 ## 2.6.1 / 2019-05-17
 
