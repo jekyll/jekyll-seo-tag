@@ -64,10 +64,10 @@
 {% endif %}
 
 {% if site.twitter %}
-  <meta name="twitter:site" content="{{ site.twitter.username | replace:'@','' | prepend:'@' }}" />
+  <meta name="twitter:site" content="{{ site.twitter.username | remove:'@' | prepend:'@' }}" />
 
   {% if seo_tag.author.twitter %}
-    <meta name="twitter:creator" content="{{ seo_tag.author.twitter | replace:'@','' | prepend:'@'  }}" />
+    <meta name="twitter:creator" content="{{ seo_tag.author.twitter | remove:'@' | prepend:'@'  }}" />
   {% endif %}
 {% endif %}
 
