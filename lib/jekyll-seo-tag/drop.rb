@@ -197,8 +197,9 @@ module Jekyll
 
         current = @context["paginator"]["page"]
         total = @context["paginator"]["total_pages"]
+        paginator_message = site["seo_paginator_message"] || "Page %<current>s of %<total>s for "
 
-        return "Page #{current} of #{total} for " if current > 1
+        format(paginator_message, :current => current, :total => total) if current > 1
       end
 
       attr_reader :context

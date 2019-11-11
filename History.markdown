@@ -4,6 +4,13 @@
 
   * HTTPS links to schema.org (#350)
   * use example.com for example URL (#351)
+  * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
+
+### Minor Enhancements
+
+  * Adding possibility to change pagination message by config file (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
 
 ## 2.6.1 / 2019-05-17
 
