@@ -2,8 +2,9 @@
 
 The SEO tag will respect any of the following if included in your site's `_config.yml` (and simply not include them if they're not defined):
 
-* `title` - Your site's title (e.g., Ben's awesome site, The GitHub Blog, etc.)
-* `description` - A short description (e.g., A blog dedicated to reviewing cat gifs)
+* `title` - Your site's title (e.g., Ben's awesome site, The GitHub Blog, etc.), used as part of the title tag like 'page.title | title'.
+* `tagline` - A short description (e.g., A blog dedicated to reviewing cat gifs), used as part of the title tag of the home page like 'title | tagline'.
+* `description` - A longer description used for the description meta tag. Also used as fallback for pages that don't provide their own `description` and as part of the home page title tag if `tagline` is not defined.
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `author` - global author information (see [Advanced usage](advanced-usage.md#author-information))
 
