@@ -7,6 +7,12 @@
   * remove Google+ from example snippet (#358)
   * HTTPS link to https://ogp.me/ (#359)
 
+### Minor Enhancements
+
+  * Adding possibility to change pagination message by config file (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
+  * Ensure a single leading `@` for twitter usernames (#367)
+
 ## 2.6.1 / 2019-05-17
 
 ### Development Fixes
