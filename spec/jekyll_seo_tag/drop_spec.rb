@@ -84,6 +84,17 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
       end
 
+      context "with a site tagline but no page title" do
+        let(:page)  { make_page }
+        let(:config) do
+          { "title" => "site title", "description" => "site description", "tagline" => "site tagline" }
+        end
+
+        it "builds the title" do
+          expect(subject.title).to eql("site title | site tagline")
+        end
+      end
+
       context "with just a page title" do
         let(:site)  { make_site }
 
@@ -478,6 +489,27 @@ RSpec.describe Jekyll::SeoTag::Drop do
     context "when canonical url is not specified for a page" do
       it "uses site specific canonical url" do
         expect(subject.canonical_url).to eq("http://example.com/page.html")
+      end
+    end
+  end
+
+  context "pagination" do
+    let(:context) do
+      make_context(
+        { :page => page, :site => site },
+        "paginator" => { "page" => 2, "total_pages" => 10 }
+      )
+    end
+
+    it "render default pagination title" do
+      expect(subject.send(:page_number)).to eq("Page 2 of 10 for ")
+    end
+
+    context "render custom pagination title" do
+      let(:config) { { "seo_paginator_message" => "%<current>s of %<total>s" } }
+
+      it "renders the correct page number" do
+        expect(subject.send(:page_number)).to eq("2 of 10")
       end
     end
   end
