@@ -17,6 +17,7 @@
 ### Development Fixes
 
   * Memoize #author_hash in SeoTag::AuthorDrop (#342)
+  * chore(ci): test Jekyll v4.0 (#372)
 
 ## 2.6.1 / 2019-05-17
 
