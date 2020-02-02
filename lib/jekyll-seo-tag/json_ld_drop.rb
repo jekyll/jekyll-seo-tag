@@ -29,9 +29,8 @@ module Jekyll
         @page_drop = page_drop
       end
 
-      # Cannot be cached since Jekyll Core allows mutating `fallback_data` via `#[]=`
       def fallback_data
-        {
+        @fallback_data ||= {
           "@context" => "https://schema.org",
         }
       end
