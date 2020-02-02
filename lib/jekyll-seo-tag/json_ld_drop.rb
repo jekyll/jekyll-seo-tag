@@ -21,10 +21,7 @@ module Jekyll
       private :logo
 
       VALID_ENTITY_TYPES = %w(BlogPosting CreativeWork).freeze
-      FALLBACK_DATA = {
-        "@context" => "https://schema.org",
-      }.freeze
-      private_constant :VALID_ENTITY_TYPES, :FALLBACK_DATA
+      private_constant :VALID_ENTITY_TYPES
 
       # page_drop should be an instance of Jekyll::SeoTag::Drop
       def initialize(page_drop)
@@ -32,8 +29,11 @@ module Jekyll
         @page_drop = page_drop
       end
 
+      # Cannot be cached since Jekyll Core allows mutating `fallback_data` via `#[]=`
       def fallback_data
-        FALLBACK_DATA
+        {
+          "@context" => "https://schema.org",
+        }
       end
 
       def author
