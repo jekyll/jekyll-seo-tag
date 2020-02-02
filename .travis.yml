@@ -16,3 +16,14 @@ env:
   matrix:
     - JEKYLL_VERSION="~> 3.3"
     - JEKYLL_VERSION="~> 4.0"
+
+matrix:
+  include:
+    - rvm: 2.5
+      env: SEO_TAG=enabled
+      name: "Profile Memory Allocation w/ SEO Tag"
+      script: bundle exec rake profile:memory
+    - rvm: 2.5
+      env: SEO_TAG=disabled
+      name: "Profile Memory Allocation w/o SEO Tag"
+      script: bundle exec rake profile:memory
