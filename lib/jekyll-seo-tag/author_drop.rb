@@ -74,12 +74,14 @@ module Jekyll
       # including site-wide metadata if the author is provided as a string,
       # or an empty hash, if the author cannot be resolved
       def author_hash
-        if resolved_author.is_a? Hash
-          resolved_author
-        elsif resolved_author.is_a? String
-          { "name" => resolved_author }.merge(site_data_hash)
-        else
-          {}
+        @author_hash ||= begin
+          if resolved_author.is_a? Hash
+            resolved_author
+          elsif resolved_author.is_a? String
+            { "name" => resolved_author }.merge(site_data_hash)
+          else
+            {}
+          end
         end
       end
 

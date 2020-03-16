@@ -1,8 +1,26 @@
 ## HEAD
 
+### Documentation
+
+  * HTTPS links to schema.org (#350)
+  * use example.com for example URL (#351)
+  * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
+
 ### Minor Enhancements
 
-  * Release: v2.6.0 (#334)
+  * Adding possibility to change pagination message by config file (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
+  * Ensure a single leading `@` for twitter usernames (#367)
+  * Prefer site.tagline to site.description for page title (#356)
+
+### Development Fixes
+
+  * Memoize #author_hash in SeoTag::AuthorDrop (#342)
+  * chore(ci): test Jekyll v4.0 (#372)
+  * Fix locale specs that use the fallback locale (#360)
+
+## 2.6.1 / 2019-05-17
 
 ### Development Fixes
 
