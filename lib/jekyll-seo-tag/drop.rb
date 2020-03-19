@@ -14,7 +14,7 @@ module Jekyll
       def initialize(text, context)
         @obj = {}
         @mutations = {}
-        @text    = text
+        @text = text
         @context = context
       end
 
