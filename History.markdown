@@ -22,6 +22,10 @@
   * Fix locale specs that use the fallback locale (#360)
   * style: align with latest jekyll-rubocop (#382)
 
+### Bug Fixes
+
+  * Reduce allocations of instance-agnostic objects (#376)
+
 ## 2.6.1 / 2019-05-17
 
 ### Development Fixes
