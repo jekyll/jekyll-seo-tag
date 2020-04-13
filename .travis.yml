@@ -1,8 +1,8 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.4
-  - 2.6
+  - 2.5
+  - 2.7
 
 before_install:
   - gem update --system
@@ -14,5 +14,5 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   matrix:
-    - JEKYLL_VERSION="~> 3.3"
+    - JEKYLL_VERSION="~> 3.8"
     - JEKYLL_VERSION="~> 4.0"
