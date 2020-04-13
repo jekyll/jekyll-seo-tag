@@ -13,12 +13,14 @@
   * Make Twitter Summary Card without having Twitter account (#284)
   * Ensure a single leading `@` for twitter usernames (#367)
   * Prefer site.tagline to site.description for page title (#356)
+  * chore(ci): bump Ruby versions (#385)
 
 ### Development Fixes
 
   * Memoize #author_hash in SeoTag::AuthorDrop (#342)
   * chore(ci): test Jekyll v4.0 (#372)
   * Fix locale specs that use the fallback locale (#360)
+  * style: align with latest jekyll-rubocop (#382)
 
 ## 2.6.1 / 2019-05-17
 
