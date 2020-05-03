@@ -60,7 +60,7 @@ webmaster_verifications:
   baidu: 1234
 ```
 
-* `lang` - The locale these tags are marked up in. Of the format `language_TERRITORY`. Default is `en_US`.
+* `locale` - The locale these tags are marked up in. Of the format `language_TERRITORY`. Default is `en_US`.
 
 The SEO tag will respect the following YAML front matter if included in a post, page, or document:
 
@@ -68,6 +68,6 @@ The SEO tag will respect the following YAML front matter if included in a post, 
 * `description` - A short description of the page's content
 * `image` - URL to an image associated with the post, page, or document (e.g., `/assets/page-pic.jpg`)
 * `author` - Page-, post-, or document-specific author information (see [Advanced usage](advanced-usage.md#author-information))
-* `lang` - Page-, post-, or document-specific language information
+* `locale` - Page-, post-, or document-specific locale information
 
 *Note:* Front matter defaults can be used for any of the above values as described in advanced usage with an image example.
