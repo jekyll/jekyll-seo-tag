@@ -33,10 +33,10 @@
   {% if seo_tag.image.path %}
     <meta property="og:image" content="{{ seo_tag.image.path }}" />
     {% if seo_tag.image.width %}
-      <meta property="og.image:width" content="{{ seo_tag.image.width }}" />
+      <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
     {% endif %}
     {% if seo_tag.image.height %}
-      <meta property="og.image:height" content="{{ seo_tag.image.height }}" />
+      <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
     {% endif %}
   {% endif %}
 {% else %}
