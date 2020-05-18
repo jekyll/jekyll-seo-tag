@@ -20,7 +20,7 @@
   <meta property="og:description" content="{{ seo_tag.description }}" />
 {% endif %}
 
-{% if site.url %}
+{% if seo_tag.canonical_url %}
   <link rel="canonical" href="{{ seo_tag.canonical_url }}" />
   <meta property="og:url" content="{{ seo_tag.canonical_url }}" />
 {% endif %}
