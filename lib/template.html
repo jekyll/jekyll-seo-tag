@@ -5,7 +5,7 @@
 
 <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
 
-{% if seo_tag.page_title %}
+{% if seo_tag.page_title and seo_tag.title? %}
   <meta property="og:title" content="{{ seo_tag.page_title }}" />
 {% endif %}
 
@@ -59,7 +59,7 @@
   <meta name="twitter:card" content="summary" />
 {% endif %}
 
-{% if seo_tag.page_title %}
+{% if seo_tag.page_title and seo_tag.title? %}
   <meta property="twitter:title" content="{{ seo_tag.page_title }}" />
 {% endif %}
 
