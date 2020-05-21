@@ -12,6 +12,8 @@ If for some reason, you don't want the plugin to output `<title>` tags on each p
 ```
 <!-- {% endraw %} -->
 
+This will remove output for `<title>`, `<meta property="og:title"/>` and `<meta property="twitter:title"/>`; you can define each of them on your side if needed.
+
 ### Author information
 
 Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
