@@ -165,9 +165,7 @@ module Jekyll
       end
 
       def page_locale
-        return @page_locale if defined?(@page_locale)
-
-        @page_locale = page["locale"] && page["locale"].tr("-", "_")
+        @page_locale ||= (page["locale"] || site["locale"] || page_lang).tr("-", "_")
       end
 
       def canonical_url
