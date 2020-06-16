@@ -219,6 +219,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
       context "with a site description" do
         let(:config) { { "description"=> "site description" } }
+        let(:page_meta) { { "excerpt" => "" } }
 
         it "uses the page description" do
           expect(subject.description).to eql("site description")
@@ -226,7 +227,7 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
 
       context "with no descriptions" do
-        let(:page_meta) { { "description" => nil, "excerpt" => nil } }
+        let(:page_meta) { { "description" => nil, "excerpt" => "" } }
         let(:config) { { "description"=> nil } }
 
         it "uses returns nil" do

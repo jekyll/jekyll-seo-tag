@@ -133,6 +133,7 @@ RSpec.describe Jekyll::SeoTag do
 
   context "with site.description" do
     let(:site) { make_site("description" => "foo") }
+    let(:page) { make_page("excerpt" => "") }
 
     it "uses the site description when no page description nor excerpt exist" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
@@ -292,6 +293,7 @@ RSpec.describe Jekyll::SeoTag do
 
     context "with site.title" do
       let(:site) { make_site("title" => "Foo", "url" => "http://example.invalid") }
+      let(:page) { make_page("excerpt" => "") }
 
       it "outputs the site title meta" do
         expect(output).to match(%r!<meta property="og:site_name" content="Foo" />!)
