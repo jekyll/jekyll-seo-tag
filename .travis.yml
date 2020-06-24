@@ -15,4 +15,4 @@ env:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   matrix:
     - JEKYLL_VERSION="~> 3.8"
-    - JEKYLL_VERSION="~> 4.0"
+    - JEKYLL_VERSION="~> 4.1.1"
