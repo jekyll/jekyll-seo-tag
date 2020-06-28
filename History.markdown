@@ -6,6 +6,7 @@
   * use example.com for example URL (#351)
   * remove Google+ from example snippet (#358)
   * HTTPS link to https://ogp.me/ (#359)
+  * Rename Google webmaster tools to Google Search Console  (#403)
 
 ### Minor Enhancements
 

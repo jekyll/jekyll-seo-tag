@@ -39,9 +39,9 @@ has been defined.
   ```
 * `logo` - URL to a site-wide logo (e.g., `/assets/your-company-logo.png`) - If you would like the "publisher" property
 to be present, you must add this field to your site's configuration, during the validation of the structured data by
-Google Webmaster tools, if the `logo` field is not validated, you will find errors inherent to the publisher in the
-[structured data test](https://search.google.com/structured-data/testing-tool/u/0/)
-* `social` - For [specifying social profiles](https://developers.google.com/structured-data/customize/social-profiles).
+Google Search Console, if the `logo` field is not validated, you will find errors inherent to the publisher in the
+[Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/u/0/)
+* `social` - For [specifying social profiles](https://developers.google.com/search/docs/guides/enhance-site#add-your-sites-name-logo-and-social-links).
 The following properties are available:
   * `name` - If the user or organization name differs from the site's name
   * `links` - An array of links to social media profiles.
@@ -56,7 +56,7 @@ The following properties are available:
       - https://github.com/benbalter
       - https://keybase.io/benbalter
   ```
-* `google_site_verification` for verifying ownership via Google webmaster tools
+* `google_site_verification` for verifying ownership via Google Search Console
 * Alternatively, verify ownership with several services at once using the following format:
   ```yml
   webmaster_verifications:
