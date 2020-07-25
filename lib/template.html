@@ -9,10 +9,6 @@
   <meta property="og:title" content="{{ seo_tag.page_title }}" />
 {% endif %}
 
-{% if seo_tag.author.name %}
-  <meta name="author" content="{{ seo_tag.author.name }}" />
-{% endif %}
-
 <meta property="og:locale" content="{{ seo_tag.page_lang | replace:'-','_' }}" />
 
 {% if seo_tag.description %}
