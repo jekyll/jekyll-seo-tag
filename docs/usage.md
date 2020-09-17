@@ -40,7 +40,7 @@ has been defined.
 * `logo` - URL to a site-wide logo (e.g., `/assets/your-company-logo.png`) - If you would like the "publisher" property
 to be present, you must add this field to your site's configuration, during the validation of the structured data by
 Google Search Console, if the `logo` field is not validated, you will find errors inherent to the publisher in the
-[Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/u/0/)
+[Rich Results Testing Tool](https://search.google.com/test/rich-results)
 * `social` - For [specifying social profiles](https://developers.google.com/search/docs/guides/enhance-site#add-your-sites-name-logo-and-social-links).
 The following properties are available:
   * `name` - If the user or organization name differs from the site's name
