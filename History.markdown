@@ -28,6 +28,7 @@
 ### Bug Fixes
 
   * Reduce allocations of instance-agnostic objects (#376)
+  * Fix Travis builds for Jekyll 3.x (#415)
 
 ## 2.6.1 / 2019-05-17
 
