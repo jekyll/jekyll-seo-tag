@@ -6,6 +6,9 @@
   * use example.com for example URL (#351)
   * remove Google+ from example snippet (#358)
   * HTTPS link to https://ogp.me/ (#359)
+  * Rename Google webmaster tools to Google Search Console  (#403)
+  * Improve documentation on plugin usage (#399)
+  * Structured Data Testing Tool is deprecated (#409)
 
 ### Minor Enhancements
 
@@ -25,6 +28,7 @@
 ### Bug Fixes
 
   * Reduce allocations of instance-agnostic objects (#376)
+  * Fix Travis builds for Jekyll 3.x (#415)
 
 ## 2.6.1 / 2019-05-17
 
