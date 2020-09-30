@@ -24,6 +24,7 @@
   * chore(ci): test Jekyll v4.0 (#372)
   * Fix locale specs that use the fallback locale (#360)
   * style: align with latest jekyll-rubocop (#382)
+  * Profile plugin using a third-party repo (#414)
 
 ### Bug Fixes
 
