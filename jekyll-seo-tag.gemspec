@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path("lib", __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "jekyll-seo-tag/version"
+require_relative "lib/jekyll-seo-tag/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-seo-tag"
@@ -10,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = "A Jekyll plugin to add metadata tags for search engines and social networks to better index and display your site's content."
-  spec.homepage      = "https://github.com/benbalter/jekyll-seo-tag"
+  spec.homepage      = "https://github.com/jekyll/jekyll-seo-tag"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -32,5 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", ">= 1.15"
   spec.add_development_dependency "html-proofer", "~> 3.7"
   spec.add_development_dependency "rspec", "~> 3.5"
-  spec.add_development_dependency "rubocop-jekyll", "~> 0.4"
+  spec.add_development_dependency "rubocop-jekyll", "~> 0.11"
 end

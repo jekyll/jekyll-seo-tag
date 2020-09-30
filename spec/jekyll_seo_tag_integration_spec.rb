@@ -660,10 +660,10 @@ RSpec.describe Jekyll::SeoTag do
     end
 
     context "with site.lang" do
-      let(:site)  { make_site("lang" => "en_US") }
+      let(:site)  { make_site("lang" => "de_DE") }
 
       it "uses site.lang if page.lang is not present" do
-        expected = %r!<meta property="og:locale" content="en_US" />!
+        expected = %r!<meta property="og:locale" content="de_DE" />!
         expect(output).to match(expected)
       end
 
@@ -678,10 +678,10 @@ RSpec.describe Jekyll::SeoTag do
     end
 
     context "with site.lang hyphenated" do
-      let(:site)  { make_site("lang" => "en-US") }
+      let(:site)  { make_site("lang" => "en-AU") }
 
       it "coerces hyphen to underscore" do
-        expected = %r!<meta property="og:locale" content="en_US" />!
+        expected = %r!<meta property="og:locale" content="en_AU" />!
         expect(output).to match(expected)
       end
     end
