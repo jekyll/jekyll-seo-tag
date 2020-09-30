@@ -22,7 +22,7 @@ module Jekyll
       def initialize(text, context)
         @obj = {}
         @mutations = {}
-        @text    = text
+        @text = text
         @context = context
       end
 
@@ -42,6 +42,10 @@ module Jekyll
         @site_title ||= format_string(site["title"] || site["name"])
       end
 
+      def site_tagline
+        @site_tagline ||= format_string site["tagline"]
+      end
+
       def site_description
         @site_description ||= format_string site["description"]
       end
@@ -51,6 +55,10 @@ module Jekyll
         @page_title ||= format_string(page["title"]) || site_title
       end
 
+      def site_tagline_or_description
+        site_tagline || site_description
+      end
+
       # Page title with site title or description appended
       # rubocop:disable Metrics/CyclomaticComplexity
       def title
@@ -58,7 +66,7 @@ module Jekyll
           if site_title && page_title != site_title
             page_title + TITLE_SEPARATOR + site_title
           elsif site_description && site_title
-            site_title + TITLE_SEPARATOR + site_description
+            site_title + TITLE_SEPARATOR + site_tagline_or_description
           else
             page_title || site_title
           end
@@ -197,8 +205,9 @@ module Jekyll
 
         current = @context["paginator"]["page"]
         total = @context["paginator"]["total_pages"]
+        paginator_message = site["seo_paginator_message"] || "Page %<current>s of %<total>s for "
 
-        return "Page #{current} of #{total} for " if current > 1
+        format(paginator_message, :current => current, :total => total) if current > 1
       end
 
       attr_reader :context

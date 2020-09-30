@@ -1,8 +1,37 @@
 ## HEAD
 
+### Documentation
+
+  * HTTPS links to schema.org (#350)
+  * use example.com for example URL (#351)
+  * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
+  * Rename Google webmaster tools to Google Search Console  (#403)
+  * Improve documentation on plugin usage (#399)
+  * Structured Data Testing Tool is deprecated (#409)
+
 ### Minor Enhancements
 
-  * Release: v2.6.0 (#334)
+  * Adding possibility to change pagination message by config file (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
+  * Ensure a single leading `@` for twitter usernames (#367)
+  * Prefer site.tagline to site.description for page title (#356)
+  * chore(ci): bump Ruby versions (#385)
+
+### Development Fixes
+
+  * Memoize #author_hash in SeoTag::AuthorDrop (#342)
+  * chore(ci): test Jekyll v4.0 (#372)
+  * Fix locale specs that use the fallback locale (#360)
+  * style: align with latest jekyll-rubocop (#382)
+  * Profile plugin using a third-party repo (#414)
+
+### Bug Fixes
+
+  * Reduce allocations of instance-agnostic objects (#376)
+  * Fix Travis builds for Jekyll 3.x (#415)
+
+## 2.6.1 / 2019-05-17
 
 ### Development Fixes
 
