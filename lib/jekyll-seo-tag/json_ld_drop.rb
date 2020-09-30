@@ -20,6 +20,9 @@ module Jekyll
       private :type
       private :logo
 
+      VALID_ENTITY_TYPES = %w(BlogPosting CreativeWork).freeze
+      private_constant :VALID_ENTITY_TYPES
+
       # page_drop should be an instance of Jekyll::SeoTag::Drop
       def initialize(page_drop)
         @mutations = {}
@@ -27,7 +30,7 @@ module Jekyll
       end
 
       def fallback_data
-        {
+        @fallback_data ||= {
           "@context" => "https://schema.org",
         }
       end
@@ -66,7 +69,7 @@ module Jekyll
       end
 
       def main_entity
-        return unless %w(BlogPosting CreativeWork).include?(type)
+        return unless VALID_ENTITY_TYPES.include?(type)
 
         {
           "@type" => "WebPage",

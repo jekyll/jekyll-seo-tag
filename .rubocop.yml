@@ -9,11 +9,11 @@ AllCops:
   Exclude:
     - vendor/**/*
 
-Metrics/LineLength:
+Layout/LineLength:
   Exclude:
     - spec/**/*
     - jekyll-seo-tag.gemspec
 
-Metrics/BlockLength:
+Layout/BlockLength:
   Exclude:
     - spec/**/*
