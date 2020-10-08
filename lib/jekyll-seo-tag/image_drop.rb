@@ -39,13 +39,17 @@ module Jekyll
 
       # The normalized image hash with a `path` key (which may be nil)
       def image_hash
-        @image_hash ||= if page["image"].is_a?(Hash)
-                          { "path" => nil }.merge(page["image"])
-                        elsif page["image"].is_a?(String)
-                          { "path" => page["image"] }
-                        else
-                          { "path" => nil }
-                        end
+        @image_hash ||= begin
+          image_meta = page["image"]
+
+          if image_meta.is_a?(Hash)
+            { "path" => nil }.merge!(image_meta)
+          elsif image_meta.is_a?(String)
+            { "path" => image_meta }
+          else
+            { "path" => nil }
+          end
+        end
       end
       alias_method :fallback_data, :image_hash
 

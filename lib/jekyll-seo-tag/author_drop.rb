@@ -78,7 +78,7 @@ module Jekyll
           if resolved_author.is_a? Hash
             resolved_author
           elsif resolved_author.is_a? String
-            { "name" => resolved_author }.merge(site_data_hash)
+            { "name" => resolved_author }.merge!(site_data_hash)
           else
             {}
           end
