@@ -164,6 +164,10 @@ module Jekyll
         @page_lang ||= page["lang"] || site["lang"] || "en_US"
       end
 
+      def page_locale
+        @page_locale ||= (page["locale"] || site["locale"] || page_lang).tr("-", "_")
+      end
+
       def canonical_url
         @canonical_url ||= begin
           if page["canonical_url"].to_s.empty?
