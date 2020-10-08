@@ -31,6 +31,10 @@
   * Reduce allocations of instance-agnostic objects (#376)
   * Fix Travis builds for Jekyll 3.x (#415)
 
+### -dev
+
+  * Mutate hash literals instead of duplicating them (#417)
+
 ## 2.6.1 / 2019-05-17
 
 ### Development Fixes
