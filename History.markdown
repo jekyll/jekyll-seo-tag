@@ -17,6 +17,7 @@
   * Ensure a single leading `@` for twitter usernames (#367)
   * Prefer site.tagline to site.description for page title (#356)
   * chore(ci): bump Ruby versions (#385)
+  * Render og:locale meta only when defined explicitly (#388)
 
 ### Development Fixes
 
@@ -29,10 +30,7 @@
 ### Bug Fixes
 
   * Reduce allocations of instance-agnostic objects (#376)
-  * Fix Travis builds for Jekyll 3.x (#415)
-
-### -dev
-
+  * Fix Travis builds for Jekyll 3.x ### -dev (#415)
   * Mutate hash literals instead of duplicating them (#417)
 
 ## 2.6.1 / 2019-05-17
