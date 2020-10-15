@@ -11,8 +11,11 @@ module Jekyll
       ].freeze
       HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!.freeze
 
+      EMPTY_READ_ONLY_HASH = {}.freeze
+      private_constant :EMPTY_READ_ONLY_HASH
+
       def initialize(text, context)
-        @obj = {}
+        @obj = EMPTY_READ_ONLY_HASH
         @mutations = {}
         @text = text
         @context = context
@@ -236,7 +239,7 @@ module Jekyll
         if hash[key].is_a?(Hash)
           hash[key]
         else
-          {}
+          EMPTY_READ_ONLY_HASH
         end
       end
     end
