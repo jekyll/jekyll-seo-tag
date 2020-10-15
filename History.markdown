@@ -33,6 +33,7 @@
   * Reduce allocations of instance-agnostic objects (#376)
   * Fix Travis builds for Jekyll 3.x ### -dev (#415)
   * Mutate hash literals instead of duplicating them (#417)
+  * Replace read-only empty hash with private constant (#418)
 
 ## 2.6.1 / 2019-05-17
 
