@@ -1,8 +1,8 @@
-## HEAD
+## 2.7.1 / 2020-10-18
 
 ### Development Fixes
 
-  * Mutate site payload instead of duplicating it (#419)
+  * refactor: mutate site payload instead of duplicating it (#419)
 
 ## 2.7.0 / 2020-10-18
 
