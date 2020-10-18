@@ -1,3 +1,9 @@
+## HEAD
+
+### Development Fixes
+
+  * Mutate site payload instead of duplicating it (#419)
+
 ## 2.7.0 / 2020-10-18
 
 ### Minor Enhancements
@@ -35,7 +41,6 @@
   * HTTPS link to https://ogp.me/ (#359)
   * HTTPS links to schema.org (#350)
   * use example.com for example URL (#351)
-
 
 ## 2.6.1 / 2019-05-17
 
