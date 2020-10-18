@@ -47,12 +47,11 @@ module Jekyll
 
     def payload
       # site_payload is an instance of UnifiedPayloadDrop. See https://git.io/v5ajm
-      Jekyll::Utils.deep_merge_hashes!(
-        context.registers[:site].site_payload,
-        "page"      => context.registers[:page],
-        "paginator" => context["paginator"],
-        "seo_tag"   => drop
-      )
+      context.registers[:site].site_payload.tap do |site_payload|
+        site_payload["page"]      = context.registers[:page]
+        site_payload["paginator"] = context["paginator"]
+        site_payload["seo_tag"]   = drop
+      end
     end
 
     def drop
