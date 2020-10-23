@@ -1,34 +1,46 @@
-## HEAD
-
-### Documentation
-
-  * HTTPS links to schema.org (#350)
-  * use example.com for example URL (#351)
-  * remove Google+ from example snippet (#358)
-  * HTTPS link to https://ogp.me/ (#359)
-  * Rename Google webmaster tools to Google Search Console  (#403)
-  * Improve documentation on plugin usage (#399)
-  * Structured Data Testing Tool is deprecated (#409)
-
-### Minor Enhancements
-
-  * Adding possibility to change pagination message by config file (#324)
-  * Make Twitter Summary Card without having Twitter account (#284)
-  * Ensure a single leading `@` for twitter usernames (#367)
-  * Prefer site.tagline to site.description for page title (#356)
-  * chore(ci): bump Ruby versions (#385)
+## 2.7.1 / 2020-10-18
 
 ### Development Fixes
 
-  * Memoize #author_hash in SeoTag::AuthorDrop (#342)
-  * chore(ci): test Jekyll v4.0 (#372)
-  * Fix locale specs that use the fallback locale (#360)
-  * style: align with latest jekyll-rubocop (#382)
+  * refactor: mutate site payload instead of duplicating it (#419)
+
+## 2.7.0 / 2020-10-18
+
+### Minor Enhancements
+
+  * Change pagination message with `seo_paginator_message` option (#324)
+  * Make Twitter Summary Card without having Twitter account (#284)
+  * Prefer site.tagline to site.description for page title (#356)
+  * Render og:locale meta only when defined explicitly (#388)
 
 ### Bug Fixes
 
-  * Reduce allocations of instance-agnostic objects (#376)
-  * Fix Travis builds for Jekyll 3.x (#415)
+  * Ensure a single leading `@` for twitter usernames (#367)
+
+### Development Fixes
+
+  * chore(deps): require Ruby > 2.4.0 EOL
+  * test: fix locale specs that use the fallback locale (#360)
+  * refactor: Replace read-only empty hash with private constant (#418)
+  * refactor: Mutate hash literals instead of duplicating them (#417)
+  * refactor: Reduce allocations of instance-agnostic objects (#376)
+  * refactor: Memoize #author_hash in SeoTag::AuthorDrop (#342)
+  * refactor: simplify conditional in SeoTag::Drop#date_modified (#343)
+  * chore(ci): profile seo-tag plugin on a third-party repository (#414)
+  * chore(ci): Jekyll v4.0 (#372)
+  * chore(ci): test against current stable Ruby 2.5 and 2.7 (#385)
+  * style: align with latest jekyll-rubocop (#382)
+  * fix: Travis builds for Jekyll 3.x (#415)
+
+### Documentation
+
+  * Structured Data Testing Tool is deprecated (#409)
+  * Rename Google webmaster tools to Google Search Console  (#403)
+  * Improve documentation on plugin usage (#399)
+  * remove Google+ from example snippet (#358)
+  * HTTPS link to https://ogp.me/ (#359)
+  * HTTPS links to schema.org (#350)
+  * use example.com for example URL (#351)
 
 ## 2.6.1 / 2019-05-17
 

@@ -13,7 +13,7 @@
   <meta name="author" content="{{ seo_tag.author.name }}" />
 {% endif %}
 
-<meta property="og:locale" content="{{ seo_tag.page_lang | replace:'-','_' }}" />
+<meta property="og:locale" content="{{ seo_tag.page_locale }}" />
 
 {% if seo_tag.description %}
   <meta name="description" content="{{ seo_tag.description }}" />
