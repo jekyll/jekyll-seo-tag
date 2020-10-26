@@ -11,8 +11,11 @@ module Jekyll
       ].freeze
       HOMEPAGE_OR_ABOUT_REGEX = %r!^/(about/)?(index.html?)?$!.freeze
 
+      EMPTY_READ_ONLY_HASH = {}.freeze
+      private_constant :EMPTY_READ_ONLY_HASH
+
       def initialize(text, context)
-        @obj = {}
+        @obj = EMPTY_READ_ONLY_HASH
         @mutations = {}
         @text = text
         @context = context
@@ -109,13 +112,7 @@ module Jekyll
 
       def date_modified
         @date_modified ||= begin
-          date = if page_seo["date_modified"]
-                   page_seo["date_modified"]
-                 elsif page["last_modified_at"]
-                   page["last_modified_at"].to_liquid
-                 else
-                   page["date"]
-                 end
+          date = page_seo["date_modified"] || page["last_modified_at"].to_liquid || page["date"]
           filters.date_to_xmlschema(date) if date
         end
       end
@@ -162,6 +159,10 @@ module Jekyll
 
       def page_lang
         @page_lang ||= page["lang"] || site["lang"] || "en_US"
+      end
+
+      def page_locale
+        @page_locale ||= (page["locale"] || site["locale"] || page_lang).tr("-", "_")
       end
 
       def canonical_url
@@ -238,7 +239,7 @@ module Jekyll
         if hash[key].is_a?(Hash)
           hash[key]
         else
-          {}
+          EMPTY_READ_ONLY_HASH
         end
       end
     end
