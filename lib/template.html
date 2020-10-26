@@ -29,20 +29,16 @@
   <meta property="og:site_name" content="{{ seo_tag.site_title }}" />
 {% endif %}
 
-{% if seo_tag.image.first %}
-  {% if seo_tag.image.path %}
-    <meta property="og:image" content="{{ seo_tag.image.path }}" />
-    {% if seo_tag.image.width %}
-      <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
-    {% endif %}
-    {% if seo_tag.image.height %}
-      <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
-    {% endif %}
+{% if seo_tag.image.first and seo_tag.image.path %}
+  <meta property="og:image" content="{{ seo_tag.image.path }}" />
+  {% if seo_tag.image.width %}
+    <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
   {% endif %}
-{% else %}
-  {% if seo_tag.image %}
-    <meta property="og:image" content="{{ seo_tag.image }}" />
+  {% if seo_tag.image.height %}
+    <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
   {% endif %}
+{% elsif seo_tag.image %}
+  <meta property="og:image" content="{{ seo_tag.image }}" />
 {% endif %}
 
 {% if page.date %}
