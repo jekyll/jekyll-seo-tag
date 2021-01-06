@@ -21,7 +21,9 @@ module Jekyll
       private :logo
 
       VALID_ENTITY_TYPES = %w(BlogPosting CreativeWork).freeze
+      VALID_AUTHOR_TYPES = %w(Organization Person).freeze
       private_constant :VALID_ENTITY_TYPES
+      private_constant :VALID_AUTHOR_TYPES
 
       # page_drop should be an instance of Jekyll::SeoTag::Drop
       def initialize(page_drop)
@@ -36,10 +38,13 @@ module Jekyll
       end
 
       def author
+        author_type = page_drop.author["type"]
+
         return unless page_drop.author["name"]
+        return nil if author_type && !VALID_AUTHOR_TYPES.include?(author_type)
 
         {
-          "@type" => "Person",
+          "@type" => author_type || "Person",
           "name"  => page_drop.author["name"],
         }
       end

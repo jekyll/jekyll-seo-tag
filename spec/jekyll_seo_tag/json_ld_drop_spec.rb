@@ -72,6 +72,29 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
         end
       end
     end
+
+    context "when type Organization" do
+      let(:author) { { "name" => "organization", "type" => "Organization" } }
+
+      it "returns the author with type" do
+        expect(subject).to have_key("author")
+        expect(subject["author"]).to be_a(Hash)
+        expect(subject["author"]).to have_key("@type")
+        expect(subject["author"]["@type"]).to eql("Organization")
+        expect(subject["author"]).to have_key("name")
+        expect(subject["author"]["name"]).to be_a(String)
+        expect(subject["author"]["name"]).to eql("organization")
+      end
+    end
+
+    context "when invalid type" do
+      let(:author) { { "name" => "organization", "type" => "Invalid" } }
+
+      it "returns the author with type" do
+        expect(subject).to have_key("author")
+        expect(subject["author"]).to be nil
+      end
+    end
   end
 
   context "image" do
