@@ -175,6 +175,10 @@ module Jekyll
         end
       end
 
+      def custom_structured_data
+        page.to_h.dig("seo", "custom_structured_data")
+      end
+
       private
 
       def filters

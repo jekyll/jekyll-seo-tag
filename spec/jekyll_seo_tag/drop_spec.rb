@@ -517,4 +517,25 @@ RSpec.describe Jekyll::SeoTag::Drop do
   it "exposes the JSON-LD drop" do
     expect(subject.json_ld).to be_a(Jekyll::SeoTag::JSONLDDrop)
   end
+
+  context "custom structured data" do
+    context "when specified for a page" do
+      let(:page_meta) do
+        { "seo" => { "custom_structured_data" => {
+          "@type"               => "SoftwareApplication",
+          "applicationCategory" => "Game",
+        } } }
+      end
+
+      it "finds specified structured data" do
+        expect(subject.custom_structured_data).to eq(page_meta["seo"]["custom_structured_data"])
+      end
+    end
+
+    context "when not specified for a page" do
+      it "uses default" do
+        expect(subject.custom_structured_data).to be nil
+      end
+    end
+  end
 end

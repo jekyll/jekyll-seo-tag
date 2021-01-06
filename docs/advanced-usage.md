@@ -78,6 +78,7 @@ The following options can be set for any particular page. While the default opti
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
   * `date_modified` - Manually specify the `dateModified` field in the JSON-LD output to override Jekyll's own `dateModified`.
   This field will take **first priority** for the `dateModified` JSON-LD output. This is useful when the file timestamp does not match the true time that the content was modified. A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
+  * `custom_structured_data` - Override single values in the structured data tree. Merging is recursive so nested attributes can be overridden without overriding the whole tree.
 
 ### Customizing image output
 
