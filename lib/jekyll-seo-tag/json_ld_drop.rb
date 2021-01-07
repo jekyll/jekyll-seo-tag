@@ -79,20 +79,10 @@ module Jekyll
       alias_method :mainEntityOfPage, :main_entity
       private :main_entity
 
-      private def deep_merge(this_hash, other_hash)
-        this_hash.merge(other_hash) do |_key, this_val, other_val|
-          if this_val.is_a?(Hash) && other_val.is_a?(Hash)
-            deep_merge(this_val, other_val)
-          else
-            other_val
-          end
-        end
-      end
-
       def to_json
         drop_hash = to_h
         if page_drop.custom_structured_data.is_a? Hash
-          drop_hash = deep_merge(drop_hash, page_drop.custom_structured_data)
+          drop_hash = Utils.deep_merge_hashes(drop_hash, page_drop.custom_structured_data)
         end
         drop_hash.reject { |_k, v| v.nil? }.to_json
       end
