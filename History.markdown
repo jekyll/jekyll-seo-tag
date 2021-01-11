@@ -1,3 +1,9 @@
+## HEAD
+
+### Minor Enhancements
+
+  * Allow to set type for author (#427)
+
 ## 2.7.1 / 2020-10-18
 
 ### Development Fixes
