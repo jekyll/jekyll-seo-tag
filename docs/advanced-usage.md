@@ -80,6 +80,21 @@ The following options can be set for any particular page. While the default opti
   This field will take **first priority** for the `dateModified` JSON-LD output. This is useful when the file timestamp does not match the true time that the content was modified. A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
   * `custom_structured_data` - Override single values in the structured data tree. Merging is recursive so nested attributes can be overridden without overriding the whole tree.
 
+For example, on a simple FAQ page one could add the following:
+
+```yml
+seo:
+  name: My FAQ Page
+  type: FAQPage
+  custom_structured_data:
+    mainEntity:
+      - "@type": Question
+        name: Does this work!
+        acceptedAnswer:
+          "@type": Answer
+          tet: <b>Yes!</b> It absolutely does!
+```
+
 ### Customizing image output
 
 For most users, setting `image: [path-to-image]` on a per-page basis should be enough. If you need more control over how images are represented, the `image` property can also be an object, with the following options:
