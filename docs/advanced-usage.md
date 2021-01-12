@@ -87,6 +87,8 @@ seo:
   name: My FAQ Page
   type: FAQPage
   custom_structured_data:
+    publisher:
+      type: Organization
     mainEntity:
       - "@type": Question
         name: Does this work!
@@ -94,6 +96,9 @@ seo:
           "@type": Answer
           tet: <b>Yes!</b> It absolutely does!
 ```
+
+This would override the publisher type to `Organization`, but not any of the
+other publisher attributes.
 
 ### Customizing image output
 
