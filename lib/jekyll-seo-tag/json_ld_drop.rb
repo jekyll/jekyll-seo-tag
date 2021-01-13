@@ -84,7 +84,25 @@ module Jekyll
       private :main_entity
 
       def to_json
-        to_h.reject { |_k, v| v.nil? }.to_json
+        # this was what happened before
+        graph = to_h.reject { |_k, v| v.nil? }
+
+        # assign publisher and remove it from the array
+        # (because I don't know the meta-programming involved in instantiating it)
+        publisher = graph["publisher"] || nil
+        graph.delete("publisher")
+
+        updated_graph = {
+          "@context" => "https://schema.org",
+          "@graph"   => [graph],
+        }
+        if publisher
+          # .push({"something" => blah}) === << {"something" => blah}
+          updated_graph["@graph"] << publisher
+        end
+
+        # .to_json for the win
+        updated_graph.to_json
       end
 
       private
