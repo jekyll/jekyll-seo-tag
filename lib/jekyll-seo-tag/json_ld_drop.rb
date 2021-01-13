@@ -63,6 +63,7 @@ module Jekyll
 
         output = {
           "@type" => "Organization",
+          "url"   => page_drop.canonical_url,
           "logo"  => {
             "@type" => "ImageObject",
             "url"   => logo,
