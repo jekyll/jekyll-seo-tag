@@ -5,7 +5,7 @@ module Jekyll
     class Drop < Jekyll::Drops::Drop
       include Jekyll::SeoTag::UrlHelper
 
-      TITLE_SEPARATOR = format_string(site["title_separator"] || " | ")
+      TITLE_SEPARATOR = " | "
       FORMAT_STRING_METHODS = [
         :markdownify, :strip_html, :normalize_whitespace, :escape_once,
       ].freeze
@@ -59,9 +59,9 @@ module Jekyll
       def title
         @title ||= begin
           if site_title && page_title != site_title
-            page_title + TITLE_SEPARATOR + site_title
+            page_title + format_string(site["title_separator"] || TITLE_SEPARATOR) + site_title
           elsif site_description && site_title
-            site_title + TITLE_SEPARATOR + site_tagline_or_description
+            site_title + format_string(site["title_separator"] || TITLE_SEPARATOR) + site_tagline_or_description
           else
             page_title || site_title
           end
