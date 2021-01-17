@@ -11,6 +11,7 @@ blog dedicated to reviewing cat gifs` that would be used when `page.title` is no
 * `description` - A longer description used for the description meta tag. Also used as fallback for pages that don't
 provide their own `description`, and also as part of the page's title tag if neither `page.title` nor `site.tagline`
 has been defined.
+* `title_separator` - The separator which separates the page title and `title`. Note: ` | ` will be used by default.
 * `url` - The full URL to your site. Note: `site.github.url` will be used by default.
 * `author` - global author information (see [Advanced usage](advanced-usage.md#author-information))
 * `twitter` - The following properties are available:
