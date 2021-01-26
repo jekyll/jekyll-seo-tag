@@ -3,6 +3,13 @@
 RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   let(:author) { "author" }
   let(:image) { "image" }
+  let(:seo) do
+    {
+      "name"          => "seo name",
+      "date_modified" => "2017-01-02",
+      "links"         => %w(a b),
+    }
+  end
   let(:metadata) do
     {
       "title"       => "title",
@@ -10,11 +17,7 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
       "image"       => image,
       "date"        => "2017-01-01",
       "description" => "description",
-      "seo"         => {
-        "name"          => "seo name",
-        "date_modified" => "2017-01-02",
-        "links"         => %w(a b),
-      },
+      "seo"         => seo,
     }
   end
   let(:config) do
@@ -181,6 +184,32 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
 
     it "does not return null values as json" do
       expect(subject.to_json).to_not match(%r!:null!)
+    end
+  end
+
+  describe "#to_json" do
+    let(:seo) do
+      {
+        "name"                   => "seo name",
+        "date_modified"          => "2017-01-02",
+        "links"                  => %w(a b),
+        "type"                   => "SoftwareApplication",
+        "custom_structured_data" => {
+          "applicationCategory" => "Game",
+          "name"                => "game name",
+        },
+      }
+    end
+    let(:json_hash) { JSON.parse(subject.to_json) }
+
+    it "merges custom structured data attributes" do
+      expect(json_hash).to have_key("applicationCategory")
+      expect(json_hash["applicationCategory"]).to eq("Game")
+    end
+
+    it "overrides structured data attributes" do
+      expect(json_hash).to have_key("name")
+      expect(json_hash["name"]).to eq("game name")
     end
   end
 end

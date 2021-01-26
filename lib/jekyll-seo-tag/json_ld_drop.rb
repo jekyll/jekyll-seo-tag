@@ -84,7 +84,11 @@ module Jekyll
       private :main_entity
 
       def to_json
-        to_h.reject { |_k, v| v.nil? }.to_json
+        drop_hash = to_h
+        if page_drop.custom_structured_data.is_a? Hash
+          drop_hash = Utils.deep_merge_hashes(drop_hash, page_drop.custom_structured_data)
+        end
+        drop_hash.reject { |_k, v| v.nil? }.to_json
       end
 
       private
