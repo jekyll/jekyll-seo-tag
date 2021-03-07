@@ -37,6 +37,9 @@
   {% if seo_tag.image.width %}
     <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
   {% endif %}
+  {% if seo_tag.image.alt %}
+    <meta property="og:image:alt" content="{{ seo_tag.image.alt }}" />
+  {% endif %}
 {% endif %}
 
 {% if page.date %}
@@ -51,12 +54,15 @@
   <link rel="next" href="{{ paginator.next_page_path | absolute_url }}" />
 {% endif %}
 
-
 {% if seo_tag.image %}
   <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" }}" />
   <meta property="twitter:image" content="{{ seo_tag.image.path }}" />
 {% else %}
   <meta name="twitter:card" content="summary" />
+{% endif %}
+
+{% if seo_tag.image.alt %}
+  <meta name="twitter:image:alt" content="{{ seo_tag.image.alt }}" />
 {% endif %}
 
 {% if seo_tag.page_title %}
