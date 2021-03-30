@@ -88,7 +88,6 @@ module Jekyll
         graph = to_h.reject { |_k, v| v.nil? }
 
         # assign publisher and remove it from the array
-        # (because I don't know the meta-programming involved in instantiating it)
         publisher = graph["publisher"] || nil
         graph.delete("publisher")
 
