@@ -85,7 +85,6 @@ module Jekyll
       private :main_entity
 
       def to_json
-        # this was what happened before
         graph = to_h.reject { |_k, v| v.nil? }
 
         # assign publisher and remove it from the array
