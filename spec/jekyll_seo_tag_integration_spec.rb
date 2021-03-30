@@ -236,7 +236,7 @@ RSpec.describe Jekyll::SeoTag do
       let(:site) { make_site("logo" => "/logo.png", "url" => "http://example.invalid") }
 
       it "outputs the logo" do
-        expect(json_data["publisher"]["logo"]["url"]).to eql("http://example.invalid/logo.png")
+        expect(json_data["@graph"][1]["logo"]["url"]).to eql("http://example.invalid/logo.png")
       end
     end
 
@@ -244,7 +244,7 @@ RSpec.describe Jekyll::SeoTag do
       let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid") }
 
       it "outputs the logo" do
-        expect(json_data["publisher"]["logo"]["url"]).to eql("http://cdn.example.invalid/logo.png")
+        expect(json_data["@graph"][1]["logo"]["url"]).to eql("http://cdn.example.invalid/logo.png")
       end
     end
 
@@ -252,7 +252,7 @@ RSpec.describe Jekyll::SeoTag do
       let(:site) { make_site("logo" => "http://cdn.example.invalid/logo.png", "url" => "http://example.invalid", "author" => "Mr. Foo") }
 
       it "outputs the author" do
-        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+        expect(json_data["@graph"][1]["name"]).to eql("Mr. Foo")
       end
     end
 
@@ -261,12 +261,12 @@ RSpec.describe Jekyll::SeoTag do
       let(:page) { make_post("author" => "Mr. Foo") }
 
       it "outputs the author" do
-        expect(json_data["author"]["@type"]).to eql("Person")
-        expect(json_data["author"]["name"]).to eql("Mr. Foo")
+        expect(json_data["@graph"][0]["author"]["@type"]).to eql("Person")
+        expect(json_data["@graph"][0]["author"]["name"]).to eql("Mr. Foo")
       end
 
       it "outputs the publisher author" do
-        expect(json_data["publisher"]["name"]).to eql("Mr. Foo")
+        expect(json_data["@graph"][1]["name"]).to eql("Mr. Foo")
       end
     end
 
@@ -275,8 +275,8 @@ RSpec.describe Jekyll::SeoTag do
       let(:page) { make_post("seo" => { "type" => "BlogPosting" }, "permalink" => "/foo/") }
 
       it "outputs the mainEntityOfPage" do
-        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
-        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+        expect(json_data["@graph"][0]["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["@graph"][0]["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
       end
     end
 
@@ -285,8 +285,8 @@ RSpec.describe Jekyll::SeoTag do
       let(:page) { make_post("seo" => { "type" => "CreativeWork" }, "permalink" => "/foo/") }
 
       it "outputs the mainEntityOfPage" do
-        expect(json_data["mainEntityOfPage"]["@type"]).to eql("WebPage")
-        expect(json_data["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
+        expect(json_data["@graph"][0]["mainEntityOfPage"]["@type"]).to eql("WebPage")
+        expect(json_data["@graph"][0]["mainEntityOfPage"]["@id"]).to eql("http://example.invalid/foo/")
       end
     end
 
@@ -330,9 +330,9 @@ RSpec.describe Jekyll::SeoTag do
         expected = %r!<meta property="og:type" content="article" />!
         expect(output).to match(expected)
 
-        expect(json_data["headline"]).to eql("post")
-        expect(json_data["description"]).to eql("description")
-        expect(json_data["image"]).to eql("http://example.invalid/img.png")
+        expect(json_data["@graph"][0]["headline"]).to eql("post")
+        expect(json_data["@graph"][0]["description"]).to eql("description")
+        expect(json_data["@graph"][0]["image"]).to eql("http://example.invalid/img.png")
       end
 
       it "minifies JSON-LD" do
@@ -551,9 +551,10 @@ RSpec.describe Jekyll::SeoTag do
       end
 
       it "outputs social meta" do
-        expect(json_data["@type"]).to eql("person")
-        expect(json_data["name"]).to eql("Ben")
-        expect(json_data["sameAs"]).to eql(links)
+        # binding.pry
+        expect(json_data["@graph"][0]["@type"]).to eql("person")
+        expect(json_data["@graph"][0]["name"]).to eql("Ben")
+        expect(json_data["@graph"][0]["sameAs"]).to eql(links)
       end
     end
 
@@ -561,7 +562,7 @@ RSpec.describe Jekyll::SeoTag do
       let(:meta) { { "permalink" => "/about/" } }
 
       it "outputs sameAs links" do
-        expect(json_data["sameAs"]).to eql(links)
+        expect(json_data["@graph"][0]["sameAs"]).to eql(links)
       end
     end
 

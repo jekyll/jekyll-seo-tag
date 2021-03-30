@@ -63,6 +63,7 @@ module Jekyll
 
         output = {
           "@type" => "Organization",
+          "url"   => page_drop.canonical_url,
           "logo"  => {
             "@type" => "ImageObject",
             "url"   => logo,
@@ -84,7 +85,22 @@ module Jekyll
       private :main_entity
 
       def to_json
-        to_h.reject { |_k, v| v.nil? }.to_json
+        graph = to_h.reject { |_k, v| v.nil? }
+
+        # assign publisher and remove it from the array
+        publisher = graph["publisher"] || nil
+        graph.delete("publisher")
+
+        updated_graph = {
+          "@context" => "https://schema.org",
+          "@graph"   => [graph],
+        }
+        if publisher
+          updated_graph["@graph"] << publisher
+        end
+
+        # .to_json for the win
+        updated_graph.to_json
       end
 
       private
