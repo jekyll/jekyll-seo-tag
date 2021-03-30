@@ -96,7 +96,6 @@ module Jekyll
           "@graph"   => [graph],
         }
         if publisher
-          # .push({"something" => blah}) === << {"something" => blah}
           updated_graph["@graph"] << publisher
         end
 
