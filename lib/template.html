@@ -109,6 +109,10 @@
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}
 
+{% if site.do_not_track.twitter %}
+  <meta name="twitter:dnt" content="on">
+{% endif %}
+
 <script type="application/ld+json">
   {{ seo_tag.json_ld | jsonify }}
 </script>
