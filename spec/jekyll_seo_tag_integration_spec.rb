@@ -686,4 +686,15 @@ RSpec.describe Jekyll::SeoTag do
       end
     end
   end
+
+  context "with do_not_track" do
+    context "with twitter" do
+      let(:site) { make_site("do_not_track" => { "twitter" => true }) }
+
+      it "adds DNT metadata for Twitter embeds" do
+        expected = %r!<meta name="twitter:dnt" content="on">!
+        expect(output).to match(expected)
+      end
+    end
+  end
 end
