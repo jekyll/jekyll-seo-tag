@@ -12,7 +12,7 @@ jobs:
     if: "!contains(github.event.commits[0].message, '[ci skip]')"
     runs-on: 'ubuntu-latest'
     steps:
-    - name: Checkout Jekyll SEO Tag
+    - name: Checkout Jekyll SEO Tag 
       uses: actions/checkout@v2
       with:
         fetch-depth: 5
