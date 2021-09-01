@@ -7,6 +7,7 @@
 ### Development Fixes
 
   * Fix typo in source code comment (#449)
+  * Set up Continuous Integration via GH Actions (#450)
 
 ## 2.7.1 / 2020-10-18
 
