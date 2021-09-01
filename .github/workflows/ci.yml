@@ -9,7 +9,7 @@ on:
     - master
 
 jobs:
-  ci:
+  j4:
     if: "!contains(github.event.commits[0].message, '[ci skip]')"
     name: "Jekyll ${{ matrix.jekyll_version }} (Ruby ${{ matrix.ruby_version }})"
     runs-on: 'ubuntu-latest'
@@ -23,7 +23,6 @@ jobs:
         - 2.7
         - 3.0
         jekyll_version:
-        - "~> 3.9"
         - "~> 4.0"
     steps:
       - uses: actions/checkout@v2
@@ -36,10 +35,30 @@ jobs:
           bundler-cache: true
       - name: Execute tests
         run:  bundle exec rspec
-      - name: Check Style Offenses
-        run:  bundle exec rubocop -S -D
-      - name: Test Gem build
-        run:  bundle exec gem build jekyll-seo-tag.gemspec
+  j3:
+    if: "!contains(github.event.commits[0].message, '[ci skip]')"
+    name: "Jekyll ${{ matrix.jekyll_version }} (Ruby ${{ matrix.ruby_version }})"
+    runs-on: 'ubuntu-latest'
+    env:
+      JEKYLL_VERSION: ${{ matrix.jekyll_version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby_version:
+        - 2.5
+        jekyll_version:
+        - "~> 3.9"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
+      - name: "Set up Ruby ${{ matrix.ruby_version }}"
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby_version }}
+          bundler-cache: true
+      - name: Execute tests
+        run:  bundle exec rspec
 
   style_check:
     if: "!contains(github.event.commits[0].message, '[ci skip]')"
@@ -66,8 +85,6 @@ jobs:
     if: "!contains(github.event.commits[0].message, '[ci skip]')"
     name: "Test Gem build (Ruby ${{ matrix.ruby_version }})"
     runs-on: 'ubuntu-latest'
-    env:
-      JEKYLL_VERSION: ${{ matrix.jekyll_version }}
     strategy:
       fail-fast: false
       matrix:
