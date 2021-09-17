@@ -16,9 +16,8 @@ module Jekyll
       def_delegator :page_drop, :type,           :type
 
       # Expose #type and #logo as private methods and #@type as a public method
-      alias_method :"@type", :type
-      private :type
-      private :logo
+      alias_method :@type, :type
+      private :type, :logo
 
       VALID_ENTITY_TYPES = %w(BlogPosting CreativeWork).freeze
       VALID_AUTHOR_TYPES = %w(Organization Person).freeze
@@ -84,7 +83,7 @@ module Jekyll
       private :main_entity
 
       def to_json
-        to_h.reject { |_k, v| v.nil? }.to_json
+        to_h.compact.to_json
       end
 
       private
