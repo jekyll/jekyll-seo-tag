@@ -26,7 +26,8 @@ RSpec.describe Jekyll::SeoTag do
   end
 
   it "outputs meta generator" do
-    expect(output).to match(%r!Jekyll v#{Jekyll::VERSION}!i)
+    version = Jekyll::VERSION
+    expect(output).to match(%r!Jekyll v#{version}!i)
   end
 
   it "outputs valid HTML" do
