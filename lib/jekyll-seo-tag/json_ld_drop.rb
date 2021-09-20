@@ -41,10 +41,15 @@ module Jekyll
         author_type = page_drop.author["type"]
         return if author_type && !VALID_AUTHOR_TYPES.include?(author_type)
 
-        {
+        hash = {
           "@type" => author_type || "Person",
           "name"  => page_drop.author["name"],
         }
+
+        author_url = page_drop.author["url"]
+        hash["url"] = author_url if author_url
+
+        hash
       end
 
       def image
