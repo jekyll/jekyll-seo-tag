@@ -59,4 +59,4 @@ jobs:
         bundle exec jekyll build -s sandbox -d sandbox/_site --trace
         bundle exec jekyll build -s sandbox -d sandbox/_site --trace
     - name: Memory Analysis of Jekyll Build (WITH SEO Tag)
-      run: bundle exec ruby jekyll-seo-tag/.github/workflows/actions/memprof.rb sandbox
+      run: bash jekyll-seo-tag/.github/workflows/scripts/memprof
