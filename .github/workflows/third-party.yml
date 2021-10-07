@@ -9,19 +9,22 @@ on:
       - master
 jobs:
   build_n_profile:
-    if: "!contains(github.event.commits[0].message, '[ci skip]')"
-    name: "Third-Party Repo Profile (Ruby ${{ matrix.ruby_version }})"
+    name: "Third-Party Repo Profile with Jekyll ${{ matrix.jekyll_version }} (Ruby ${{ matrix.ruby_version }})"
     runs-on: "ubuntu-latest"
     strategy:
       fail-fast: false
       matrix:
         ruby_version:
           - 2.7
+        jekyll_version:
+          - "~> 4.0"
+          - "~> 3.9"
     env:
       BUNDLE_GEMFILE: "sandbox/Gemfile"
       BUNDLE_PATH: "vendor/bundle"
       BUNDLE_JOBS: 4
       BUNDLE_RETRY: 3
+      JEKYLL_VERSION: ${{ matrix.jekyll_version }}
     steps:
     - name: Checkout Jekyll SEO Tag
       uses: actions/checkout@v2
