@@ -69,6 +69,7 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
           expect(subject["author"]).to have_key("name")
           expect(subject["author"]["name"]).to be_a(String)
           expect(subject["author"]["name"]).to eql("author")
+          expect(subject["author"]["url"]).to be nil
         end
       end
     end
