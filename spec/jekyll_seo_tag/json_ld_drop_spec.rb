@@ -69,6 +69,7 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
           expect(subject["author"]).to have_key("name")
           expect(subject["author"]["name"]).to be_a(String)
           expect(subject["author"]["name"]).to eql("author")
+          expect(subject["author"]["url"]).to be nil
         end
       end
     end
@@ -93,6 +94,20 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
       it "returns the author with type" do
         expect(subject).to have_key("author")
         expect(subject["author"]).to be nil
+      end
+    end
+
+    context "when url is present" do
+      let(:author) { { "name" => "author", "url" => "https://example.com" } }
+
+      it "returns the author with url" do
+        expect(subject).to have_key("author")
+        expect(subject["author"]).to be_a(Hash)
+        expect(subject["author"]).to have_key("url")
+        expect(subject["author"]["url"]).to eql("https://example.com")
+        expect(subject["author"]).to have_key("name")
+        expect(subject["author"]["name"]).to be_a(String)
+        expect(subject["author"]["name"]).to eql("author")
       end
     end
   end

@@ -34,17 +34,17 @@ module Jekyll
 
       private
 
-      attr_accessor :page
-      attr_accessor :context
+      attr_accessor :page, :context
 
       # The normalized image hash with a `path` key (which may be nil)
       def image_hash
         @image_hash ||= begin
           image_meta = page["image"]
 
-          if image_meta.is_a?(Hash)
+          case image_meta
+          when Hash
             { "path" => nil }.merge!(image_meta)
-          elsif image_meta.is_a?(String)
+          when String
             { "path" => image_meta }
           else
             { "path" => nil }

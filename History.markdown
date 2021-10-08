@@ -3,6 +3,13 @@
 ### Minor Enhancements
 
   * Allow to set type for author (#427)
+  * Allow setting `author.url` (#453)
+
+### Development Fixes
+
+  * Fix typo in source code comment (#449)
+  * Set up Continuous Integration via GH Actions (#450)
+  * Bump RuboCop to v1.18.x (#452)
 
 ## 2.7.1 / 2020-10-18
 
