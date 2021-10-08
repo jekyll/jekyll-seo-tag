@@ -3,6 +3,7 @@
 ### Minor Enhancements
 
   * Allow to set type for author (#427)
+  * Allow setting `author.url` (#453)
 
 ### Development Fixes
 
