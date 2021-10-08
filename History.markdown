@@ -11,6 +11,10 @@
   * Set up Continuous Integration via GH Actions (#450)
   * Bump RuboCop to v1.18.x (#452)
 
+### Bug Fixes
+
+  * Set the default og:type to &#39;website&#39; (#391)
+
 ## 2.7.1 / 2020-10-18
 
 ### Development Fixes
