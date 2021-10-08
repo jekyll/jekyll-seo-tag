@@ -68,6 +68,18 @@ There are several ways to convey this author-specific information. Author inform
   author: benbalter
   ```
 
+#### Setting author url
+
+Starting from August 6, 2021 [Google recommends](https://developers.google.com/search/updates) to set the `author.url` property. This property helps Google to disambiguate the correct author of the article.
+
+You can set it the same way as the other author properties. For example, you can put it in an `author` object, in the site's `_config.yml`, e.g.:
+
+  ```yml
+  author:
+    name: My Name
+    url: https://example.com/
+  ```
+
 ### Customizing JSON-LD output
 
 The following options can be set for any particular page. While the default options are meant to serve most users in the most common circumstances, there may be situations where more precise control is necessary.

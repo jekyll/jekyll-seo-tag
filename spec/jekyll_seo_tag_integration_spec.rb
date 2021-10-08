@@ -8,7 +8,7 @@ RSpec.describe Jekyll::SeoTag do
   let(:tag)       { "seo" }
   let(:text)      { "" }
   let(:output)    { Liquid::Template.parse("{% #{tag} #{text} %}").render!(context, {}) }
-  let(:json)      { output.match(%r!<script type=\"application/ld\+json\">(.*)</script>!m)[1] }
+  let(:json)      { output.match(%r!<script type="application/ld\+json">(.*)</script>!m)[1] }
   let(:json_data) { JSON.parse(json) }
   let(:paginator) { { "previous_page" => true, "previous_page_path" => "foo", "next_page" => true, "next_page_path" => "bar" } }
 
@@ -26,7 +26,8 @@ RSpec.describe Jekyll::SeoTag do
   end
 
   it "outputs meta generator" do
-    expect(output).to match(%r!Jekyll v#{Jekyll::VERSION}!i)
+    version = Jekyll::VERSION
+    expect(output).to match(%r!Jekyll v#{version}!i)
   end
 
   it "outputs valid HTML" do

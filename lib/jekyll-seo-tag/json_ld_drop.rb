@@ -16,12 +16,12 @@ module Jekyll
       def_delegator :page_drop, :type,           :type
 
       # Expose #type and #logo as private methods and #@type as a public method
-      alias_method :"@type", :type
-      private :type
-      private :logo
+      alias_method :@type, :type
+      private :type, :logo
 
       VALID_ENTITY_TYPES = %w(BlogPosting CreativeWork).freeze
-      private_constant :VALID_ENTITY_TYPES
+      VALID_AUTHOR_TYPES = %w(Organization Person).freeze
+      private_constant :VALID_ENTITY_TYPES, :VALID_AUTHOR_TYPES
 
       # page_drop should be an instance of Jekyll::SeoTag::Drop
       def initialize(page_drop)
@@ -38,10 +38,18 @@ module Jekyll
       def author
         return unless page_drop.author["name"]
 
-        {
-          "@type" => "Person",
+        author_type = page_drop.author["type"]
+        return if author_type && !VALID_AUTHOR_TYPES.include?(author_type)
+
+        hash = {
+          "@type" => author_type || "Person",
           "name"  => page_drop.author["name"],
         }
+
+        author_url = page_drop.author["url"]
+        hash["url"] = author_url if author_url
+
+        hash
       end
 
       def image
@@ -80,7 +88,7 @@ module Jekyll
       private :main_entity
 
       def to_json
-        to_h.reject { |_k, v| v.nil? }.to_json
+        to_h.compact.to_json
       end
 
       private
