@@ -98,6 +98,7 @@ For most users, setting `image: [path-to-image]` on a per-page basis should be e
 * `path` - The relative path to the image. Same as `image: [path-to-image]`
 * `height` - The height of the Open Graph (`og:image`) image
 * `width` - The width of the Open Graph (`og:image`) image
+* `alt` - The alternative image text for Open Graph (`og:image:alt`) and Twitter (`twitter:image:alt`)
 
 You can use any of the above, optional properties, like so:
 
@@ -106,6 +107,7 @@ image:
   path: /img/twitter.png
   height: 100
   width: 100
+  alt: Twitter Logo
 ```
 
 ### Setting a default image
@@ -158,7 +160,7 @@ Which will generate following canonical_url:
 You can override the default title modifier for paginated pages from `Page %{current} of %{total} for ` to a string of your
 choice by setting a `seo_paginator_message` key in your `_config.yml`.
 
-For example:  
+For example:
 
 ```yml
 seo_paginator_message: "%<current>s / %<total>s | "
