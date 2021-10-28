@@ -614,10 +614,10 @@ RSpec.describe Jekyll::SeoTag do
     context "with site.webmaster_verifications" do
       let(:site_verifications) do
         {
-          "google" => "foo",
-          "bing"   => "bar",
-          "alexa"  => "baz",
-          "yandex" => "bat",
+          "google"   => "foo",
+          "bing"     => "bar",
+          "alexa"    => "baz",
+          "yandex"   => "bat",
           "facebook" => "bas",
         }
       end
