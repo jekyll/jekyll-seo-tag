@@ -107,6 +107,10 @@
   {% if site.webmaster_verifications.baidu %}
     <meta name="baidu-site-verification" content="{{ site.webmaster_verifications.baidu }}" />
   {% endif %}
+
+  {% if site.webmaster_verifications.facebook %}
+    <meta name="facebook-domain-verification" content="{{ site.webmaster_verifications.facebook }}" />
+  {% endif %}
 {% elsif site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}

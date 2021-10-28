@@ -65,6 +65,7 @@ The following properties are available:
     alexa: 1234
     yandex: 1234
     baidu: 1234
+    facebook: 1234
   ```
 * `locale` - The locale these tags are marked up in. Of the format `language_TERRITORY`. Default is `en_US`. Takes priority
 over existing config key `lang`.
