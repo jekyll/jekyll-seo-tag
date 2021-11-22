@@ -16,6 +16,7 @@
 ### Bug Fixes
 
   * Set the default og:type to &#39;website&#39; (#391)
+  * Template: Remove double new line (#454)
 
 ## 2.7.1 / 2020-10-18
 
