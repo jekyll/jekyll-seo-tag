@@ -5,6 +5,7 @@
   * Allow to set type for author (#427)
   * Allow setting `author.url` (#453)
   * Implement Facebook domain verification (#455)
+  * Add `og:image:alt` and `twitter:image:alt` (#438)
 
 ### Development Fixes
 
