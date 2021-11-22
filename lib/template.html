@@ -37,6 +37,9 @@
   {% if seo_tag.image.width %}
     <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
   {% endif %}
+  {% if seo_tag.image.alt %}
+    <meta property="og:image:alt" content="{{ seo_tag.image.alt }}" />
+  {% endif %}
 {% endif %}
 
 {% if page.date %}
@@ -58,6 +61,10 @@
   <meta property="twitter:image" content="{{ seo_tag.image.path }}" />
 {% else %}
   <meta name="twitter:card" content="summary" />
+{% endif %}
+
+{% if seo_tag.image.alt %}
+  <meta name="twitter:image:alt" content="{{ seo_tag.image.alt }}" />
 {% endif %}
 
 {% if seo_tag.page_title %}
@@ -105,6 +112,10 @@
 
   {% if site.webmaster_verifications.baidu %}
     <meta name="baidu-site-verification" content="{{ site.webmaster_verifications.baidu }}" />
+  {% endif %}
+
+  {% if site.webmaster_verifications.facebook %}
+    <meta name="facebook-domain-verification" content="{{ site.webmaster_verifications.facebook }}" />
   {% endif %}
 {% elsif site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />

@@ -614,10 +614,11 @@ RSpec.describe Jekyll::SeoTag do
     context "with site.webmaster_verifications" do
       let(:site_verifications) do
         {
-          "google" => "foo",
-          "bing"   => "bar",
-          "alexa"  => "baz",
-          "yandex" => "bat",
+          "google"   => "foo",
+          "bing"     => "bar",
+          "alexa"    => "baz",
+          "yandex"   => "bat",
+          "facebook" => "bas",
         }
       end
 
@@ -640,6 +641,11 @@ RSpec.describe Jekyll::SeoTag do
 
       it "outputs yandex verification meta" do
         expected = %r!<meta name="yandex-verification" content="bat" />!
+        expect(output).to match(expected)
+      end
+
+      it "outputs facebook verification meta" do
+        expected = %r!<meta name="facebook-domain-verification" content="bas" />!
         expect(output).to match(expected)
       end
     end
