@@ -26,7 +26,8 @@ RSpec.describe Jekyll::SeoTag do
   end
 
   it "outputs meta generator" do
-    expect(output).to match(%r!Jekyll v#{Jekyll::VERSION}!i)
+    version = Jekyll::VERSION
+    expect(output).to match(%r!Jekyll v#{version}!i)
   end
 
   it "outputs valid HTML" do
@@ -613,10 +614,11 @@ RSpec.describe Jekyll::SeoTag do
     context "with site.webmaster_verifications" do
       let(:site_verifications) do
         {
-          "google" => "foo",
-          "bing"   => "bar",
-          "alexa"  => "baz",
-          "yandex" => "bat",
+          "google"   => "foo",
+          "bing"     => "bar",
+          "alexa"    => "baz",
+          "yandex"   => "bat",
+          "facebook" => "bas",
         }
       end
 
@@ -639,6 +641,11 @@ RSpec.describe Jekyll::SeoTag do
 
       it "outputs yandex verification meta" do
         expected = %r!<meta name="yandex-verification" content="bat" />!
+        expect(output).to match(expected)
+      end
+
+      it "outputs facebook verification meta" do
+        expected = %r!<meta name="facebook-domain-verification" content="bas" />!
         expect(output).to match(expected)
       end
     end

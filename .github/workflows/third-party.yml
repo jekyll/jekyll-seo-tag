@@ -9,8 +9,22 @@ on:
       - master
 jobs:
   build_n_profile:
-    if: "!contains(github.event.commits[0].message, '[ci skip]')"
-    runs-on: 'ubuntu-latest'
+    name: "Third-Party Repo Profile with Jekyll ${{ matrix.jekyll_version }} (Ruby ${{ matrix.ruby_version }})"
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby_version:
+          - 2.7
+        jekyll_version:
+          - "~> 4.0"
+          - "~> 3.9"
+    env:
+      BUNDLE_GEMFILE: "sandbox/Gemfile"
+      BUNDLE_PATH: "vendor/bundle"
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 3
+      JEKYLL_VERSION: ${{ matrix.jekyll_version }}
     steps:
     - name: Checkout Jekyll SEO Tag
       uses: actions/checkout@v2
@@ -21,32 +35,19 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ashmaroli/tomjoht.github.io
-        ref: 'no-seo-tag'
+        ref: "no-seo-tag"
         path: alpha-sandbox
     - name: Checkout Same Third-Party Repository (WITH SEO Tag)
       uses: actions/checkout@v2
       with:
         repository: ashmaroli/tomjoht.github.io
-        ref: 'seo-tag'
+        ref: "seo-tag"
         path: sandbox
-    - name: Set up Ruby
-      uses: actions/setup-ruby@v1
+    - name: "Set up Ruby ${{ matrix.ruby_version }}"
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
-    - name: Set up Dependencies Cache
-      uses: actions/cache@v1
-      with:
-        path: sandbox/vendor/bundle
-        key: ubuntu-latest-gems-
-        restore-keys: |
-          ubuntu-latest-gems-
-    - name: Set up Dependencies
-      run: |
-        gem update --system --no-document
-        gem update bundler --no-document
-        bundle config gemfile sandbox/Gemfile
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
+        ruby-version: ${{ matrix.ruby_version }}
+        bundler-cache: true
     - name: Run Jekyll Build (WITHOUT SEO Tag) 3 times
       run: |
         bundle exec jekyll build -s alpha-sandbox -d alpha-sandbox/_site --trace
@@ -58,4 +59,4 @@ jobs:
         bundle exec jekyll build -s sandbox -d sandbox/_site --trace
         bundle exec jekyll build -s sandbox -d sandbox/_site --trace
     - name: Memory Analysis of Jekyll Build (WITH SEO Tag)
-      run: bundle exec ruby jekyll-seo-tag/.github/workflows/actions/memprof.rb sandbox
+      run: bash jekyll-seo-tag/.github/workflows/scripts/memprof
