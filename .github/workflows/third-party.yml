@@ -9,7 +9,7 @@ on:
       - master
 jobs:
   build_n_profile:
-    name: "Third-Party Repo Profile with Jekyll ${{ matrix.jekyll_version }} (Ruby ${{ matrix.ruby_version }})"
+    name: "Third-Party Repo Profile (Jekyll ${{ matrix.jekyll_version }}, Ruby ${{ matrix.ruby_version }})"
     runs-on: "ubuntu-latest"
     strategy:
       fail-fast: false
