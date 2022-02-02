@@ -92,7 +92,7 @@ module Jekyll
       def to_json(state = nil)
         keys.sort.each_with_object({}) do |(key, _), result|
           v = self[key]
-          result[key] = v if v # don't write if value is nil
+          result[key] = v unless v.nil?
         end.to_json(state)
       end
 
