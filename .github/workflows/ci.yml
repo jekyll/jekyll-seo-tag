@@ -21,7 +21,7 @@ jobs:
         ruby_version:
         - 2.5
         - 2.7
-        - 3.0
+        - 3.1
         jekyll_version:
         - "~> 4.0"
     steps:
