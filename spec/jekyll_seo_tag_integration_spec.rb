@@ -30,6 +30,10 @@ RSpec.describe Jekyll::SeoTag do
     expect(output).to match(%r!Jekyll v#{version}!i)
   end
 
+  it "outputs JSON sorted by key" do
+    expect(json.strip).to eql('{"@context":"https://schema.org","@type":"WebPage","url":"/page.html"}')
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {
