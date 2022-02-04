@@ -6,6 +6,7 @@
   * Allow setting `author.url` (#453)
   * Implement Facebook domain verification (#455)
   * Add `og:image:alt` and `twitter:image:alt` (#438)
+  * Sort JSON-LD data by key (#458)
 
 ### Development Fixes
 
