@@ -1,4 +1,4 @@
-## HEAD
+## 2.8.0 / 2022-02-04
 
 ### Minor Enhancements
 
@@ -8,16 +8,17 @@
   * Add `og:image:alt` and `twitter:image:alt` (#438)
   * Sort JSON-LD data by key (#458)
 
+### Bug Fixes
+
+  * Set the default `og:type` to &#39;website&#39; (#391)
+  * Template: Remove double new line (#454)
+
 ### Development Fixes
 
   * Fix typo in source code comment (#449)
   * Set up Continuous Integration via GH Actions (#450)
   * Bump RuboCop to v1.18.x (#452)
-
-### Bug Fixes
-
-  * Set the default og:type to &#39;website&#39; (#391)
-  * Template: Remove double new line (#454)
+  * Add workflow to release gem via GH Actions
 
 ## 2.7.1 / 2020-10-18
 
