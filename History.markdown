@@ -1,3 +1,9 @@
+## HEAD
+
+### Development Fixes
+
+  * Add Ruby 3.1 to CI matrix (#459)
+
 ## 2.8.0 / 2022-02-04
 
 ### Minor Enhancements
