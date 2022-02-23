@@ -41,8 +41,7 @@ module Jekyll
 
       private
 
-      attr_reader :page
-      attr_reader :site
+      attr_reader :site, :page
 
       # Finds the page author in the page.author, page.authors, or site.author
       #
@@ -75,9 +74,10 @@ module Jekyll
       # or an empty hash, if the author cannot be resolved
       def author_hash
         @author_hash ||= begin
-          if resolved_author.is_a? Hash
+          case resolved_author
+          when Hash
             resolved_author
-          elsif resolved_author.is_a? String
+          when String
             { "name" => resolved_author }.merge!(site_data_hash)
           else
             {}
