@@ -46,7 +46,7 @@ module Jekyll
     end
 
     def payload
-      # site_payload is an instance of UnifiedPayloadDrop. See https://git.io/v5ajm
+      # site_payload is an instance of UnifiedPayloadDrop. See https://github.com/jekyll/jekyll/blob/22f2724a1f117a94cc16d18c499a93d5915ede4f/lib/jekyll/site.rb#L261-L276
       context.registers[:site].site_payload.tap do |site_payload|
         site_payload["page"]      = context.registers[:page]
         site_payload["paginator"] = context["paginator"]
