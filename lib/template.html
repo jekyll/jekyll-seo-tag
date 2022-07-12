@@ -18,6 +18,7 @@
 {% if seo_tag.description %}
   <meta name="description" content="{{ seo_tag.description }}" />
   <meta property="og:description" content="{{ seo_tag.description }}" />
+  <meta property="twitter:description" content="{{ seo_tag.description }}" />
 {% endif %}
 
 {% if site.url %}
