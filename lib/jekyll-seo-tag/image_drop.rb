@@ -61,13 +61,17 @@ module Jekyll
 
       def absolute_url
         return unless raw_path
-        return @absolute_url if defined? @absolute_url
+        @absolute_url ||= build_absolute_path
+      end
 
-        @absolute_url = if raw_path.is_a?(String) && absolute_url?(raw_path) == false
-                          filters.absolute_url raw_path
-                        else
-                          raw_path
-                        end
+      def build_absolute_path
+        return raw_path unless raw_path.is_a?(String) && absolute_url?(raw_path) == false
+
+        if !raw_path.start_with?("/")
+          return filters.absolute_url File.join(File.dirname(context.registers[:page]["url"]), raw_path)
+        end
+
+        filters.absolute_url raw_path
       end
 
       def filters
