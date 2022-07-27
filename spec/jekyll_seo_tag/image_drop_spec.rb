@@ -14,6 +14,15 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
     Jekyll.logger.log_level = :error
   end
 
+  context "with a post object" do
+    let(:image) { "image.png" }
+    let(:page) { make_post(page_meta) }
+
+    it "returns the image url relative to the post directory" do
+      expect(subject["path"]).to eql("/2022/07/26/image.png")
+    end
+  end
+
   context "with image as a relative path" do
     let(:image) { "image.png" }
 
