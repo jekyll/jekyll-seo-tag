@@ -31,7 +31,7 @@ CONFIG_DEFAULTS = {
 }.freeze
 
 def make_page(options = {})
-  page = Jekyll::Page.new site, CONFIG_DEFAULTS["source"], "", "page.md"
+  page = Jekyll::Page.new site, CONFIG_DEFAULTS["source"], options.delete("dir") || "", "page.md"
   page.data = options
   page
 end
