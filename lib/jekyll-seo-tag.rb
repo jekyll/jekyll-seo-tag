@@ -64,7 +64,6 @@ module Jekyll
 
     def info
       {
-        :registers => context.registers,
         :filters   => [Jekyll::Filters],
       }
     end
