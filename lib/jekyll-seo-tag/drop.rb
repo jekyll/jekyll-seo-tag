@@ -89,7 +89,8 @@ module Jekyll
 
       def description
         @description ||= begin
-          format_string(page["description"] || page["excerpt"]) || site_description
+          value = format_string(page["description"] || page["excerpt"]) || site_description
+          filters.truncate(value, 280)
         end
       end
 
