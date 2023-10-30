@@ -90,7 +90,7 @@ module Jekyll
       def description
         @description ||= begin
           value = format_string(page["description"] || page["excerpt"]) || site_description
-          filters.truncate(value, 280)
+          snippet(value, description_max_words)
         end
       end
 
@@ -176,6 +176,10 @@ module Jekyll
         end
       end
 
+      def description_max_words
+        @description_max_words ||= page["seo_description_max_words"] || site["seo_description_max_words"] || 50
+      end
+
       private
 
       def filters
@@ -216,6 +220,13 @@ module Jekyll
         end
 
         string unless string.empty?
+      end
+
+      def snippet(string, max_words)
+        return string if string.nil?
+
+        result = string.split(%r!\s+!, max_words + 1)[0...max_words].join(" ")
+        result.length < string.length ? result.concat("…") : result
       end
 
       def seo_name

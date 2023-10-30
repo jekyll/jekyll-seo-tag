@@ -80,6 +80,16 @@ You can set it the same way as the other author properties. For example, you can
     url: https://example.com/
   ```
 
+### Customizing description length
+
+By default the description is limited to the first 50 words of the full content.
+
+You can adjust this limit either at the page level or at the site level, by using the `seo_description_max_words` page property:
+
+```yml
+  seo_description_max_words: 100
+```
+
 ### Customizing JSON-LD output
 
 The following options can be set for any particular page. While the default options are meant to serve most users in the most common circumstances, there may be situations where more precise control is necessary.
