@@ -352,23 +352,7 @@ RSpec.describe Jekyll::SeoTag do
       end
 
       context "description" do
-        context "with site.seo_description_max_words" do
-          let(:site) { make_site("url" => "http://example.invalid", "seo_description_max_words" => 6) }
-          let(:meta) do
-            {
-              "title"       => "post",
-              "description" => "For a long time, I went to bed early",
-              "image"       => "/img.png"
-            }
-          end
-
-          it "truncates the description" do
-            expect(json_data["description"]).to eql("For a long time, I went…")
-          end
-        end
-
         context "with page.seo_description_max_words" do
-          let(:site) { make_site("url" => "http://example.invalid", "seo_description_max_words" => 10) }
           let(:meta) do
             {
               "title"                     => "post",

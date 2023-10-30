@@ -177,7 +177,7 @@ module Jekyll
       end
 
       def description_max_words
-        @description_max_words ||= page["seo_description_max_words"] || site["seo_description_max_words"] || 50
+        @description_max_words ||= page["seo_description_max_words"] || 100
       end
 
       private
