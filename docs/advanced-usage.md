@@ -80,6 +80,27 @@ You can set it the same way as the other author properties. For example, you can
     url: https://example.com/
   ```
 
+### Customizing description length
+
+By default, the description is limited to the first 100 words of the full content.
+
+You can adjust this limit at the page level, by using the `seo_description_max_words` page property:
+
+```yml
+  seo_description_max_words: 200
+```
+
+You can also set a default site-wide value for all pages using [Front Matter defaults](https://jekyllrb.com/docs/configuration/front-matter-defaults/) in your `_config.yml` file:
+
+```yml
+defaults:
+  - scope:
+      path: ""
+    values:
+      seo_description_max_words: 200
+```
+
+
 ### Customizing JSON-LD output
 
 The following options can be set for any particular page. While the default options are meant to serve most users in the most common circumstances, there may be situations where more precise control is necessary.

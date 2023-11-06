@@ -350,6 +350,23 @@ RSpec.describe Jekyll::SeoTag do
       it "removes null values from JSON-LD" do
         expect(output).to_not match(%r!:null!)
       end
+
+      context "description" do
+        context "with page.seo_description_max_words" do
+          let(:meta) do
+            {
+              "title"                     => "post",
+              "description"               => "For a long time, I went to bed early",
+              "image"                     => "/img.png",
+              "seo_description_max_words" => 6,
+            }
+          end
+
+          it "truncates the description" do
+            expect(json_data["description"]).to eql("For a long time, I went…")
+          end
+        end
+      end
     end
   end
 

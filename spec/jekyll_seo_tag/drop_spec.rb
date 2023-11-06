@@ -233,6 +233,24 @@ RSpec.describe Jekyll::SeoTag::Drop do
           expect(subject.description).to be_nil
         end
       end
+
+      context "truncation" do
+        context "without seo_description_max_words" do
+          let(:page_meta) { { "description" => "word " * 150 } }
+
+          it "truncates the description to the first 200 words" do
+            expect(subject.description).to eql(("word " * 100).chop.concat("…"))
+          end
+        end
+
+        context "with an explicit seo_description_max_words property" do
+          let(:page_meta) { { "description" => "For a long time, I went to bed early", "seo_description_max_words" => 6 } }
+
+          it "truncates the description to the configured words count" do
+            expect(subject.description).to eql("For a long time, I went…")
+          end
+        end
+      end
     end
 
     context "author" do
