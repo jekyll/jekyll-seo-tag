@@ -9,6 +9,7 @@
 
   * Added the `twitter:description` tag (#464)
   * Support for image paths relative to the page&#39;s directory (#466)
+  * Truncate the description value to 100 words (#492)
 
 ## 2.8.0 / 2022-02-04
 
