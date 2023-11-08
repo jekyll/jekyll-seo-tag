@@ -60,7 +60,7 @@ module Jekyll
         @title ||= begin
           if site_title && page_title != site_title
             page_title + TITLE_SEPARATOR + site_title
-          elsif site_description && site_title
+          elsif site_tagline_or_description && site_title
             site_title + TITLE_SEPARATOR + site_tagline_or_description
           else
             page_title || site_title
