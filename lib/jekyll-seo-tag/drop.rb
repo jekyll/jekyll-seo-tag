@@ -73,6 +73,10 @@ module Jekyll
       end
       # rubocop:enable Metrics/CyclomaticComplexity
 
+      def webmaster_verifications
+        Webmaster.render(site["webmaster_verifications"])
+      end
+
       def name
         return @name if defined?(@name)
 
