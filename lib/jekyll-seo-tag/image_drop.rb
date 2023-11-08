@@ -55,7 +55,7 @@ module Jekyll
 
       def raw_path
         @raw_path ||= begin
-          image_hash["path"] || image_hash["facebook"] || image_hash["twitter"]
+          image_hash["twitter"] || image_hash["facebook"] || image_hash["path"]
         end
       end
 
