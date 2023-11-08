@@ -111,6 +111,13 @@ The following options can be set for any particular page. While the default opti
   * `links` - An array of other URLs that represent the same thing that this page represents. For instance, Jane's bio page might include links to Jane's GitHub and Twitter profiles.
   * `date_modified` - Manually specify the `dateModified` field in the JSON-LD output to override Jekyll's own `dateModified`.
   This field will take **first priority** for the `dateModified` JSON-LD output. This is useful when the file timestamp does not match the true time that the content was modified. A user may also install [Last Modified At](https://github.com/gjtorikian/jekyll-last-modified-at) which will offer an alternative way of providing for the `dateModified` field.
+  
+For example, you can use:
+
+```yml
+seo:
+ date_modified: 2019-09-15 18:10:00 -03:00
+```
 
 ### Customizing image output
 
