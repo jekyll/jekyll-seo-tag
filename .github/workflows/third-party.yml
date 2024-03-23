@@ -60,3 +60,4 @@ jobs:
         bundle exec jekyll build -s sandbox -d sandbox/_site --trace
     - name: Memory Analysis of Jekyll Build (WITH SEO Tag)
       run: bash jekyll-seo-tag/.github/workflows/scripts/memprof
+      if: "!contains(matrix.jekyll_version, '3.')"

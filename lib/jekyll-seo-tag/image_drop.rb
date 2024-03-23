@@ -61,6 +61,7 @@ module Jekyll
 
       def absolute_url
         return unless raw_path
+
         @absolute_url ||= build_absolute_path
       end
 
