@@ -105,6 +105,7 @@ defaults:
 
 The following options can be set for any particular page. While the default options are meant to serve most users in the most common circumstances, there may be situations where more precise control is necessary.
 
+* `no_json_ld` - If set to `true`, disables `json_ld` output for the page
 * `seo`
   * `name` - If the name of the thing that the page represents is different from the page title. (i.e.: "Frank's Café" vs "Welcome to Frank's Café")
   * `type` - The type of things that the page represents. This must be a [Schema.org type](https://schema.org/docs/schemas.html), and will probably usually be something like [`BlogPosting`](https://schema.org/BlogPosting), [`NewsArticle`](https://schema.org/NewsArticle), [`Person`](https://schema.org/Person), [`Organization`](https://schema.org/Organization), etc.
