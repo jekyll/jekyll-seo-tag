@@ -59,6 +59,15 @@ module Jekyll
         hash = page_drop.image.to_h
         hash["url"]   = hash.delete("path")
         hash["@type"] = "imageObject"
+
+        if hash["alt"] && !hash["description"]
+          hash["description"] = hash["alt"]
+        end
+
+        if hash["alt"]
+          hash.delete("alt")
+        end
+
         hash
       end
 
