@@ -15,6 +15,10 @@
 
   * Migrate build badge to GH Actions (#499)
 
+### Bug Fixes
+
+  * Use attribute `name` consistently for metadata under `twitter` namespace (#437)
+
 ## 2.8.0 / 2022-02-04
 
 ### Minor Enhancements
