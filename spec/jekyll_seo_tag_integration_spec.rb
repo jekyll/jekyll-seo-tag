@@ -30,6 +30,10 @@ RSpec.describe Jekyll::SeoTag do
     expect(output).to match(%r!Jekyll v#{version}!i)
   end
 
+  it "outputs JSON sorted by key" do
+    expect(json.strip).to eql('{"@context":"https://schema.org","@type":"WebPage","url":"/page.html"}')
+  end
+
   it "outputs valid HTML" do
     site.process
     options = {
@@ -120,6 +124,7 @@ RSpec.describe Jekyll::SeoTag do
     it "uses the page description" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
+      expect(output).to match(%r!<meta property="twitter:description" content="foo" />!)
     end
   end
 
@@ -129,6 +134,7 @@ RSpec.describe Jekyll::SeoTag do
     it "uses the page excerpt when no page description exists" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
+      expect(output).to match(%r!<meta property="twitter:description" content="foo" />!)
     end
   end
 
@@ -138,6 +144,7 @@ RSpec.describe Jekyll::SeoTag do
     it "uses the site description when no page description nor excerpt exist" do
       expect(output).to match(%r!<meta name="description" content="foo" />!)
       expect(output).to match(%r!<meta property="og:description" content="foo" />!)
+      expect(output).to match(%r!<meta property="twitter:description" content="foo" />!)
     end
   end
 
@@ -342,6 +349,23 @@ RSpec.describe Jekyll::SeoTag do
 
       it "removes null values from JSON-LD" do
         expect(output).to_not match(%r!:null!)
+      end
+
+      context "description" do
+        context "with page.seo_description_max_words" do
+          let(:meta) do
+            {
+              "title"                     => "post",
+              "description"               => "For a long time, I went to bed early",
+              "image"                     => "/img.png",
+              "seo_description_max_words" => 6,
+            }
+          end
+
+          it "truncates the description" do
+            expect(json_data["description"]).to eql("For a long time, I went…")
+          end
+        end
       end
     end
   end

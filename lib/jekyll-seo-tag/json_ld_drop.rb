@@ -87,8 +87,13 @@ module Jekyll
       alias_method :mainEntityOfPage, :main_entity
       private :main_entity
 
-      def to_json
-        to_h.compact.to_json
+      # Returns a JSON-encoded object containing the JSON-LD data.
+      # Keys are sorted.
+      def to_json(state = nil)
+        keys.sort.each_with_object({}) do |(key, _), result|
+          v = self[key]
+          result[key] = v unless v.nil?
+        end.to_json(state)
       end
 
       private

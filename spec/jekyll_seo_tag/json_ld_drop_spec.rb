@@ -113,8 +113,8 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
   end
 
   context "image" do
-    context "with image as a string" do
-      let(:image) { "image" }
+    context "with image as an absolute path" do
+      let(:image) { "/image" }
 
       it "returns the image as a string" do
         expect(subject).to have_key("image")
@@ -124,7 +124,7 @@ RSpec.describe Jekyll::SeoTag::JSONLDDrop do
     end
 
     context "with image as a hash" do
-      let(:image) { { "path" => "image", "height" => 5, "width" => 10 } }
+      let(:image) { { "path" => "/image", "height" => 5, "width" => 10 } }
 
       it "returns the image as a hash" do
         expect(subject).to have_key("image")

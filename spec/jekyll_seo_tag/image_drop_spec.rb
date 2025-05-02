@@ -3,7 +3,7 @@
 RSpec.describe Jekyll::SeoTag::ImageDrop do
   let(:config)    { { "title" => "site title" } }
   let(:image)     { nil }
-  let(:page_meta) { { "image" => image } }
+  let(:page_meta) { { "image" => image, "dir" => "foo" } }
   let(:page)      { make_page(page_meta) }
   let(:site)      { make_site(config) }
   let(:context)   { make_context(:page => page, :site => site) }
@@ -14,8 +14,34 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
     Jekyll.logger.log_level = :error
   end
 
-  context "with image as a string" do
+  context "with a post object" do
     let(:image) { "image.png" }
+    let(:page_meta) { { "image" => image, "date" => "2017-01-01" } }
+    let(:page) { make_post(page_meta) }
+
+    it "returns the image url relative to the post directory" do
+      expect(subject["path"]).to eql("/2017/01/01/image.png")
+    end
+  end
+
+  context "with image as a relative path" do
+    let(:image) { "image.png" }
+
+    it "returns the image with the page dir prepended" do
+      expect(subject["path"]).to eql("/foo/image.png")
+    end
+
+    context "with site.url" do
+      let(:config) { { "url" => "http://example.com" } }
+
+      it "makes the path absolute" do
+        expect(subject["path"]).to eql("http://example.com/foo/image.png")
+      end
+    end
+  end
+
+  context "with image as an absolute path" do
+    let(:image) { "/image.png" }
 
     it "returns the image" do
       expect(subject["path"]).to eql("/image.png")
@@ -30,7 +56,7 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
     end
 
     context "with a URL-escaped path" do
-      let(:image) { "some image.png" }
+      let(:image) { "/some image.png" }
 
       it "URL-escapes the image" do
         expect(subject["path"]).to eql("/some%20image.png")
@@ -39,8 +65,8 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
   end
 
   context "with image as a hash" do
-    context "with a path" do
-      let(:image) { { "path" => "image.png" } }
+    context "with an absolute path" do
+      let(:image) { { "path" => "/image.png" } }
 
       it "returns the image" do
         expect(subject["path"]).to eql("/image.png")
@@ -48,7 +74,7 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
     end
 
     context "with facebook" do
-      let(:image) { { "facebook" => "image.png" } }
+      let(:image) { { "facebook" => "/image.png" } }
 
       it "returns the image" do
         expect(subject["path"]).to eql("/image.png")
@@ -56,7 +82,7 @@ RSpec.describe Jekyll::SeoTag::ImageDrop do
     end
 
     context "with twitter" do
-      let(:image) { { "twitter" => "image.png" } }
+      let(:image) { { "twitter" => "/image.png" } }
 
       it "returns the image" do
         expect(subject["path"]).to eql("/image.png")
