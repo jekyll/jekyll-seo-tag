@@ -11,6 +11,10 @@
   * Support for image paths relative to the page&#39;s directory (#466)
   * Truncate the description value to 100 words (#492)
 
+### Documentation
+
+  * Migrate build badge to GH Actions (#499)
+
 ## 2.8.0 / 2022-02-04
 
 ### Minor Enhancements
