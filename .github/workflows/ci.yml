@@ -19,13 +19,13 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
         - 2.7
-        - 3.1
+        - 3.3
+        - 3.4
         jekyll_version:
         - "~> 4.0"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 5
       - name: "Set up Ruby ${{ matrix.ruby_version }}"
@@ -45,11 +45,11 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
         jekyll_version:
         - "~> 3.9"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 5
       - name: "Set up Ruby ${{ matrix.ruby_version }}"
@@ -68,9 +68,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 5
       - name: "Set up Ruby ${{ matrix.ruby_version }}"
@@ -89,9 +89,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 5
       - name: "Set up Ruby ${{ matrix.ruby_version }}"
