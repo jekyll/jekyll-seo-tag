@@ -42,9 +42,12 @@
   {% endif %}
 {% endif %}
 
-{% if page.date %}
+{% if seo_tag.date_published %}
   <meta property="og:type" content="article" />
-  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+  <meta property="article:published_time" content="{{ seo_tag.date_published | date_to_xmlschema }}" />
+  {% if seo_tag.date_modified %}
+    <meta property="article:modified_time" content="{{ seo_tag.date_modified | date_to_xmlschema }}" />
+  {% endif %}
 {% else %}
   <meta property="og:type" content="website" />
 {% endif %}
