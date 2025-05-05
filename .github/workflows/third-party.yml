@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-          - 3.2
+          - 2.7
         jekyll_version:
           - "~> 4.0"
           - "~> 3.9"
