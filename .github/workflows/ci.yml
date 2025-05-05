@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
         - 3.3
         - 3.4
         jekyll_version:
@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
         jekyll_version:
         - "~> 3.9"
     steps:
@@ -68,7 +68,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,7 +89,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-        - 2.5
+        - 2.7
     steps:
       - uses: actions/checkout@v4
         with:
