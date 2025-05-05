@@ -4,6 +4,7 @@
 
   * Add Ruby 3.1 to CI matrix (#459)
   * chore: remove git.io (#462)
+  * Bump versions in workflows (#516)
 
 ### Minor Enhancements
 
