@@ -51,10 +51,10 @@ module Jekyll
 
         title = format_string(page["title"])
         title_category = format_string(page["title_category"])
-        if title && title_category && title != title_category
-          @page_title = title + TITLE_SEPARATOR + title_category
+        @page_title = if title && title_category && title != title_category
+          title + TITLE_SEPARATOR + title_category
         else
-          @page_title = title || title_category || site_title
+          title || title_category || site_title
         end
       end
 
