@@ -189,3 +189,24 @@ seo_paginator_message: "%<current>s / %<total>s | "
 
 While the value can be any string text, we recommend using a Ruby string-template containing the variables `current` and `total`
 similar to the example above, to incorporate the current page-number and total number of paginated pages in the title.
+
+### Adding a page title category
+
+You can optionally add a page category to its title.
+This is useful for indicating to the users that some pages are logically grouped or are of a specific kind.
+
+For example page front matter including:
+
+```yml
+title: "my page"
+title_category: "category"
+```
+
+And `_config.yml` including:
+
+```yml
+title: "my site"
+```
+
+Will generate `my page | category | my site` as the page's main `<title>` tag
+and `my page | category` as all other page's title declarations like `og:title`.
