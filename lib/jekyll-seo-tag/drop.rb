@@ -52,10 +52,10 @@ module Jekyll
         title = format_string(page["title"])
         title_category = format_string(page["title_category"])
         @page_title = if title && title_category && title != title_category
-          title + TITLE_SEPARATOR + title_category
-        else
-          title || title_category || site_title
-        end
+                        title + TITLE_SEPARATOR + title_category
+                      else
+                        title || title_category || site_title
+                      end
       end
 
       def site_tagline_or_description
