@@ -45,6 +45,7 @@
 {% if page.date %}
   <meta property="og:type" content="article" />
   <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+  <meta property="article:modified_time" content="{{ page.updated | default: page.date | date_to_xmlschema }}"/>
 {% else %}
   <meta property="og:type" content="website" />
 {% endif %}
