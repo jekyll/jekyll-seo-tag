@@ -47,7 +47,15 @@ module Jekyll
 
       # Page title without site title or description appended
       def page_title
-        @page_title ||= format_string(page["title"]) || site_title
+        return @page_title if defined?(@page_title)
+
+        title = format_string(page["title"])
+        title_category = format_string(page["title_category"])
+        @page_title = if title && title_category && title != title_category
+                        title + TITLE_SEPARATOR + title_category
+                      else
+                        title || title_category || site_title
+                      end
       end
 
       def site_tagline_or_description

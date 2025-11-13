@@ -73,6 +73,30 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
       end
 
+      context "with a page title, page title category and site title" do
+        let(:page) { make_page("title" => "page title", "title_category" => "page title category") }
+
+        it "builds the title" do
+          expect(subject.title).to eql("page title | page title category | site title")
+        end
+      end
+
+      context "with a page title category and site title" do
+        let(:page) { make_page("title_category" => "page title category") }
+
+        it "builds the title" do
+          expect(subject.title).to eql("page title category | site title")
+        end
+      end
+
+      context "with a page title, identical page title category and site title" do
+        let(:page) { make_page("title" => "page title", "title_category" => "page title") }
+
+        it "builds the title" do
+          expect(subject.title).to eql("page title | site title")
+        end
+      end
+
       context "with a site description but no page title" do
         let(:page)  { make_page }
         let(:config) do
