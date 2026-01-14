@@ -21,8 +21,8 @@
 {% endif %}
 
 {% if site.url %}
-  <link rel="canonical" href="{{ seo_tag.canonical_url }}" />
-  <meta property="og:url" content="{{ seo_tag.canonical_url }}" />
+  {% if seo_tag.canonical? %}<link rel="canonical" href="{{ seo_tag.canonical_url }}" />
+  {% endif %}<meta property="og:url" content="{{ seo_tag.canonical_url }}" />
 {% endif %}
 
 {% if seo_tag.site_title %}

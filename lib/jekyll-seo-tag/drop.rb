@@ -33,6 +33,13 @@ module Jekyll
         @display_title = (@text !~ %r!title=false!i)
       end
 
+      # Should the `<link rel="canonical">` tag be generated for this page?
+      def canonical?
+        return @display_canonical if defined?(@display_canonical)
+
+        @display_canonical = (@text !~ %r!canonical=false!i)
+      end
+
       def site_title
         @site_title ||= format_string(site["title"] || site["name"])
       end

@@ -622,6 +622,19 @@ RSpec.describe Jekyll::SeoTag do
     end
   end
 
+  context "with canonical=false" do
+    let(:site) { make_site("url" => "http://example.invalid") }
+    let(:text) { "canonical=false" }
+
+    it "does not output a canonical link tag" do
+      expect(output).not_to match(%r!<link rel="canonical"!)
+    end
+
+    it "still outputs og:url meta tag" do
+      expect(output).to match(%r!<meta property="og:url"!)
+    end
+  end
+
   context "with pagination" do
     let(:context) { make_context({}, "paginator" => paginator) }
 
