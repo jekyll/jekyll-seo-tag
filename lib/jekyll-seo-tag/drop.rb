@@ -35,9 +35,9 @@ module Jekyll
 
       # Should the `<link rel="canonical">` tag be generated for this page?
       def canonical?
-        return @display_canonical if defined?(@display_canonical)
+        return @canonical if defined?(@canonical)
 
-        @display_canonical = (@text !~ %r!canonical=false!i)
+        @canonical = (@text !~ %r!canonical=false!i)
       end
 
       def site_title
