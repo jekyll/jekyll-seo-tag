@@ -168,6 +168,15 @@ RSpec.describe Jekyll::SeoTag::Drop do
           expect(subject.title).to be_nil
         end
       end
+
+      context "with a home_or_about page and a site title" do
+        let(:config) { { "title" => "site title" } }
+        let(:page_meta) { { "permalink" => "/", "title" => "page title" } }
+
+        it "is just the page title" do
+          expect(subject.title).to eql("page title")
+        end
+      end
     end
   end
 
@@ -503,6 +512,22 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
         it "knows it's the home or about page" do
           expect(subject.send(:homepage_or_about?)).to be_truthy
+        end
+      end
+    end
+
+    context "when page has homepage_or_about" do
+      let(:page_meta) { { "homepage_or_about" => true } }
+
+      it "knows it's the home or about page" do
+        expect(subject.send(:homepage_or_about?)).to be_truthy
+      end
+
+      context "with homepage_or_about=false" do
+        let(:page_meta) { { "homepage_or_about" => false } }
+
+        it "knows it's not the home or about page" do
+          expect(subject.send(:homepage_or_about?)).to be_falsy
         end
       end
     end

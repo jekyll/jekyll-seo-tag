@@ -2,16 +2,6 @@
 
 Jekyll SEO Tag is designed to implement SEO best practices by default and to be the right fit for most sites right out of the box. If for some reason, you need more control over the output, read on:
 
-### Disabling `<title>` output
-
-If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
-
-<!-- {% raw %} -->
-```
-{% seo title=false %}
-```
-<!-- {% endraw %} -->
-
 ### Disabling `<link rel="canonical">` output
 
 If you're using another plugin to generate canonical URLs (such as [jekyll-polyglot](https://github.com/untra/polyglot) for multilingual sites), you can disable the canonical URL output:
@@ -188,7 +178,42 @@ Which will generate following canonical_url:
 <link rel="canonical" href="https://example.com/title-of-your-post" />
 ```
 
-### Customizing title modifier for paginated pages
+### Customizing title
+Jekyll SEO tag outputs the `<title>` tag and automatically adds several
+important details such as the site title, page number for paginated
+pages, and can add the page category if applicable.
+
+#### Disabling `<title>` output
+
+If for some reason, you don't want the plugin to output `<title>` tags on each page, simply invoke the plugin within your template like so:
+
+```
+{% seo title=false %}
+```
+
+#### Removing site title from the page title
+The site title is appended to the majority as: `Page title | Site title`.
+
+You can configure the site title by setting either `title` or `name` in `_config.yml`.
+```yml
+title: Site title
+```
+
+Site title is not added on the "home" and "about" pages. Those pages
+are identified by the page's `url`.
+
+You can override it by adding `homepage_or_about` to the page's front matter:
+
+```yml
+---
+homepage_or_about: false
+---
+```
+
+Setting `homepage_or_about: false` prevents the site name
+from being added the page title.
+
+#### Customizing title modifier for paginated pages
 
 You can override the default title modifier for paginated pages from `Page %{current} of %{total} for ` to a string of your
 choice by setting a `seo_paginator_message` key in your `_config.yml`.
@@ -202,7 +227,7 @@ seo_paginator_message: "%<current>s / %<total>s | "
 While the value can be any string text, we recommend using a Ruby string-template containing the variables `current` and `total`
 similar to the example above, to incorporate the current page-number and total number of paginated pages in the title.
 
-### Adding a page title category
+#### Adding a page title category
 
 You can optionally add a page category to its title.
 This is useful for indicating to the users that some pages are logically grouped or are of a specific kind.
