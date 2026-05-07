@@ -13,6 +13,7 @@
   * Support for image paths relative to the page&#39;s directory (#466)
   * Truncate the description value to 100 words (#492)
   * Add support for title_category (#517)
+  * feat: Add canonical=false option to disable canonical URL output (#521)
 
 ### Documentation
 

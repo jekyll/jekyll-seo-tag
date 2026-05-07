@@ -535,6 +535,28 @@ RSpec.describe Jekyll::SeoTag::Drop do
     end
   end
 
+  context "canonical?" do
+    it "knows to include the canonical by default" do
+      expect(subject.canonical?).to be_truthy
+    end
+
+    context "with canonical=false" do
+      let(:text) { "canonical=false" }
+
+      it "knows not to include the canonical" do
+        expect(subject.canonical?).to be_falsy
+      end
+    end
+
+    context "with CANONICAL=FALSE (case insensitive)" do
+      let(:text) { "CANONICAL=FALSE" }
+
+      it "knows not to include the canonical" do
+        expect(subject.canonical?).to be_falsy
+      end
+    end
+  end
+
   context "pagination" do
     let(:context) do
       make_context(

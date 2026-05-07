@@ -12,6 +12,18 @@ If for some reason, you don't want the plugin to output `<title>` tags on each p
 ```
 <!-- {% endraw %} -->
 
+### Disabling `<link rel="canonical">` output
+
+If you're using another plugin to generate canonical URLs (such as [jekyll-polyglot](https://github.com/untra/polyglot) for multilingual sites), you can disable the canonical URL output:
+
+<!-- {% raw %} -->
+```
+{% seo canonical=false %}
+```
+<!-- {% endraw %} -->
+
+This will prevent the plugin from outputting the `<link rel="canonical">` tag, while still outputting all other SEO tags including the `<meta property="og:url">` tag.
+
 ### Author information
 
 Author information is used to propagate the `creator` field of Twitter summary cards. This should be an author-specific, not site-wide Twitter handle (the site-wide username be stored as `site.twitter.username`).
