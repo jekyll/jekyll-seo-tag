@@ -70,10 +70,9 @@ module Jekyll
       end
 
       # Page title with site title or description appended
-      # rubocop:disable Metrics/CyclomaticComplexity
-      def title
+      def title # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
         @title ||= begin
-          if site_title && page_title != site_title
+          if site_title && !homepage_or_about? && page_title != site_title
             page_title + TITLE_SEPARATOR + site_title
           elsif site_description && site_title
             site_title + TITLE_SEPARATOR + site_tagline_or_description
@@ -86,7 +85,6 @@ module Jekyll
 
         @title
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
 
       def name
         return @name if defined?(@name)
@@ -210,7 +208,11 @@ module Jekyll
       end
 
       def homepage_or_about?
-        page["url"] =~ HOMEPAGE_OR_ABOUT_REGEX
+        if page.key?("homepage_or_about")
+          page["homepage_or_about"]
+        else
+          page["url"] =~ HOMEPAGE_OR_ABOUT_REGEX
+        end
       end
 
       def page_number
