@@ -12,6 +12,7 @@ module Jekyll
     autoload :UrlHelper,  "jekyll-seo-tag/url_helper"
     autoload :Drop,       "jekyll-seo-tag/drop"
     autoload :Filters,    "jekyll-seo-tag/filters"
+    autoload :Webmaster,  "jekyll-seo-tag/webmaster"
 
     attr_accessor :context
 
