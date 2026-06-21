@@ -169,9 +169,18 @@ RSpec.describe Jekyll::SeoTag::Drop do
         end
       end
 
-      context "with a home_or_about page and a site title" do
+      context "with the homepage permalink" do
         let(:config) { { "title" => "site title" } }
         let(:page_meta) { { "permalink" => "/", "title" => "page title" } }
+
+        it "is just the page title" do
+          expect(subject.title).to eql("page title")
+        end
+      end
+
+      context "with a homepage_or_about page and a site title" do
+        let(:config) { { "title" => "site title" } }
+        let(:page_meta) { { "homepage_or_about" => true, "title" => "page title" } }
 
         it "is just the page title" do
           expect(subject.title).to eql("page title")
