@@ -447,6 +447,19 @@ RSpec.describe Jekyll::SeoTag::Drop do
       end
     end
 
+    context "with a relative site.logo and a site url with a trailing slash" do
+      let(:config) do
+        {
+          "logo" => "image.png",
+          "url"  => "http://example.com/",
+        }
+      end
+
+      it "does not duplicate the slash" do
+        expect(subject.logo).to eql("http://example.com/image.png")
+      end
+    end
+
     context "with a uri-escaped logo" do
       let(:config) { { "logo" => "some image.png" } }
 
@@ -530,6 +543,14 @@ RSpec.describe Jekyll::SeoTag::Drop do
 
     context "when canonical url is not specified for a page" do
       it "uses site specific canonical url" do
+        expect(subject.canonical_url).to eq("http://example.com/page.html")
+      end
+    end
+
+    context "when site url has a trailing slash" do
+      let(:config) { { :url => "http://example.com/" } }
+
+      it "does not duplicate the slash" do
         expect(subject.canonical_url).to eq("http://example.com/page.html")
       end
     end

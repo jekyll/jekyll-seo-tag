@@ -18,6 +18,15 @@ module Jekyll
       rescue Addressable::URI::InvalidURIError
         nil
       end
+
+      # Collapses consecutive slashes left behind when `site.url` and a
+      # relative path are joined and both sides supply one (e.g. `site.url`
+      # ending in `/`), without touching the `//` after a URL's scheme.
+      #
+      # Returns the URL with duplicate path slashes squeezed to one
+      def squeeze_url_slashes(url)
+        url.to_s.gsub(%r{(?<!:)//+}, "/")
+      end
     end
   end
 end
