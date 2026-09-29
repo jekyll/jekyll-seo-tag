@@ -1,3 +1,9 @@
+## 2.9.1 / 2026-09-29
+
+### Security
+
+  * Escape all metadata attribute outputs, and make the JSON-LD block safe inside its script tag (GHSA-572m-7cg5-6j5r)
+
 ## 2.9.0 / 2026-05-08
 
 ### Minor Enhancements
