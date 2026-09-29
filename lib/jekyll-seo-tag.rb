@@ -12,6 +12,7 @@ module Jekyll
     autoload :UrlHelper,  "jekyll-seo-tag/url_helper"
     autoload :Drop,       "jekyll-seo-tag/drop"
     autoload :Filters,    "jekyll-seo-tag/filters"
+    autoload :JSONFilters, "jekyll-seo-tag/json_filters"
 
     attr_accessor :context
 
@@ -65,7 +66,7 @@ module Jekyll
     def info
       {
         :registers => context.registers,
-        :filters   => [Jekyll::Filters],
+        :filters   => [Jekyll::Filters, JSONFilters],
       }
     end
 
