@@ -6,39 +6,39 @@
 <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
 
 {% if seo_tag.page_title %}
-  <meta property="og:title" content="{{ seo_tag.page_title }}" />
+  <meta property="og:title" content="{{ seo_tag.page_title | escape_once }}" />
 {% endif %}
 
 {% if seo_tag.author.name %}
-  <meta name="author" content="{{ seo_tag.author.name }}" />
+  <meta name="author" content="{{ seo_tag.author.name | escape_once }}" />
 {% endif %}
 
-<meta property="og:locale" content="{{ seo_tag.page_locale }}" />
+<meta property="og:locale" content="{{ seo_tag.page_locale | escape_once }}" />
 
 {% if seo_tag.description %}
-  <meta name="description" content="{{ seo_tag.description }}" />
-  <meta name="twitter:description" property="og:description" content="{{ seo_tag.description }}" />
+  <meta name="description" content="{{ seo_tag.description | escape_once }}" />
+  <meta name="twitter:description" property="og:description" content="{{ seo_tag.description | escape_once }}" />
 {% endif %}
 
 {% if site.url %}
-  {% if seo_tag.canonical? %}<link rel="canonical" href="{{ seo_tag.canonical_url }}" />
-  {% endif %}<meta property="og:url" content="{{ seo_tag.canonical_url }}" />
+  {% if seo_tag.canonical? %}<link rel="canonical" href="{{ seo_tag.canonical_url | escape_once }}" />
+  {% endif %}<meta property="og:url" content="{{ seo_tag.canonical_url | escape_once }}" />
 {% endif %}
 
 {% if seo_tag.site_title %}
-  <meta property="og:site_name" content="{{ seo_tag.site_title }}" />
+  <meta property="og:site_name" content="{{ seo_tag.site_title | escape_once }}" />
 {% endif %}
 
 {% if seo_tag.image %}
-  <meta property="og:image" content="{{ seo_tag.image.path }}" />
+  <meta property="og:image" content="{{ seo_tag.image.path | escape_once }}" />
   {% if seo_tag.image.height %}
-    <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
+    <meta property="og:image:height" content="{{ seo_tag.image.height | escape_once }}" />
   {% endif %}
   {% if seo_tag.image.width %}
-    <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
+    <meta property="og:image:width" content="{{ seo_tag.image.width | escape_once }}" />
   {% endif %}
   {% if seo_tag.image.alt %}
-    <meta property="og:image:alt" content="{{ seo_tag.image.alt }}" />
+    <meta property="og:image:alt" content="{{ seo_tag.image.alt | escape_once }}" />
   {% endif %}
 {% endif %}
 
@@ -53,79 +53,79 @@
 {% endif %}
 
 {% if paginator.previous_page %}
-  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}" />
+  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url | escape_once }}" />
 {% endif %}
 {% if paginator.next_page %}
-  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}" />
+  <link rel="next" href="{{ paginator.next_page_path | absolute_url | escape_once }}" />
 {% endif %}
 
 {% if seo_tag.image %}
-  <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" }}" />
-  <meta name="twitter:image" content="{{ seo_tag.image.path }}" />
+  <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" | escape_once }}" />
+  <meta name="twitter:image" content="{{ seo_tag.image.path | escape_once }}" />
 {% else %}
   <meta name="twitter:card" content="summary" />
 {% endif %}
 
 {% if seo_tag.image.alt %}
-  <meta name="twitter:image:alt" content="{{ seo_tag.image.alt }}" />
+  <meta name="twitter:image:alt" content="{{ seo_tag.image.alt | escape_once }}" />
 {% endif %}
 
 {% if seo_tag.page_title %}
-  <meta name="twitter:title" content="{{ seo_tag.page_title }}" />
+  <meta name="twitter:title" content="{{ seo_tag.page_title | escape_once }}" />
 {% endif %}
 
 {% if site.twitter %}
-  <meta name="twitter:site" content="@{{ site.twitter.username | remove:'@' }}" />
+  <meta name="twitter:site" content="@{{ site.twitter.username | remove:'@' | escape_once }}" />
 
   {% if seo_tag.author.twitter %}
-    <meta name="twitter:creator" content="@{{ seo_tag.author.twitter | remove:'@' }}" />
+    <meta name="twitter:creator" content="@{{ seo_tag.author.twitter | remove:'@' | escape_once }}" />
   {% endif %}
 {% endif %}
 
 {% if site.facebook %}
   {% if site.facebook.admins %}
-    <meta property="fb:admins" content="{{ site.facebook.admins }}" />
+    <meta property="fb:admins" content="{{ site.facebook.admins | escape_once }}" />
   {% endif %}
 
   {% if site.facebook.publisher %}
-    <meta property="article:publisher" content="{{ site.facebook.publisher }}" />
+    <meta property="article:publisher" content="{{ site.facebook.publisher | escape_once }}" />
   {% endif %}
 
   {% if site.facebook.app_id %}
-    <meta property="fb:app_id" content="{{ site.facebook.app_id }}" />
+    <meta property="fb:app_id" content="{{ site.facebook.app_id | escape_once }}" />
   {% endif %}
 {% endif %}
 
 {% if site.webmaster_verifications %}
   {% if site.webmaster_verifications.google %}
-    <meta name="google-site-verification" content="{{ site.webmaster_verifications.google }}" />
+    <meta name="google-site-verification" content="{{ site.webmaster_verifications.google | escape_once }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.bing %}
-    <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing }}" />
+    <meta name="msvalidate.01" content="{{ site.webmaster_verifications.bing | escape_once }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.alexa %}
-    <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa }}" />
+    <meta name="alexaVerifyID" content="{{ site.webmaster_verifications.alexa | escape_once }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.yandex %}
-    <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex }}" />
+    <meta name="yandex-verification" content="{{ site.webmaster_verifications.yandex | escape_once }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.baidu %}
-    <meta name="baidu-site-verification" content="{{ site.webmaster_verifications.baidu }}" />
+    <meta name="baidu-site-verification" content="{{ site.webmaster_verifications.baidu | escape_once }}" />
   {% endif %}
 
   {% if site.webmaster_verifications.facebook %}
-    <meta name="facebook-domain-verification" content="{{ site.webmaster_verifications.facebook }}" />
+    <meta name="facebook-domain-verification" content="{{ site.webmaster_verifications.facebook | escape_once }}" />
   {% endif %}
 {% elsif site.google_site_verification %}
-  <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
+  <meta name="google-site-verification" content="{{ site.google_site_verification | escape_once }}" />
 {% endif %}
 
 <script type="application/ld+json">
-  {{ seo_tag.json_ld | jsonify }}
+  {{ seo_tag.json_ld | jsonify | seo_json_escape }}
 </script>
 
 <!-- End Jekyll SEO tag -->
