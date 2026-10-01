@@ -168,7 +168,7 @@ module Jekyll
           if absolute_url? site["logo"]
             filters.uri_escape site["logo"]
           else
-            filters.uri_escape filters.absolute_url site["logo"]
+            filters.uri_escape squeeze_url_slashes(filters.absolute_url(site["logo"]))
           end
         end
       end
@@ -184,7 +184,7 @@ module Jekyll
       def canonical_url
         @canonical_url ||= begin
           if page["canonical_url"].to_s.empty?
-            filters.absolute_url(page["url"]).to_s.gsub(%r!/index\.html$!, "/")
+            squeeze_url_slashes(filters.absolute_url(page["url"])).gsub(%r!/index\.html$!, "/")
           else
             page["canonical_url"]
           end
